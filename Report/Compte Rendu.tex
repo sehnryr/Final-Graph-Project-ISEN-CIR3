@@ -1,0 +1,71 @@
+% J'utilise Latex Workshop sur VSCODE pour compiler et générer le pdf depuis un fichier Latex comme celui ci
+% lien d'une vidéo permettant de le DL : https://www.youtube.com/watch?v=4lyHIQl4VM8
+
+\documentclass{article}
+
+\usepackage{amsmath,amsthm,amsfonts,amssymb,amscd} % package mathématiques permettant de faciliter l'utilisation de symboles mathématiques et de théorèmes
+\usepackage{tikz-cd} % package permettant de faire des graphs
+\usepackage{fancyhdr} %permet de personnaliser l'entete et le pied de page
+\usepackage[margin=3cm]{geometry} % permet de gérer les marges et dimensions de la page
+
+% ------ en tête ------
+\geometry{margin=1in, headsep=0.25in}
+\pagestyle{fancy}
+\setlength{\headheight}{65pt}
+\lhead{\textcolor{red}{\LARGE ISEN Nantes}}  
+\rhead{Graph Theory}
+\begin{document}
+\title{Graph Theory - Graphs}
+
+% ------ titre ------
+\begin{center}
+    {\Huge \bf Final Project}
+\end{center}
+
+\begin{center}
+    {\LARGE \bf The Maximum Edge Weight Clique Problem}
+\end{center}
+
+% ------ intro ------
+% jsp si il faut que je la remette mais osef, ca présente le projet
+
+\begin{flushleft}
+    {\LARGE \bf{Introduction}}
+\end{flushleft}
+
+% jsp comment justifier proprement comme sur word
+\begin{flushleft}
+
+    Given an undirected simple connected graph $G =(V,E)$, a clique is a complete maximal induced subgraph of $G$. The Maximum Clique Problem consists in finding a clique of maximum size. This is a classic graph theory problem that has many-real life applications in various fields such as social networks, chemistry, bioinformatics. In addition, this problem is $NP$-Hard and it has been studied as a combinatorial optimization problem, being very important in operations research and theoretical computer science.
+    \newline \newline
+    Let $G = (V,E,w)$ be an undirected simple weigheted connected graph such taht $|V| = n, |E|=m$ and $w : E \rightarrow \mathbb{R}_{[1,100]}$ is the weight function. That is, G is a graph with bounded weights on its edges. The Maximum Edge Weight Clique Problem (MEWC) consists in finding a clique that maximises the sum of the weights of its edges. Clearly MEWC is also a $NP$-Hard problem since the Maximum Clique Problem is the special case in which all weights are equal.
+
+\end{flushleft}
+
+% ----- Exercices -----
+
+\begin{flushleft}
+    {\LARGE \bf{Exercices}}
+\end{flushleft}
+
+\begin{flushleft}
+
+    \textbf{An example of real-life situations that can be modelledas MEWC} is \underline{the team formation process} during a project for example. 
+    \newline \newline
+    Indeed, let's take the example of the choice of groups for our graph theory project. The latter was done randomly but we could have imagined another process like the formation of groups by their comptability based on previous project. Here, forming a team from a group of individuals can be considered as a maximum edge weight clique problem because the goal is to select a subset of individuals such that the overall performance of the team is maximized.
+    \newline \newline
+    To model this problem as a maximum edge weight clique problem, you can represent each individual as a node in a graph and add an edge between two nodes if the corresponding individuals are expected to work well in graph theory. The weight of the edge could represent the average of the scores of previous projects that the two individuals would have completed together.
+
+    \begin{center}
+        \begin{tikzcd} 
+            Youn \arrow[dd, dash, "14"] \arrow[r, dash, "18"] \arrow[ddr, dash, "16"] & Valentin \arrow[r, dash, "19"] \arrow[ddl, dash, "15"] \arrow[dd, dash, "16"] & Aubin \arrow[ddl, dash, "15"] \arrow[dd, dash, "15"] \arrow[r, dash, "13"] & Antoine \arrow[dd, dash, "12"] \arrow[dr, dash, "10"] \\
+            & & & & Alexandre \\
+            Martin \arrow[r, dash, "16"] & Quentin & Dorian & Thomas \arrow[ur, dash, "12"]
+        \end{tikzcd} 
+    \end{center}
+    
+    The goal of the maximum edge weight clique problem in this context would be to find a subset of individuals such that the sum of the weights of the edges between the individuals is maximized. In this example, the maximum weight clique would be the clique consisting of nodes Youn, Valentin, Martin, Quentin with a total weight of 95(18+14+16+15+16+16).
+
+\end{flushleft}
+
+\end{document}

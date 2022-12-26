@@ -43,15 +43,15 @@ int main(int argc, char **argv)
     {
         // TODO: Implement exact algorithm
     }
-    else if (algorithm == "constructive-heuristic")
+    else if (algorithm == "constructive")
     {
         // TODO: Implement constructive heuristic algorithm
     }
-    else if (algorithm == "local-search-heuristic")
+    else if (algorithm == "local-search")
     {
         // TODO: Implement local search heuristic algorithm
     }
-    else if (algorithm == "grasp-meta-heuristic")
+    else if (algorithm == "grasp")
     {
         // TODO: Implement grasp meta heuristic algorithm
     }

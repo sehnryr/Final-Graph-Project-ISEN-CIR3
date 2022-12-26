@@ -24,7 +24,7 @@ $(TARGET): $(OBJ_FILES)
 
 # build object files from source files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXX_FLAGS) -MMD -c -o $@ $<
+	$(CXX) $(CXX_FLAGS) -MMD -c -o $@ $< -std=c++17
 
 .PHONY: clean
 # clean build folder

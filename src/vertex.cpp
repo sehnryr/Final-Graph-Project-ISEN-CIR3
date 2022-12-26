@@ -14,20 +14,36 @@ int Vertex::getId() const
     return id;
 }
 
-void Vertex::addNeighbor(Vertex *v)
+void Vertex::addEdge(Edge *e)
 {
-    neighbors.push_back(v);
+    edges.push_back(e);
+}
+
+std::vector<Edge *> Vertex::getEdges() const
+{
+    return edges;
 }
 
 std::vector<Vertex *> Vertex::getNeighbors() const
 {
+    std::vector<Vertex *> neighbors;
+    for (auto e : edges)
+    {
+        if (e->getV1() == this)
+            neighbors.push_back(e->getV2());
+        else
+            neighbors.push_back(e->getV1());
+    }
     return neighbors;
 }
 
 bool Vertex::hasNeighbor(Vertex *v) const
 {
-    for (auto &neighbor : neighbors)
-        if (neighbor == v)
+    if (v == this)
+        return false;
+
+    for (auto e : edges)
+        if (e->getV1() == v || e->getV2() == v)
             return true;
     return false;
 }

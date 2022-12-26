@@ -71,7 +71,7 @@ Graph read_file(std::string path)
     std::vector<std::unique_ptr<Vertex>> vertices_unique(num_vertices);
     for (int i = 0; i < num_vertices; i++)
         vertices_unique[i] = std::make_unique<Vertex>(i + 1);
-    std::vector<Edge> edges;
+    std::vector<std::unique_ptr<Edge>> edges_unique;
 
     // Read the rest of the file
     while (std::getline(input_file, line))
@@ -113,20 +113,20 @@ Graph read_file(std::string path)
         std::unique_ptr<Vertex> &source_vertex = vertices_unique[source - 1];
         std::unique_ptr<Vertex> &destination_vertex = vertices_unique[destination - 1];
 
-        // Add the source and destination vertices to each other's neighbors
-        source_vertex->addNeighbor(destination_vertex.get());
-        destination_vertex->addNeighbor(source_vertex.get());
-
         // Create the edge
-        Edge edge = Edge(source_vertex.get(), destination_vertex.get(), weight);
-        edges.push_back(edge);
+        Edge *edge = new Edge(source_vertex.get(), destination_vertex.get(), weight);
+        edges_unique.push_back(std::unique_ptr<Edge>(edge));
+
+        // Add the edge to the source and destination vertices
+        source_vertex->addEdge(edge);
+        destination_vertex->addEdge(edge);
     }
 
     // Close the input file
     input_file.close();
 
     // Check if the number of edges is correct
-    if (edges.size() != (long unsigned int)(num_edges))
+    if (edges_unique.size() != (long unsigned int)(num_edges))
     {
         std::cout << "Input file has an invalid number of edges" << std::endl;
         exit(1);
@@ -136,6 +136,9 @@ Graph read_file(std::string path)
     std::vector<Vertex *> vertices;
     for (auto &vertex : vertices_unique)
         vertices.push_back(vertex.get());
+    std::vector<Edge *> edges;
+    for (auto &edge : edges_unique)
+        edges.push_back(edge.get());
 
     // Create the graph
     return Graph(vertices, edges);

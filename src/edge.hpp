@@ -1,7 +1,7 @@
-#include "vertex.hpp"
-
 #ifndef EDGE_HPP
 #define EDGE_HPP
+
+class Vertex;
 
 class Edge
 {

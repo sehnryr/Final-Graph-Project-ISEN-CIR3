@@ -1,3 +1,5 @@
+#include <vector>
+
 #ifndef VERTEX_HPP
 #define VERTEX_HPP
 
@@ -7,9 +9,12 @@ public:
     Vertex(int id);
     ~Vertex();
     int getId() const;
+    void addNeighbor(Vertex *v);
+    std::vector<Vertex *> getNeighbors() const;
 
 private:
     int id;
+    std::vector<Vertex *> neighbors;
 };
 
 #endif // VERTEX_HPP

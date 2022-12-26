@@ -144,6 +144,10 @@ Graph read_file(std::string path)
         std::unique_ptr<Vertex> &source_vertex = vertices_unique[source - 1];
         std::unique_ptr<Vertex> &destination_vertex = vertices_unique[destination - 1];
 
+        // Add the source and destination vertices to each other's neighbors
+        source_vertex->addNeighbor(destination_vertex.get());
+        destination_vertex->addNeighbor(source_vertex.get());
+
         // Create the edge
         Edge edge = Edge(source_vertex.get(), destination_vertex.get(), weight);
         edges.push_back(edge);

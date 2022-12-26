@@ -18,7 +18,7 @@ int main(int argc, char **argv)
     // Guard against no arguments
     if (argc < 2)
     {
-        std::cout << "Usage: " << argv[0] << " <input path>" << std::endl;
+        std::cout << "Usage: " << argv[0] << " <input-file-path>" << std::endl;
         return 1;
     }
 

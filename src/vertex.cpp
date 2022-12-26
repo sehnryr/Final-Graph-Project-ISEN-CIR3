@@ -23,3 +23,11 @@ std::vector<Vertex *> Vertex::getNeighbors() const
 {
     return neighbors;
 }
+
+bool Vertex::hasNeighbor(Vertex *v) const
+{
+    for (auto &neighbor : neighbors)
+        if (neighbor == v)
+            return true;
+    return false;
+}

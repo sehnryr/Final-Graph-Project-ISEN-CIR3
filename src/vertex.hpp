@@ -11,6 +11,7 @@ public:
     int getId() const;
     void addNeighbor(Vertex *v);
     std::vector<Vertex *> getNeighbors() const;
+    bool hasNeighbor(Vertex *v) const;
 
 private:
     int id;

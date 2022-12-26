@@ -1,3 +1,4 @@
+#include <memory>
 #include <vector>
 
 #include "vertex.hpp"
@@ -10,15 +11,17 @@ class Graph
 {
 public:
     Graph();
+    Graph(std::vector<Vertex *> vertices,
+          std::vector<Edge> edges);
     ~Graph();
     void addVertex(Vertex *v);
-    void addEdge(Edge *e);
+    void addEdge(Edge e);
     std::vector<Vertex *> getVertices() const;
-    std::vector<Edge *> getEdges() const;
+    std::vector<Edge> getEdges() const;
 
 private:
     std::vector<Vertex *> vertices;
-    std::vector<Edge *> edges;
+    std::vector<Edge> edges;
 };
 
 #endif // GRAPH_HPP

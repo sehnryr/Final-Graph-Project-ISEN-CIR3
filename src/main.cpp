@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <filesystem>
 #include <iostream>
 #include <string>
@@ -68,6 +69,8 @@ int main(int argc, char **argv)
 
     std::string output_file =
         input_file.substr(0, input_file.find_last_of(".")) + "_" + algorithm + ".out";
+    // replace all '-' with '_' in the output file name
+    std::replace(output_file.begin(), output_file.end(), '-', '_');
 
     // Check if there are any extra arguments
     if (args.size() > 0)

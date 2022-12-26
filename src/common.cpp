@@ -64,12 +64,12 @@ Graph read_file(std::string path)
     }
 
     // Convert the number of vertices and edges to integers
-    int num_vertices = std::stoi(first_line[0]);
-    int num_edges = std::stoi(first_line[1]);
+    unsigned int num_vertices = std::stoi(first_line[0]);
+    long unsigned int num_edges = std::stoi(first_line[1]);
 
     // Create a vector of vertices of size num_vertices and initialize them
     std::vector<std::unique_ptr<Vertex>> vertices_unique(num_vertices);
-    for (int i = 0; i < num_vertices; i++)
+    for (unsigned int i = 0; i < num_vertices; i++)
         vertices_unique[i] = std::make_unique<Vertex>(i + 1);
     std::vector<std::unique_ptr<Edge>> edges_unique;
 
@@ -95,9 +95,9 @@ Graph read_file(std::string path)
         }
 
         // Convert the source and destination vertices to integers
-        int source = std::stoi(splitted[0]);
-        int destination = std::stoi(splitted[1]);
-        int weight = std::stoi(splitted[2]);
+        unsigned int source = std::stoi(splitted[0]);
+        unsigned int destination = std::stoi(splitted[1]);
+        unsigned int weight = std::stoi(splitted[2]);
 
         // Check if the source and destination vertices are valid
         if (source < 1 ||
@@ -126,7 +126,7 @@ Graph read_file(std::string path)
     input_file.close();
 
     // Check if the number of edges is correct
-    if (edges_unique.size() != (long unsigned int)(num_edges))
+    if (edges_unique.size() != num_edges)
     {
         std::cout << "Input file has an invalid number of edges" << std::endl;
         exit(1);

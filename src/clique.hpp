@@ -13,15 +13,15 @@ public:
     void addVertex(Vertex *v);
     std::vector<Vertex *> getVertices() const;
     bool hasVertex(Vertex *v) const;
-    int computeWeight() const;
-    void setWeight(int weight);
-    void addWeight(int weight);
-    int getWeight() const;
-    int getSize() const;
+    long unsigned int computeWeight() const;
+    void setWeight(long unsigned int weight);
+    void addWeight(long unsigned int weight);
+    long unsigned int getWeight() const;
+    long unsigned int getSize() const;
 
 private:
     std::vector<Vertex *> vertices;
-    int weight;
+    long unsigned int weight;
 };
 
 #endif // CLIQUE_HPP

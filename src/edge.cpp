@@ -1,6 +1,6 @@
 #include "edge.hpp"
 
-Edge::Edge(Vertex *v1, Vertex *v2, int weight)
+Edge::Edge(Vertex *v1, Vertex *v2, unsigned int weight)
 {
     this->v1 = v1;
     this->v2 = v2;
@@ -21,7 +21,7 @@ Vertex *Edge::getV2() const
     return v2;
 }
 
-int Edge::getWeight() const
+unsigned int Edge::getWeight() const
 {
     return weight;
 }

@@ -6,16 +6,16 @@ class Vertex;
 class Edge
 {
 public:
-    Edge(Vertex *v1, Vertex *v2, int weight);
+    Edge(Vertex *v1, Vertex *v2, unsigned int weight);
     ~Edge();
     Vertex *getV1() const;
     Vertex *getV2() const;
-    int getWeight() const;
+    unsigned int getWeight() const;
 
 private:
     Vertex *v1;
     Vertex *v2;
-    int weight;
+    unsigned int weight;
 };
 
 #endif // EDGE_HPP

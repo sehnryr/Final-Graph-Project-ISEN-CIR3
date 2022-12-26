@@ -1,6 +1,6 @@
 # variables
 CXX = g++
-CXX_FLAGS = -Wall -Wextra -Werror -std=c++11 -O3
+CXX_FLAGS = -Wall -Wextra -Werror -std=c++17 -O3
 
 SRC_DIR = src
 BUILD_DIR = build
@@ -24,7 +24,7 @@ $(TARGET): $(OBJ_FILES)
 
 # build object files from source files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
-	$(CXX) $(CXX_FLAGS) -MMD -c -o $@ $< -std=c++17
+	$(CXX) $(CXX_FLAGS) -MMD -c -o $@ $<
 
 .PHONY: clean
 # clean build folder

@@ -26,7 +26,7 @@ $(TARGET): $(OBJ_FILES)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXX_FLAGS) -MMD -c -o $@ $<
 
-# clean build folder
 .PHONY: clean
+# clean build folder
 clean:
 	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.d $(TARGET)

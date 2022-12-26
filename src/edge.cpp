@@ -9,8 +9,6 @@ Edge::Edge(Vertex *v1, Vertex *v2, int weight)
 
 Edge::~Edge()
 {
-    delete v1;
-    delete v2;
 }
 
 Vertex *Edge::getV1() const

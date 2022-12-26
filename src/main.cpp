@@ -21,15 +21,19 @@ int main(int argc, char **argv)
     std::string input_dir = input_path.substr(0, input_path.find_last_of("/"));
     std::string input_file = input_path.substr(input_dir.size() + 1);
 
-    // Check if the input path is valid
-    check_file(input_path);
-
-    // Read the input file
-    Graph graph = read_file(input_path);
-
     // Convert the arguments to a vector of strings excluding
     // the first and second arguments
     std::vector<std::string> args(argv + 2, argv + argc);
+
+    // Find and pop the --help argument
+    for (auto it = args.begin(); it != args.end(); ++it)
+    {
+        if (*it == "--help")
+        {
+            print_usage(argv);
+            exit(0);
+        }
+    }
 
     // Find and pop the algorithm type argument
     std::string algorithm = "exact";
@@ -79,6 +83,12 @@ int main(int argc, char **argv)
         exit(1);
     }
 
+    // Check if the input path is valid
+    check_file(input_path);
+
+    // Read the input file
+    Graph graph = read_file(input_path);
+
     // Check if the algorithm type is valid
     if (algorithm == "exact")
     {
@@ -106,10 +116,10 @@ int main(int argc, char **argv)
 }
 
 void print_usage(char **argv)
-{
-    std::cout << "Usage: "
-              << argv[0]
-              << " <input-file-path>"
-              << " [--output-dir=<output-directory> --type=<algorithm-type>]"
-              << std::endl;
+{   
+    std::cout << "Usage: " << argv[0] << " <input-file> [options]" << std::endl;
+    std::cout << "Options:" << std::endl;
+    std::cout << "  --type=<type>        The algorithm type to use. Default: exact" << std::endl;
+    std::cout << "  --output-dir=<dir>   The directory to output the results to. Default: input directory" << std::endl;
+    std::cout << "  --help               Print this message" << std::endl;
 }

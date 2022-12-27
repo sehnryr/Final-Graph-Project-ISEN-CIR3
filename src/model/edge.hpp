@@ -1,3 +1,5 @@
+#include <optional>
+
 #ifndef EDGE_HPP
 #define EDGE_HPP
 
@@ -10,6 +12,7 @@ public:
     ~Edge();
     Vertex *getV1() const;
     Vertex *getV2() const;
+    std::optional<Vertex *> isIncident(Edge *e) const;
     unsigned int getWeight() const;
 
 private:

@@ -26,7 +26,11 @@ $(TARGET): $(OBJ_FILES)
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 	$(CXX) $(CXX_FLAGS) -MMD -c -o $@ $<
 
-.PHONY: clean
+.PHONY: clean generate
 # clean build folder
 clean:
 	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.d $(TARGET)
+
+# build generator
+generate:
+	$(CXX) $(CXX_FLAGS) -o $(BUILD_DIR)/generate graph-gen/generate.cpp

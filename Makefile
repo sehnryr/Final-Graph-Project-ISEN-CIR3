@@ -7,10 +7,7 @@ BUILD_DIR = build
 
 TARGET = $(BUILD_DIR)/main
 
-# create build folder
-$(shell mkdir -p $(BUILD_DIR))
-
-SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp)
+SRC_FILES = $(wildcard $(SRC_DIR)/*.cpp $(SRC_DIR)/**/*.cpp)
 OBJ_FILES = $(patsubst $(SRC_DIR)/%.cpp, $(BUILD_DIR)/%.o, $(SRC_FILES))
 
 DEPS = $(OBJ_FILES:.o=.d)
@@ -24,6 +21,7 @@ $(TARGET): $(OBJ_FILES)
 
 # build object files from source files
 $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
+	$(shell mkdir -p $(dir $@))
 	$(CXX) $(CXX_FLAGS) -MMD -c -o $@ $<
 
 .PHONY: clean generate

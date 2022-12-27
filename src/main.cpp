@@ -19,74 +19,57 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-    std::string input_path = argv[1];
-    std::string input_dir = input_path.substr(0, input_path.find_last_of("/"));
-    std::string input_file = input_path.substr(input_dir.size() + 1);
+    std::vector<std::string> args(argv + 1, argv + argc);
 
-    // Convert the arguments to a vector of strings excluding
-    // the first and second arguments
-    std::vector<std::string> args(argv + 2, argv + argc);
-
-    // Find and pop the --help argument
-    for (auto it = args.begin(); it != args.end(); ++it)
+    // Find the --help argument
+    if (find_option(args, "--help"))
     {
-        if (*it == "--help")
-        {
-            print_usage(argv);
-            exit(0);
-        }
+        print_usage(argv);
+        exit(0);
     }
 
     // Find and pop the algorithm type argument
     std::string algorithm = "exact";
-    for (auto it = args.begin(); it != args.end(); ++it)
+    if (auto it = find_option(args, "--type="))
     {
-        if ((*it).substr(0, 7) == "--type=")
-        {
-            algorithm = (*it).substr(7);
-            args.erase(it);
-            break;
-        }
+        algorithm = (**it).substr(7);
+        args.erase(*it);
     }
 
-    // Find and pop the --output= argument
-    std::string output_dir = input_dir;
-    for (auto it = args.begin(); it != args.end(); ++it)
+    // Find and pop the output-dir argument
+    std::string output_dir = "//unset";
+    if (auto it = find_option(args, "--output-dir="))
     {
-        if ((*it).substr(0, 13) == "--output-dir=")
-        {
-            output_dir = (*it).substr(13);
-            args.erase(it);
-            break;
-        }
+        output_dir = (**it).substr(13);
+        args.erase(*it);
     }
 
-    // Check if the output directory exists and is a directory
-    if (!std::filesystem::exists(output_dir))
-    {
-        std::cout << "Output directory does not exist" << std::endl;
-        exit(1);
-    }
-    if (!std::filesystem::is_directory(output_dir))
-    {
-        std::cout << "Output directory is not a directory" << std::endl;
-        exit(1);
-    }
-
-    std::string output_file =
-        input_file.substr(0, input_file.find_last_of(".")) + "_" + algorithm + ".out";
-    // replace all '-' with '_' in the output file name
-    std::replace(output_file.begin(), output_file.end(), '-', '_');
-
-    // Check if there are any extra arguments
-    if (args.size() > 0)
+    // Check if the input-file argument is set
+    if (args.size() != 1)
     {
         print_usage(argv);
         exit(1);
     }
 
+    std::string input_path = args[0];
     // Check if the input path is valid
     check_file(input_path);
+
+    std::string input_dir = input_path.substr(0, input_path.find_last_of("/"));
+    std::string input_file = input_path.substr(input_dir.size() + 1);
+
+    // Check if the value of output_dir is unset
+    if (output_dir == "//unset")
+        output_dir = input_dir;
+
+    // Check if the output directory is valid
+    check_directory(output_dir);
+
+    std::string output_file =
+        input_file.substr(0, input_file.find_last_of(".")) +
+        "_" + algorithm + ".out";
+    // replace all '-' with '_' in the output file name
+    std::replace(output_file.begin(), output_file.end(), '-', '_');
 
     // Read the input file
     Graph graph = read_file(input_path);
@@ -127,7 +110,7 @@ int main(int argc, char **argv)
 
     // Write the size of the clique and the weight of the clique
     output << clique.getVertices().size() << " "
-                << clique.getWeight() << std::endl;
+           << clique.getWeight() << std::endl;
 
     // Write the vertices of the clique
     for (auto vertex : clique.getVertices())

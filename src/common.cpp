@@ -29,6 +29,23 @@ void check_file(std::string path)
     }
 }
 
+void check_directory(std::string path)
+{
+    // Check if the path exists
+    if (!std::filesystem::exists(path))
+    {
+        std::cout << "Path does not exist : " << path << std::endl;
+        exit(1);
+    }
+
+    // Check if the path is a directory
+    if (!std::filesystem::is_directory(path))
+    {
+        std::cout << "Path is not a directory : " << path << std::endl;
+        exit(1);
+    }
+}
+
 Graph read_file(std::string path)
 {
     // Read the input file
@@ -156,4 +173,12 @@ std::vector<std::string> split(const std::string &s, char delim)
         elems.push_back(item);
     }
     return elems;
+}
+
+std::optional<std::vector<std::string>::iterator> find_option(std::vector<std::string> args, std::string option)
+{
+    for (auto it = args.begin(); it != args.end(); ++it)
+        if ((*it).substr(0, option.size()) == option)
+            return it;
+    return {};
 }

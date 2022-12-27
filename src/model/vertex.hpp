@@ -1,3 +1,4 @@
+#include <map>
 #include <vector>
 
 #include "edge.hpp"
@@ -18,7 +19,9 @@ public:
 
 private:
     unsigned int id;
+    std::map<long unsigned int, Edge *> edgesMap;
     std::vector<Edge *> edges;
+    std::vector<Vertex *> neighbors;
 };
 
 #endif // VERTEX_HPP

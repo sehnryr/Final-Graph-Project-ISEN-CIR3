@@ -1,3 +1,4 @@
+#include <map>
 #include <vector>
 
 #include "vertex.hpp"
@@ -10,17 +11,16 @@ class Clique
 public:
     Clique();
     ~Clique();
-    void addVertex(Vertex *v);
+    void addEdge(Edge *e);
     std::vector<Vertex *> getVertices() const;
     bool hasVertex(Vertex *v) const;
-    long unsigned int computeWeight() const;
-    void setWeight(long unsigned int weight);
-    void addWeight(long unsigned int weight);
     long unsigned int getWeight() const;
     long unsigned int getSize() const;
 
 private:
+    std::map<long unsigned int, Vertex *> verticesMap;
     std::vector<Vertex *> vertices;
+    std::vector<Edge *> edges;
     long unsigned int weight;
 };
 

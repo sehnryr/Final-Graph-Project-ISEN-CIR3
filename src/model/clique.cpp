@@ -1,4 +1,7 @@
+#include <iostream>
+
 #include "clique.hpp"
+#include "../common.hpp"
 
 Clique::Clique()
 {
@@ -9,45 +12,42 @@ Clique::~Clique()
 {
 }
 
-void Clique::addVertex(Vertex *v)
+void Clique::addEdge(Edge *e) // Time complexity: O(1)
 {
-    vertices.push_back(v);
+    if (hasVertex(e->getV1()) && hasVertex(e->getV2()))
+        return;
+
+    if (!hasVertex(e->getV1()))
+    {
+        verticesMap[e->getV1()->getId()] = e->getV1();
+        vertices.push_back(e->getV1());
+    }
+    if (!hasVertex(e->getV2()))
+    {
+        verticesMap[e->getV2()->getId()] = e->getV2();
+        vertices.push_back(e->getV2());
+    }
+    edges.push_back(e);
+    weight += e->getWeight();
 }
 
-std::vector<Vertex *> Clique::getVertices() const
+std::vector<Vertex *> Clique::getVertices() const // Time complexity: O(1)
 {
     return vertices;
 }
 
-bool Clique::hasVertex(Vertex *v) const
+bool Clique::hasVertex(Vertex *v) const // Time complexity: O(1)
 {
-    for (auto &vertex : vertices)
-        if (vertex == v)
-            return true;
-    return false;
-}
-
-long unsigned int Clique::computeWeight() const
-{
-    // if an edge exists between two vertices in the clique, add its weight to the total
-    long unsigned int weight = 0;
-    for (auto &vertex : vertices)
-        for (auto &e : vertex->getEdges())
-            if (hasVertex(e->getV1() == vertex ? e->getV2() : e->getV1()))
-                weight += e->getWeight();
-    
-    // divide by two because each edge is counted twice
-    return weight / 2;
-}
-
-void Clique::setWeight(long unsigned int weight)
-{
-    this->weight = weight;
-}
-
-void Clique::addWeight(long unsigned int weight)
-{
-    this->weight += weight;
+    try
+    {
+        verticesMap.at(v->getId());
+        return true;
+    }
+    catch (const std::out_of_range &e)
+    {
+        UNUSED(e);
+        return false;
+    }
 }
 
 long unsigned int Clique::getWeight() const

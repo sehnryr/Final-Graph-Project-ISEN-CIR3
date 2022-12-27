@@ -1,5 +1,5 @@
-#include "../clique.hpp"
-#include "../graph.hpp"
+#include "../model/clique.hpp"
+#include "../model/graph.hpp"
 
 #ifndef MEWC_HPP
 #define MEWC_HPP

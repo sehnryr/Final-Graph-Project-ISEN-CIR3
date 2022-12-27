@@ -1,7 +1,7 @@
 #include <string>
 #include <vector>
 
-#include "graph.hpp"
+#include "model/graph.hpp"
 
 #ifndef COMMON_HPP
 #define COMMON_HPP

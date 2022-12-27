@@ -64,7 +64,8 @@ int main(int argc, char **argv)
     unsigned int connectivity = std::stoi(argv[2]);
 
     long unsigned int max_edges = num_vertices * (num_vertices - 1) / 2;
-    long unsigned int num_edges = max_edges * connectivity / 100;
+    long unsigned int num_edges = (max_edges * connectivity + 50) / 100;
+    // We add 50 to round the fraction to the nearest integer
 
     // Seed the random number generator with the current time
     srand(time(NULL));

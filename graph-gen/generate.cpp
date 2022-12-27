@@ -75,7 +75,6 @@ int main(int argc, char **argv)
                                   "_" + std::to_string(connectivity) +
                                   ".in",
                               std::ios::out);
-    std::string line;
 
     // Check if the output file is open
     if (!output_file.is_open())

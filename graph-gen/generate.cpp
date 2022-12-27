@@ -64,16 +64,17 @@ int main(int argc, char **argv)
     unsigned int connectivity = std::stoi(argv[2]);
 
     long unsigned int max_edges = num_vertices * (num_vertices - 1) / 2;
-    long unsigned int num_edges = max_edges / 100 * connectivity;
+    long unsigned int num_edges = max_edges * connectivity / 100;
 
     // Seed the random number generator with the current time
     srand(time(NULL));
 
     // Open the output file
     std::ofstream output_file(output_dir +
-                              "/" + std::to_string(num_vertices) +
-                              "_" + std::to_string(connectivity) +
-                              ".in", std::ios::out);
+                                  "/" + std::to_string(num_vertices) +
+                                  "_" + std::to_string(connectivity) +
+                                  ".in",
+                              std::ios::out);
     std::string line;
 
     // Check if the output file is open
@@ -86,39 +87,17 @@ int main(int argc, char **argv)
     // Write the number of vertices and edges to the output file
     output_file << num_vertices << " " << num_edges << std::endl;
 
-    // There cannot be edges that share the same vertices
-    // so we need to keep track of which pairs of vertices have been used already
-    // We can use a dictionary to do this
-    std::map<std::pair<unsigned int, unsigned int>, bool> used_edges;
-
-    // Generate the edges
-    for (unsigned int i = 0; i < num_edges; i++)
-    {
-        // Generate a random pair of vertices where the first vertex is less than the second
-        unsigned int v1 = rand() % num_vertices + 1;
-        unsigned int v2 = rand() % num_vertices + 1;
-        while (v1 == v2 || v1 > v2)
+    for (unsigned int i = 0; i < num_vertices; i++)
+        for (unsigned int j = i + 1; j < num_vertices; j++)
         {
-            v1 = rand() % num_vertices + 1;
-            v2 = rand() % num_vertices + 1;
+            if (rand() % max_edges < num_edges)
+            {
+                unsigned int weight = rand() % 100 + 1;
+                output_file << i + 1 << " " << j + 1 << " " << weight << std::endl;
+                num_edges--;
+            }
+            max_edges--;
         }
-
-        // Check if the edge has already been used
-        if (used_edges[std::make_pair(v1, v2)] == true)
-        {
-            // If it has, decrement the counter and try again
-            i--;
-            continue;
-        }
-
-        // Mark the edge as used
-        used_edges[std::make_pair(v1, v2)] = true;
-
-        unsigned short weight = rand() % 100 + 1;
-
-        // Write the edge to the output file
-        output_file << v1 << " " << v2 << " " << weight << std::endl;
-    }
 
     return 0;
 }

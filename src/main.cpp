@@ -1,10 +1,12 @@
 #include <algorithm>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
 #include "common.hpp"
+#include "algorithm/mewc.hpp"
 
 void print_usage(char **argv);
 
@@ -88,23 +90,24 @@ int main(int argc, char **argv)
 
     // Read the input file
     Graph graph = read_file(input_path);
+    Clique clique;
 
     // Check if the algorithm type is valid
     if (algorithm == "exact")
     {
-        // TODO: Implement exact algorithm
+        clique = exactMEWC(graph);
     }
     else if (algorithm == "constructive")
     {
-        // TODO: Implement constructive heuristic algorithm
+        clique = constructiveMEWC(graph);
     }
     else if (algorithm == "local-search")
     {
-        // TODO: Implement local search heuristic algorithm
+        clique = localSearchMEWC(graph);
     }
     else if (algorithm == "grasp")
     {
-        // TODO: Implement grasp meta heuristic algorithm
+        clique = graspMEWC(graph);
     }
     else
     {
@@ -112,11 +115,33 @@ int main(int argc, char **argv)
         exit(1);
     }
 
+    // Write the output file
+    std::ofstream output(output_dir + "/" + output_file, std::ios::out);
+
+    // Check if the output file is open
+    if (!output.is_open())
+    {
+        std::cout << "Error: Could not open output file" << std::endl;
+        exit(1);
+    }
+
+    // Write the size of the clique and the weight of the clique
+    output << clique.getVertices().size() << " "
+                << clique.getWeight() << std::endl;
+
+    // Write the vertices of the clique
+    for (auto vertex : clique.getVertices())
+        output << vertex->getId() << " ";
+    output << std::endl;
+
+    // Close the output file
+    output.close();
+
     return 0;
 }
 
 void print_usage(char **argv)
-{   
+{
     std::cout << "Usage: " << argv[0] << " <input-file> [options]" << std::endl;
     std::cout << "Options:" << std::endl;
     std::cout << "  --type=<type>        The algorithm type to use. Default: exact" << std::endl;

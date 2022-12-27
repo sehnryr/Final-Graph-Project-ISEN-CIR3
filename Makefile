@@ -27,7 +27,7 @@ $(BUILD_DIR)/%.o: $(SRC_DIR)/%.cpp
 .PHONY: clean generate
 # clean build folder
 clean:
-	rm -f $(BUILD_DIR)/*.o $(BUILD_DIR)/*.d $(TARGET)
+	rm -rf $(BUILD_DIR)/*
 
 # build generator
 generate:

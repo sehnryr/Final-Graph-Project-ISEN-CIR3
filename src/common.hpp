@@ -6,6 +6,8 @@
 #ifndef COMMON_HPP
 #define COMMON_HPP
 
+#define UNUSED(x) (void)(x)
+
 // Check if a file exists and is a file and is a .in file
 void check_file(std::string path);
 // Read a file and return a graph

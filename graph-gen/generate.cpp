@@ -98,6 +98,9 @@ int main(int argc, char **argv)
             }
             max_edges--;
         }
+    
+    // Close the output file
+    output_file.close();
 
     return 0;
 }

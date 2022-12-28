@@ -43,16 +43,15 @@ std::vector<Vertex *> Vertex::getNeighbors() const // Time complexity: O(1)
     return neighbors;
 }
 
-bool Vertex::hasNeighbor(Vertex *v) const // Time complexity: O(1)
+std::optional<Edge *> Vertex::hasNeighbor(Vertex *v) const // Time complexity: O(1)
 {
     try
     {
-        edgesMap.at(v->getId());
-        return true;
+        return edgesMap.at(v->getId());
     }
     catch (const std::out_of_range &e)
     {
         UNUSED(e);
-        return false;
+        return {};
     }
 }

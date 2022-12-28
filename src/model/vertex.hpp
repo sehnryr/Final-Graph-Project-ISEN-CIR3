@@ -1,4 +1,5 @@
 #include <map>
+#include <optional>
 #include <vector>
 
 #include "edge.hpp"
@@ -15,7 +16,7 @@ public:
     void addEdge(Edge *e);
     std::vector<Edge *> getEdges() const;
     std::vector<Vertex *> getNeighbors() const;
-    bool hasNeighbor(Vertex *v) const;
+    std::optional<Edge *> hasNeighbor(Vertex *v) const;
 
 private:
     unsigned int id;

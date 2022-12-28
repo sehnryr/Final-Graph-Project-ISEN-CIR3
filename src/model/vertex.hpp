@@ -20,7 +20,7 @@ public:
 
 private:
     unsigned int id;
-    std::map<long unsigned int, Edge *> edgesMap;
+    std::map<unsigned int, Edge *> edgesMap;
     std::vector<Edge *> edges;
     std::vector<Vertex *> neighbors;
 };

@@ -20,9 +20,9 @@ public:
     long unsigned int getSize() const;
 
 private:
-    std::map<long unsigned int, Vertex *> verticesMap;
+    std::map<unsigned int, Vertex *> verticesMap;
     std::vector<Vertex *> vertices;
-    std::map<std::pair<long unsigned int, long unsigned int>, Edge *> edgesMap;
+    std::map<std::pair<unsigned int, unsigned int>, Edge *> edgesMap;
     std::vector<Edge *> edges;
     long unsigned int weight;
 };

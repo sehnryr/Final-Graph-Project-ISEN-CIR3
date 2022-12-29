@@ -23,6 +23,7 @@ public:
     void addWeight(long unsigned int weight);
     long unsigned int getWeight() const;
     long unsigned int getSize() const;
+    bool isEmpty() const;
 
 private:
     std::map<unsigned int, std::shared_ptr<Vertex>> verticesMap;

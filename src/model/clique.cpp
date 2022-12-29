@@ -65,3 +65,8 @@ long unsigned int Clique::getSize() const
 {
     return vertices.size();
 }
+
+bool Clique::isEmpty() const
+{
+    return vertices.empty();
+}

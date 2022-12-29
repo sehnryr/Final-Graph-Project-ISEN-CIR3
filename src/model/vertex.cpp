@@ -1,7 +1,4 @@
-#include <iostream>
-
 #include "vertex.hpp"
-#include "../common.hpp"
 
 Vertex::Vertex(unsigned int id)
 {

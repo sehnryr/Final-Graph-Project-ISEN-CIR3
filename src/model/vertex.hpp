@@ -7,6 +7,7 @@ public:
     Vertex(unsigned int id);
     ~Vertex();
     unsigned int getId() const;
+    bool operator==(const Vertex &v) const;
 
 private:
     unsigned int id;

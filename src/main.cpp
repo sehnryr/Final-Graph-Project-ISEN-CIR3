@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <chrono>
 #include <filesystem>
 #include <fstream>
 #include <iostream>
@@ -9,6 +10,7 @@
 #include "algorithm/mewc.hpp"
 
 void print_usage(char **argv);
+Clique runMEWC(Graph graph, std::string algorithm, char **argv);
 
 int main(int argc, char **argv)
 {
@@ -44,6 +46,14 @@ int main(int argc, char **argv)
         args.erase(*it);
     }
 
+    // Find and pop the runs argument
+    int runs = 1;
+    if (auto it = find_option(args, "--runs="))
+    {
+        runs = std::stoi((**it).substr(7));
+        args.erase(*it);
+    }
+
     // Check if the input-file argument is set
     if (args.size() != 1)
     {
@@ -75,27 +85,14 @@ int main(int argc, char **argv)
     Graph graph = read_file(input_path);
     Clique clique;
 
-    // Check if the algorithm type is valid
-    if (algorithm == "exact")
+    // Run the algorithm
+    for (int i = 0; i < runs; i++)
     {
-        clique = exactMEWC(graph);
-    }
-    else if (algorithm == "constructive")
-    {
-        clique = constructiveMEWC(graph);
-    }
-    else if (algorithm == "local-search")
-    {
-        clique = localSearchMEWC(graph);
-    }
-    else if (algorithm == "grasp")
-    {
-        clique = graspMEWC(graph);
-    }
-    else
-    {
-        print_usage(argv);
-        exit(1);
+        auto start = std::chrono::high_resolution_clock::now();
+        clique = runMEWC(graph, algorithm, argv);
+        auto end = std::chrono::high_resolution_clock::now();
+        std::cout << std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count()
+                  << std::endl;
     }
 
     // Write the output file
@@ -129,5 +126,31 @@ void print_usage(char **argv)
     std::cout << "Options:" << std::endl;
     std::cout << "  --type=<type>        The algorithm type to use. Default: exact" << std::endl;
     std::cout << "  --output-dir=<dir>   The directory to output the results to. Default: input directory" << std::endl;
+    std::cout << "  --runs=<n>           The number of times to run the algorithm. Default: 1" << std::endl;
     std::cout << "  --help               Print this message" << std::endl;
+}
+
+Clique runMEWC(Graph graph, std::string algorithm, char **argv)
+{
+    if (algorithm == "exact")
+    {
+        return exactMEWC(graph);
+    }
+    else if (algorithm == "constructive")
+    {
+        return constructiveMEWC(graph);
+    }
+    else if (algorithm == "local-search")
+    {
+        return localSearchMEWC(graph);
+    }
+    else if (algorithm == "grasp")
+    {
+        return graspMEWC(graph);
+    }
+    else
+    {
+        print_usage(argv);
+        exit(1);
+    }
 }

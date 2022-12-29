@@ -55,12 +55,16 @@ make
 To run the project, you can use the following command.
 
 ```bash
-./build/main <input-file-path> [--output-dir=<output-directory> --type=<algorithm-type>]
+./build/main <input-file> [options]
 ```
 
-The `input-file-path` is the path to the input file. 
-The `algorithm-type` is the algorithm to use to solve the problem. 
-The `output-directory` is the directory where the output files will be written.
+The `input-file` is the path to the input file.
+
+The `options` are the following:
+- `--type <algorithm-type>`: The algorithm type to use.
+- `--output-dir=<dir>`: The directory to output the results to. (default: the input file directory)
+- `--runs=<n>`: The number of runs to perform. (default: 1)
+- `--help`: Display the help message.
 
 The `algorithm-type` can be one of the following values:
 - `exact` (default)

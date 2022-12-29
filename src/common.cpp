@@ -1,7 +1,6 @@
 #include <filesystem>
 #include <fstream>
 #include <iostream>
-#include <sstream>
 
 #include "common.hpp"
 
@@ -85,10 +84,10 @@ Graph read_file(std::string path)
     long unsigned int num_edges = std::stoi(first_line[1]);
 
     // Create a vector of vertices of size num_vertices and initialize them
-    std::vector<std::unique_ptr<Vertex>> vertices_unique(num_vertices);
+    std::vector<std::shared_ptr<Vertex>> vertices(num_vertices);
     for (unsigned int i = 0; i < num_vertices; i++)
-        vertices_unique[i] = std::make_unique<Vertex>(i + 1);
-    std::vector<std::unique_ptr<Edge>> edges_unique;
+        vertices[i] = std::make_shared<Vertex>(i + 1);
+    std::vector<std::shared_ptr<Edge>> edges;
 
     // Read the rest of the file
     while (std::getline(input_file, line))
@@ -127,35 +126,23 @@ Graph read_file(std::string path)
         }
 
         // Get the source and destination vertices
-        std::unique_ptr<Vertex> &source_vertex = vertices_unique[source - 1];
-        std::unique_ptr<Vertex> &destination_vertex = vertices_unique[destination - 1];
+        std::shared_ptr<Vertex> source_vertex = vertices[source - 1];
+        std::shared_ptr<Vertex> destination_vertex = vertices[destination - 1];
 
         // Create the edge
-        Edge *edge = new Edge(source_vertex.get(), destination_vertex.get(), weight);
-        edges_unique.push_back(std::unique_ptr<Edge>(edge));
-
-        // Add the edge to the source and destination vertices
-        source_vertex->addEdge(edge);
-        destination_vertex->addEdge(edge);
+        std::shared_ptr<Edge> edge = std::make_shared<Edge>(source_vertex, destination_vertex, weight);
+        edges.push_back(edge);
     }
 
     // Close the input file
     input_file.close();
 
     // Check if the number of edges is correct
-    if (edges_unique.size() != num_edges)
+    if (edges.size() != num_edges)
     {
         std::cout << "Input file has an invalid number of edges" << std::endl;
         exit(1);
     }
-
-    // Convert the vectors of unique pointers to vectors of raw pointers
-    std::vector<Vertex *> vertices;
-    for (auto &vertex : vertices_unique)
-        vertices.push_back(vertex.get());
-    std::vector<Edge *> edges;
-    for (auto &edge : edges_unique)
-        edges.push_back(edge.get());
 
     // Create the graph
     return Graph(vertices, edges);

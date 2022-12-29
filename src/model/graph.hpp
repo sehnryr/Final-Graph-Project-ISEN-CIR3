@@ -1,4 +1,6 @@
 #include <map>
+#include <memory>
+#include <optional>
 #include <vector>
 
 #include "vertex.hpp"
@@ -11,21 +13,24 @@ class Graph
 {
 public:
     Graph();
-    Graph(std::vector<Vertex *> vertices,
-          std::vector<Edge *> edges);
+    Graph(std::vector<std::shared_ptr<Vertex>> vertices,
+          std::vector<std::shared_ptr<Edge>> edges);
     ~Graph();
-    void addVertex(Vertex *v);
-    void addEdge(Edge *e);
-    std::vector<Vertex *> getVertices() const;
-    std::vector<Edge *> getEdges() const;
-    bool hasVertex(Vertex *v) const;
-    bool hasEdge(Edge *e) const;
+    void addVertex(std::shared_ptr<Vertex> v);
+    void addEdge(std::shared_ptr<Edge>);
+    std::vector<std::shared_ptr<Vertex>> getVertices() const;
+    std::vector<std::shared_ptr<Edge>> getEdges() const;
+    bool hasVertex(std::shared_ptr<Vertex>) const;
+    bool hasEdge(std::shared_ptr<Edge>) const;
+    std::optional<std::shared_ptr<Vertex>> getVertex(unsigned int id) const;
+    std::optional<std::shared_ptr<Edge>> getEdge(std::shared_ptr<Vertex> v1,
+                                                 std::shared_ptr<Vertex> v2) const;
 
 private:
-    std::map<unsigned int, Vertex *> verticesMap;
-    std::vector<Vertex *> vertices;
-    std::map<std::pair<unsigned int, unsigned int>, Edge *> edgesMap;
-    std::vector<Edge *> edges;
+    std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> adjacencyMatrix;
+    std::map<unsigned int, std::shared_ptr<Vertex>> verticesMap;
+    std::vector<std::shared_ptr<Vertex>> vertices;
+    std::vector<std::shared_ptr<Edge>> edges;
 };
 
 #endif // GRAPH_HPP

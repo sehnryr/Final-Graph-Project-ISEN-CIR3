@@ -1,23 +1,27 @@
+#include <memory>
 #include <optional>
+
+#include "vertex.hpp"
 
 #ifndef EDGE_HPP
 #define EDGE_HPP
 
-class Vertex;
-
 class Edge
 {
 public:
-    Edge(Vertex *v1, Vertex *v2, unsigned int weight);
+    Edge(std::shared_ptr<Vertex> v1,
+         std::shared_ptr<Vertex> v2,
+         unsigned int weight);
     ~Edge();
-    Vertex *getV1() const;
-    Vertex *getV2() const;
-    std::optional<Vertex *> isIncident(Edge *e) const;
+    std::shared_ptr<Vertex> getV1() const;
+    std::shared_ptr<Vertex> getV2() const;
+    std::optional<std::shared_ptr<Vertex>> hasVertex(std::shared_ptr<Vertex> v) const;
+    std::optional<std::shared_ptr<Vertex>> isIncident(std::shared_ptr<Edge> e) const;
     unsigned int getWeight() const;
 
 private:
-    Vertex *v1;
-    Vertex *v2;
+    std::shared_ptr<Vertex> v1;
+    std::shared_ptr<Vertex> v2;
     unsigned int weight;
 };
 

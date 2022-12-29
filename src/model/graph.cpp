@@ -7,8 +7,8 @@ Graph::Graph()
 {
 }
 
-Graph::Graph(std::vector<Vertex *> vertices,
-             std::vector<Edge *> edges)
+Graph::Graph(std::vector<std::shared_ptr<Vertex>> vertices,
+             std::vector<std::shared_ptr<Edge>> edges)
 {
     this->vertices = vertices;
     this->edges = edges;
@@ -16,11 +16,9 @@ Graph::Graph(std::vector<Vertex *> vertices,
 
 Graph::~Graph()
 {
-    vertices.clear();
-    edges.clear();
 }
 
-void Graph::addVertex(Vertex *v) // Time complexity: O(1)
+void Graph::addVertex(std::shared_ptr<Vertex> v) // Time complexity: O(1)
 {
     // If the vertex already exists, do nothing
     if (hasVertex(v))
@@ -30,51 +28,73 @@ void Graph::addVertex(Vertex *v) // Time complexity: O(1)
     vertices.push_back(v);
 }
 
-void Graph::addEdge(Edge *e) // Time complexity: O(1)
+void Graph::addEdge(std::shared_ptr<Edge> e) // Time complexity: O(1)
 {
-    // Considering simple graphs (no parallel edges and no self-loops)
     // If the edge already exists, do nothing
     if (hasEdge(e))
         return;
 
-    edgesMap[std::make_pair(e->getV1()->getId(), e->getV2()->getId())] = e;
     edges.push_back(e);
+    adjacencyMatrix[e->getV1()->getId()][e->getV2()->getId()] = e;
 }
 
-std::vector<Vertex *> Graph::getVertices() const // Time complexity: O(1)
+std::vector<std::shared_ptr<Vertex>> Graph::getVertices() const // Time complexity: O(1)
 {
     return vertices;
 }
 
-std::vector<Edge *> Graph::getEdges() const // Time complexity: O(1)
+std::vector<std::shared_ptr<Edge>> Graph::getEdges() const // Time complexity: O(1)
 {
     return edges;
 }
 
-bool Graph::hasVertex(Vertex *v) const // Time complexity: O(1)
+bool Graph::hasVertex(std::shared_ptr<Vertex> v) const // Time complexity: O(1)
+{
+    if (getVertex(v->getId()))
+        return true;
+    return false;
+}
+
+bool Graph::hasEdge(std::shared_ptr<Edge> e) const // Time complexity: O(1)
+{
+    if (getEdge(e->getV1(), e->getV2()))
+        return true;
+    return false;
+}
+
+std::optional<std::shared_ptr<Vertex>> Graph::getVertex(unsigned int id) const // Time complexity: O(1)
 {
     try
     {
-        verticesMap.at(v->getId());
-        return true;
+        return verticesMap.at(id);
     }
     catch (const std::out_of_range &e)
     {
         UNUSED(e);
-        return false;
+        return {};
     }
 }
 
-bool Graph::hasEdge(Edge *e) const // Time complexity: O(1)
+std::optional<std::shared_ptr<Edge>> Graph::getEdge(std::shared_ptr<Vertex> v1,
+                                                    std::shared_ptr<Vertex> v2) const // Time complexity: O(1)
 {
+    // Considering simple undirected graphs (no parallel edges and no self-loops)
+    // we need to check if the edge exists in the adjacency matrix in both directions
     try
     {
-        edgesMap.at(std::make_pair(e->getV1()->getId(), e->getV2()->getId()));
-        return true;
+        return adjacencyMatrix.at(v1->getId()).at(v2->getId());
     }
     catch (const std::out_of_range &e)
     {
         UNUSED(e);
-        return false;
     }
+    try
+    {
+        return adjacencyMatrix.at(v2->getId()).at(v1->getId());
+    }
+    catch (const std::out_of_range &e)
+    {
+        UNUSED(e);
+    }
+    return {};
 }

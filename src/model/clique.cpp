@@ -12,65 +12,51 @@ Clique::~Clique()
 {
 }
 
-void Clique::addEdge(Edge *e) // Time complexity: O(1)
+void Clique::addVertex(std::shared_ptr<Vertex> v)
 {
-    if (hasVertex(e->getV1()) && hasVertex(e->getV2()))
-        return;
-
-    if (!hasVertex(e->getV1()))
+    if (!hasVertex(v))
     {
-        verticesMap[e->getV1()->getId()] = e->getV1();
-        vertices.push_back(e->getV1());
+        vertices.push_back(v);
+        verticesMap[v->getId()] = v;
     }
-    if (!hasVertex(e->getV2()))
-    {
-        verticesMap[e->getV2()->getId()] = e->getV2();
-        vertices.push_back(e->getV2());
-    }
-    edges.push_back(e);
-    edgesMap[std::make_pair(e->getV1()->getId(), e->getV2()->getId())] = e;
-    weight += e->getWeight();
 }
 
-std::vector<Vertex *> Clique::getVertices() const // Time complexity: O(1)
+std::vector<std::shared_ptr<Vertex>> Clique::getVertices() const
 {
     return vertices;
 }
 
-std::vector<Edge *> Clique::getEdges() const // Time complexity: O(1)
+bool Clique::hasVertex(std::shared_ptr<Vertex> v) const // Time complexity: O(1)
 {
-    return edges;
+    if (getVertex(v->getId()))
+        return true;
+    return false;
 }
 
-bool Clique::hasVertex(Vertex *v) const // Time complexity: O(1)
+std::optional<std::shared_ptr<Vertex>> Clique::getVertex(unsigned int id) const // Time complexity: O(1)
 {
     try
     {
-        verticesMap.at(v->getId());
-        return true;
+        return verticesMap.at(id);
     }
     catch (const std::out_of_range &e)
     {
         UNUSED(e);
-        return false;
+        return {};
     }
 }
 
-bool Clique::hasEdge(Edge *e) const // Time complexity: O(1)
+void Clique::setWeight(long unsigned int weight)
 {
-    try
-    {
-        edgesMap.at(std::make_pair(e->getV1()->getId(), e->getV2()->getId()));
-        return true;
-    }
-    catch (const std::out_of_range &e)
-    {
-        UNUSED(e);
-        return false;
-    }
+    this->weight = weight;
 }
 
-long unsigned int Clique::getWeight() const
+void Clique::addWeight(long unsigned int weight)
+{
+    this->weight += weight;
+}
+
+long unsigned int Clique::getWeight() const // Time complexity: O(n^2)
 {
     return weight;
 }

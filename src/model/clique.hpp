@@ -1,6 +1,10 @@
 #include <map>
+#include <memory>
+#include <optional>
 #include <vector>
 
+#include "graph.hpp"
+#include "edge.hpp"
 #include "vertex.hpp"
 
 #ifndef CLIQUE_HPP
@@ -11,19 +15,18 @@ class Clique
 public:
     Clique();
     ~Clique();
-    void addEdge(Edge *e);
-    std::vector<Vertex *> getVertices() const;
-    std::vector<Edge *> getEdges() const;
-    bool hasVertex(Vertex *v) const;
-    bool hasEdge(Edge *e) const;
+    void addVertex(std::shared_ptr<Vertex> v);
+    std::vector<std::shared_ptr<Vertex>> getVertices() const;
+    bool hasVertex(std::shared_ptr<Vertex> v) const;
+    std::optional<std::shared_ptr<Vertex>> getVertex(unsigned int id) const;
+    void setWeight(long unsigned int weight);
+    void addWeight(long unsigned int weight);
     long unsigned int getWeight() const;
     long unsigned int getSize() const;
 
 private:
-    std::map<unsigned int, Vertex *> verticesMap;
-    std::vector<Vertex *> vertices;
-    std::map<std::pair<unsigned int, unsigned int>, Edge *> edgesMap;
-    std::vector<Edge *> edges;
+    std::map<unsigned int, std::shared_ptr<Vertex>> verticesMap;
+    std::vector<std::shared_ptr<Vertex>> vertices;
     long unsigned int weight;
 };
 

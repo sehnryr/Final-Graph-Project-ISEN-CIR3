@@ -18,6 +18,7 @@ public:
     std::optional<std::shared_ptr<Vertex>> hasVertex(std::shared_ptr<Vertex> v) const;
     std::optional<std::shared_ptr<Vertex>> isIncident(std::shared_ptr<Edge> e) const;
     unsigned int getWeight() const;
+    bool operator==(const Edge &e) const;
 
 private:
     std::shared_ptr<Vertex> v1;

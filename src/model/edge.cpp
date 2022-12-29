@@ -45,3 +45,8 @@ unsigned int Edge::getWeight() const
 {
     return weight;
 }
+
+bool Edge::operator==(const Edge &e) const
+{
+    return v1 == e.v1 && v2 == e.v2;
+}

@@ -83,11 +83,15 @@ Graph read_file(std::string path)
     unsigned int num_vertices = std::stoi(first_line[0]);
     long unsigned int num_edges = std::stoi(first_line[1]);
 
+    Graph graph = Graph();
+
     // Create a vector of vertices of size num_vertices and initialize them
     std::vector<std::shared_ptr<Vertex>> vertices(num_vertices);
     for (unsigned int i = 0; i < num_vertices; i++)
+    {
         vertices[i] = std::make_shared<Vertex>(i + 1);
-    std::vector<std::shared_ptr<Edge>> edges;
+        graph.addVertex(vertices[i]);
+    }
 
     // Read the rest of the file
     while (std::getline(input_file, line))
@@ -131,21 +135,21 @@ Graph read_file(std::string path)
 
         // Create the edge
         std::shared_ptr<Edge> edge = std::make_shared<Edge>(source_vertex, destination_vertex, weight);
-        edges.push_back(edge);
+        graph.addEdge(edge);
     }
 
     // Close the input file
     input_file.close();
 
     // Check if the number of edges is correct
-    if (edges.size() != num_edges)
+    if (graph.getEdges().size() != num_edges)
     {
         std::cout << "Input file has an invalid number of edges" << std::endl;
         exit(1);
     }
 
     // Create the graph
-    return Graph(vertices, edges);
+    return graph;
 }
 
 // Split a string by a delimiter into a vector of strings

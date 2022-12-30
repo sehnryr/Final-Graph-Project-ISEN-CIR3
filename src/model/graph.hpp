@@ -13,8 +13,6 @@ class Graph
 {
 public:
     Graph();
-    Graph(std::vector<std::shared_ptr<Vertex>> vertices,
-          std::vector<std::shared_ptr<Edge>> edges);
     ~Graph();
     void addVertex(std::shared_ptr<Vertex> v);
     void addEdge(std::shared_ptr<Edge>);

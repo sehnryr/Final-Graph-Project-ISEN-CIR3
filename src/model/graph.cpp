@@ -7,13 +7,6 @@ Graph::Graph()
 {
 }
 
-Graph::Graph(std::vector<std::shared_ptr<Vertex>> vertices,
-             std::vector<std::shared_ptr<Edge>> edges)
-{
-    this->vertices = vertices;
-    this->edges = edges;
-}
-
 Graph::~Graph()
 {
 }

@@ -59,10 +59,13 @@ std::vector<std::vector<std::shared_ptr<Vertex>>> generateVerticesSubsets(
  * This function finds the maximum weight clique in a graph by generating all 
  * possible subsets of vertices and checking if they form a clique.
  * 
+ * The time complexity of this function is O(n * n^n * m), where n is the number
+ * of vertices in the graph and m is the number of edges in the graph.
+ * 
  * @param g The graph
  * @return The maximum weight clique
  */
-Clique exactMEWC(Graph g)
+Clique exactMEWC(Graph g) // O(n * n^n * m)
 {
     // variable to store the maximum weight clique
     Clique max_clique;
@@ -70,7 +73,7 @@ Clique exactMEWC(Graph g)
     std::vector<std::shared_ptr<Vertex>> vertices = g.getVertices();
 
     // iterate over the sizes of the subsets
-    for (long unsigned int i = 1; i <= vertices.size(); i++)
+    for (long unsigned int i = 1; i <= vertices.size(); i++) // O(n)
     {
         // dummy vector for the generateVerticesSubsets() function
         std::vector<std::shared_ptr<Vertex>> vertices_subset;
@@ -79,19 +82,19 @@ Clique exactMEWC(Graph g)
             generateVerticesSubsets(vertices, vertices_subset, i);
         
         // iterate over the subsets
-        for (std::vector<std::shared_ptr<Vertex>> vertices_subset : vertices_subsets)
+        for (std::vector<std::shared_ptr<Vertex>> vertices_subset : vertices_subsets) // O(n^k)
         {
             // create a temporary clique to store the current subset
             Clique clique;
             // add all vertices in the subset to the clique
-            for (auto vertex : vertices_subset)
+            for (auto vertex : vertices_subset) // O(k)
                 clique.addVertex(vertex);
 
             // Check if the clique is a clique
             bool isClique = true;
             // nested loop to check all pairs of vertices in the subset
             for (long unsigned int i = 0; i < vertices_subset.size(); i++)
-                for (long unsigned int j = i + 1; j < vertices_subset.size(); j++)
+                for (long unsigned int j = i + 1; j < vertices_subset.size(); j++) // O(m)
                     // check if there is an edge between the vertices
                     if (auto edge = g.getEdge(vertices_subset[i], vertices_subset[j]))
                         // add the weight of the edge to the clique

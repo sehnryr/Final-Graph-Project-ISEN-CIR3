@@ -98,3 +98,8 @@ std::optional<std::shared_ptr<Edge>> Graph::getEdge(std::shared_ptr<Vertex> v1,
     }
     return {};
 }
+
+std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> Graph::getAdjacencyMatrix() const // Time complexity: O(1)
+{
+    return adjacencyMatrix;
+}

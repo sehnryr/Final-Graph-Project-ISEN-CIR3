@@ -25,6 +25,7 @@ public:
     std::optional<std::shared_ptr<Vertex>> getVertex(unsigned int id) const;
     std::optional<std::shared_ptr<Edge>> getEdge(std::shared_ptr<Vertex> v1,
                                                  std::shared_ptr<Vertex> v2) const;
+    std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> getAdjacencyMatrix() const;
 
 private:
     std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> adjacencyMatrix;

@@ -35,7 +35,10 @@ void Graph::addEdge(std::shared_ptr<Edge> e) // Time complexity: O(1)
         return;
 
     edges.push_back(e);
+    // Considering simple undirected graphs (no parallel edges and no self-loops)
+    // we need to add the edge to the adjacency matrix in both directions
     adjacencyMatrix[e->getV1()->getId()][e->getV2()->getId()] = e;
+    adjacencyMatrix[e->getV2()->getId()][e->getV1()->getId()] = e;
 }
 
 std::vector<std::shared_ptr<Vertex>> Graph::getVertices() const // Time complexity: O(1)
@@ -78,8 +81,6 @@ std::optional<std::shared_ptr<Vertex>> Graph::getVertex(unsigned int id) const /
 std::optional<std::shared_ptr<Edge>> Graph::getEdge(std::shared_ptr<Vertex> v1,
                                                     std::shared_ptr<Vertex> v2) const // Time complexity: O(1)
 {
-    // Considering simple undirected graphs (no parallel edges and no self-loops)
-    // we need to check if the edge exists in the adjacency matrix in both directions
     try
     {
         return adjacencyMatrix.at(v1->getId()).at(v2->getId());
@@ -87,16 +88,8 @@ std::optional<std::shared_ptr<Edge>> Graph::getEdge(std::shared_ptr<Vertex> v1,
     catch (const std::out_of_range &e)
     {
         UNUSED(e);
+        return {};
     }
-    try
-    {
-        return adjacencyMatrix.at(v2->getId()).at(v1->getId());
-    }
-    catch (const std::out_of_range &e)
-    {
-        UNUSED(e);
-    }
-    return {};
 }
 
 std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> Graph::getAdjacencyMatrix() const // Time complexity: O(1)

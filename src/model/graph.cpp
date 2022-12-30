@@ -53,7 +53,12 @@ bool Graph::hasVertex(std::shared_ptr<Vertex> v) const // Time complexity: O(1)
 
 bool Graph::hasEdge(std::shared_ptr<Edge> e) const // Time complexity: O(1)
 {
-    if (getEdge(e->getV1(), e->getV2()))
+    return hasEdge(e->getV1(), e->getV2());
+}
+
+bool Graph::hasEdge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) const // Time complexity: O(1)
+{
+    if (getEdge(v1, v2))
         return true;
     return false;
 }

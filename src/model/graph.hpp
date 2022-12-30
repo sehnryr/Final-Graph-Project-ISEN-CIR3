@@ -20,6 +20,7 @@ public:
     std::vector<std::shared_ptr<Edge>> getEdges() const;
     bool hasVertex(std::shared_ptr<Vertex>) const;
     bool hasEdge(std::shared_ptr<Edge>) const;
+    bool hasEdge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) const;
     std::optional<std::shared_ptr<Vertex>> getVertex(unsigned int id) const;
     std::optional<std::shared_ptr<Edge>> getEdge(std::shared_ptr<Vertex> v1,
                                                  std::shared_ptr<Vertex> v2) const;

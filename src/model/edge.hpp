@@ -6,6 +6,12 @@
 #ifndef EDGE_HPP
 #define EDGE_HPP
 
+/**
+ * @brief The Edge class
+ * 
+ * This class represents an edge in a graph. It contains the two vertices that
+ * are connected by the edge and the weight of the edge.
+ */
 class Edge
 {
 public:

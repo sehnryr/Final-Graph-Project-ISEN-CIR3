@@ -1,7 +1,7 @@
-#include <map>
 #include <memory>
 #include <optional>
-#include <vector>
+#include <unordered_map>
+#include <unordered_set>
 
 #include "vertex.hpp"
 #include "edge.hpp"
@@ -12,7 +12,7 @@
 /**
  * @brief The Graph class
  *
- * This class represents a graph. It contains a vector of vertices and a vector
+ * This class represents a graph. It contains a set of vertices and a set
  * of edges. It also contains a map of vertices and a map of edges for faster
  * lookup.
  */
@@ -23,21 +23,22 @@ public:
     ~Graph();
     void addVertex(VertexPtr v);
     void addEdge(EdgePtr);
-    std::vector<VertexPtr> getVertices() const;
-    std::vector<EdgePtr> getEdges() const;
+    std::unordered_set<VertexPtr> getVertices() const;
+    std::unordered_set<EdgePtr> getEdges() const;
     bool hasVertex(VertexPtr) const;
     bool hasEdge(EdgePtr) const;
     bool hasEdge(VertexPtr v1, VertexPtr v2) const;
     std::optional<VertexPtr> getVertex(unsigned int id) const;
     std::optional<EdgePtr> getEdge(VertexPtr v1,
-                                                 VertexPtr v2) const;
-    std::map<unsigned int, std::map<unsigned int, EdgePtr>> getAdjacencyMatrix() const;
+                                   VertexPtr v2) const;
+    std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
+    getAdjacencyMatrix() const;
 
 private:
-    std::map<unsigned int, std::map<unsigned int, EdgePtr>> adjacencyMatrix;
-    std::map<unsigned int, VertexPtr> verticesMap;
-    std::vector<VertexPtr> vertices;
-    std::vector<EdgePtr> edges;
+    std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
+        adjacencyMatrix;
+    std::unordered_set<VertexPtr> vertices;
+    std::unordered_set<EdgePtr> edges;
 };
 
 #endif // GRAPH_HPP

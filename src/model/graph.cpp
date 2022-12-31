@@ -31,8 +31,7 @@ void Graph::addVertex(VertexPtr v) // Time complexity: O(1)
     if (hasVertex(v))
         return;
 
-    verticesMap[v->getId()] = v;
-    vertices.push_back(v);
+    vertices.insert(v);
 }
 
 /**
@@ -50,7 +49,7 @@ void Graph::addEdge(EdgePtr e) // Time complexity: O(1)
     if (hasEdge(e))
         return;
 
-    edges.push_back(e);
+    edges.insert(e);
     // Considering simple undirected graphs (no parallel edges and no self-loops)
     // we need to add the edge to the adjacency matrix in both directions
     adjacencyMatrix[e->getV1()->getId()][e->getV2()->getId()] = e;
@@ -60,9 +59,9 @@ void Graph::addEdge(EdgePtr e) // Time complexity: O(1)
 /**
  * @brief Get the vertices of the graph
  *
- * @return std::vector<VertexPtr> The vertices of the graph
+ * @return std::unordered_set<VertexPtr> The vertices of the graph
  */
-std::vector<VertexPtr> Graph::getVertices() const // Time complexity: O(1)
+std::unordered_set<VertexPtr> Graph::getVertices() const // Time complexity: O(1)
 {
     return vertices;
 }
@@ -70,9 +69,9 @@ std::vector<VertexPtr> Graph::getVertices() const // Time complexity: O(1)
 /**
  * @brief Get the edges of the graph
  *
- * @return std::vector<EdgePtr> The edges of the graph
+ * @return std::unordered_set<EdgePtr> The edges of the graph
  */
-std::vector<EdgePtr> Graph::getEdges() const // Time complexity: O(1)
+std::unordered_set<EdgePtr> Graph::getEdges() const // Time complexity: O(1)
 {
     return edges;
 }
@@ -127,15 +126,10 @@ bool Graph::hasEdge(VertexPtr v1, VertexPtr v2) const // Time complexity: O(1)
  */
 std::optional<VertexPtr> Graph::getVertex(unsigned int id) const // Time complexity: O(1)
 {
-    try
-    {
-        return verticesMap.at(id);
-    }
-    catch (const std::out_of_range &e)
-    {
-        UNUSED(e);
-        return {};
-    }
+    VertexPtr v = std::make_shared<Vertex>(id);
+    if (vertices.find(v) != vertices.end())
+        return *vertices.find(v);
+    return {};
 }
 
 /**
@@ -149,8 +143,9 @@ std::optional<VertexPtr> Graph::getVertex(unsigned int id) const // Time complex
  * @return std::optional<EdgePtr> The edge if it exists,
  * an empty optional otherwise
  */
-std::optional<EdgePtr> Graph::getEdge(VertexPtr v1,
-                                                    VertexPtr v2) const // Time complexity: O(1)
+std::optional<EdgePtr> Graph::getEdge(
+    VertexPtr v1,
+    VertexPtr v2) const // Time complexity: O(1)
 {
     try
     {
@@ -166,9 +161,11 @@ std::optional<EdgePtr> Graph::getEdge(VertexPtr v1,
 /**
  * @brief Get the adjacency matrix of the graph
  *
- * @return std::map<unsigned int, std::map<unsigned int, EdgePtr>> The adjacency matrix
+ * @return std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
+ * The adjacency matrix
  */
-std::map<unsigned int, std::map<unsigned int, EdgePtr>> Graph::getAdjacencyMatrix() const // Time complexity: O(1)
+std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
+Graph::getAdjacencyMatrix() const // Time complexity: O(1)
 {
     return adjacencyMatrix;
 }

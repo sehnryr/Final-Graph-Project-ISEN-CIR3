@@ -29,18 +29,15 @@ Clique::~Clique()
 void Clique::addVertex(VertexPtr v)
 {
     if (!hasVertex(v))
-    {
-        vertices.push_back(v);
-        verticesMap[v->getId()] = v;
-    }
+        vertices.insert(v);
 }
 
 /**
  * @brief Get the vertices of the clique
  *
- * @return std::vector<VertexPtr> The vertices of the clique
+ * @return std::unordered_set<VertexPtr> The vertices of the clique
  */
-std::vector<VertexPtr> Clique::getVertices() const
+std::unordered_set<VertexPtr> Clique::getVertices() const
 {
     return vertices;
 }
@@ -71,15 +68,10 @@ bool Clique::hasVertex(VertexPtr v) const // Time complexity: O(1)
  */
 std::optional<VertexPtr> Clique::getVertex(unsigned int id) const // Time complexity: O(1)
 {
-    try
-    {
-        return verticesMap.at(id);
-    }
-    catch (const std::out_of_range &e)
-    {
-        UNUSED(e);
-        return {};
-    }
+    VertexPtr v = std::make_shared<Vertex>(id);
+    if (vertices.find(v) != vertices.end())
+        return *vertices.find(v);
+    return {};
 }
 
 /**

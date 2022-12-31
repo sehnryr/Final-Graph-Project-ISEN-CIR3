@@ -12,6 +12,16 @@
 void print_usage(char **argv);
 Clique runMEWC(Graph graph, std::string algorithm, char **argv);
 
+/**
+ * @brief Main function
+ * 
+ * This method is the main function of the program. It parses the command line arguments
+ * and runs the algorithm.
+ * 
+ * @param argc The number of command line arguments
+ * @param argv The command line arguments
+ * @return int The exit code
+ */
 int main(int argc, char **argv)
 {
     // Guard against no arguments
@@ -120,6 +130,15 @@ int main(int argc, char **argv)
     return 0;
 }
 
+/**
+ * @brief Print the usage message
+ * 
+ * This function prints the usage message to the console. It is called when the
+ * program is run with no arguments or with the --help argument or when the
+ * the arguments are invalid.
+ * 
+ * @param argv The command line arguments
+ */
 void print_usage(char **argv)
 {
     std::cout << "Usage: " << argv[0] << " <input-file> [options]" << std::endl;
@@ -130,6 +149,17 @@ void print_usage(char **argv)
     std::cout << "  --help               Print this message" << std::endl;
 }
 
+/**
+ * @brief Run the algorithm
+ * 
+ * This function runs the algorithm specified by the algorithm argument. It is
+ * called by the main function.
+ * 
+ * @param graph The graph to run the algorithm on
+ * @param algorithm The algorithm to run
+ * @param argv The command line arguments
+ * @return Clique The clique found by the algorithm
+ */
 Clique runMEWC(Graph graph, std::string algorithm, char **argv)
 {
     if (algorithm == "exact")

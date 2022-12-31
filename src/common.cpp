@@ -4,6 +4,15 @@
 
 #include "common.hpp"
 
+/**
+ * @brief Check if the input file is valid
+ * 
+ * This method checks if the input file is valid. If it is not, it exits the program.
+ * The validity of the input file is checked by checking if the path exists, 
+ * if the path is a file and if the path is in the correct format.
+ * 
+ * @param path The path to the input file
+ */
 void check_file(std::string path)
 {
     // Check if the input path exists
@@ -28,6 +37,13 @@ void check_file(std::string path)
     }
 }
 
+/**
+ * @brief Check if the output directory is valid
+ * 
+ * This method checks if the output directory is valid. If it is not, it exits the program.
+ * The validity of the output directory is checked by checking if the path exists 
+ * and if the path is a directory.
+*/
 void check_directory(std::string path)
 {
     // Check if the path exists
@@ -45,6 +61,18 @@ void check_directory(std::string path)
     }
 }
 
+/**
+ * @brief Read the input file and return a graph
+ * 
+ * This method reads the input file and returns a graph.
+ * The input file must be composed of the number of vertices and edges on the first line,
+ * followed by the edges on the next lines. The edges must be composed of three numbers
+ * separated by a space char. The first number is the id of the first vertex, the second
+ * number is the id of the second vertex and the third number is the weight of the edge.
+ * 
+ * @param path The path to the input file
+ * @return Graph The graph
+*/
 Graph read_file(std::string path)
 {
     // Read the input file
@@ -152,8 +180,16 @@ Graph read_file(std::string path)
     return graph;
 }
 
-// Split a string by a delimiter into a vector of strings
-// (from https://stackoverflow.com/a/236803)
+/**
+ * @brief Split a string by a delimiter
+ * 
+ * This method splits a string by a delimiter and returns a vector of strings.
+ * (from https://stackoverflow.com/a/236803)
+ * 
+ * @param s The string to split
+ * @param delim The delimiter
+ * @return std::vector<std::string> The vector of strings
+ */
 std::vector<std::string> split(const std::string &s, char delim)
 {
     std::vector<std::string> elems;
@@ -166,6 +202,16 @@ std::vector<std::string> split(const std::string &s, char delim)
     return elems;
 }
 
+/**
+ * @brief Find an option in the arguments
+ * 
+ * This method finds an option in the arguments and returns an iterator to the option
+ * as an optional. If the option is not found, it returns an empty optional.
+ * 
+ * @param args The arguments
+ * @param option The option
+ * @return std::optional<std::vector<std::string>::iterator> The iterator to the option
+ */
 std::optional<std::vector<std::string>::iterator> find_option(std::vector<std::string> args, std::string option)
 {
     for (auto it = args.begin(); it != args.end(); ++it)

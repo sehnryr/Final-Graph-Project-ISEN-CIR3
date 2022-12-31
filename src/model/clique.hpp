@@ -22,6 +22,7 @@ class Clique
 {
 public:
     Clique(Graph graph);
+    Clique(Clique &clique);
     ~Clique();
     void addVertex(std::shared_ptr<Vertex> v);
     std::vector<std::shared_ptr<Vertex>> getVertices() const;

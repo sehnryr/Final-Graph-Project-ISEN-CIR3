@@ -5,12 +5,26 @@
 
 /**
  * @brief Construct a new Clique:: Clique object
- * 
+ *
  * @param graph The graph of the clique
  */
-Clique::Clique(Graph graph) : graph(graph)
+Clique::Clique(Graph graph)
+    : graph(graph),
+      weight(0)
 {
-    weight = 0;
+}
+
+/**
+ * @brief Copy constructor of the Clique:: Clique object
+ *
+ * @param clique The clique to copy
+ */
+Clique::Clique(Clique &clique)
+    : graph(clique.graph),
+      weight(clique.weight),
+      vertices(clique.vertices),
+      verticesMap(clique.verticesMap)
+{
 }
 
 /**

@@ -107,7 +107,7 @@ void BronKerbosch(
  * This function finds the maximum weight clique in a graph by generating all
  * possible subsets of vertices and checking if they form a clique.
  *
- * The time complexity of this function is O(n^n), where n is the number
+ * The time complexity of this function is O(3^(n/3) * n^2), where n is the number
  * of vertices in the graph.
  *
  * @param g The graph

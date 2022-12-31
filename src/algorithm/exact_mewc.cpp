@@ -68,7 +68,7 @@ std::vector<std::vector<std::shared_ptr<Vertex>>> generateVerticesSubsets(
 Clique exactMEWC(Graph g) // O(n * n^n * m)
 {
     // variable to store the maximum weight clique
-    Clique max_clique;
+    Clique max_clique(g);
     // get all vertices in the graph
     std::vector<std::shared_ptr<Vertex>> vertices = g.getVertices();
 
@@ -85,7 +85,7 @@ Clique exactMEWC(Graph g) // O(n * n^n * m)
         for (std::vector<std::shared_ptr<Vertex>> vertices_subset : vertices_subsets) // O(n^k)
         {
             // create a temporary clique to store the current subset
-            Clique clique;
+            Clique clique(g);
             // add all vertices in the subset to the clique
             for (auto vertex : vertices_subset) // O(k)
                 clique.addVertex(vertex);

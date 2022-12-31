@@ -5,8 +5,10 @@
 
 /**
  * @brief Construct a new Clique:: Clique object
+ * 
+ * @param graph The graph of the clique
  */
-Clique::Clique()
+Clique::Clique(Graph graph) : graph(graph)
 {
     weight = 0;
 }
@@ -120,6 +122,16 @@ long unsigned int Clique::getWeight() const // Time complexity: O(n^2)
 long unsigned int Clique::getSize() const
 {
     return vertices.size();
+}
+
+/**
+ * @brief Get the graph of the clique
+ *
+ * @return Graph The graph of the clique
+ */
+Graph Clique::getGraph() const
+{
+    return graph;
 }
 
 /**

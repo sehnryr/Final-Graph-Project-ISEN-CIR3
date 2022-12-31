@@ -40,7 +40,7 @@ int main(int argc, char **argv)
     }
 
     // Find and pop the algorithm type argument
-    Algorithm algorithm;
+    Algorithm algorithm = Algorithm::Exact;
     if (auto it = find_option(args, "--type="))
     {
         try

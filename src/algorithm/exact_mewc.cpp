@@ -1,6 +1,40 @@
 #include "mewc.hpp"
 
 /**
+ * @brief Get the weight of a clique
+ * 
+ * This function calculates the weight of a clique. If the clique is not a clique,
+ * it returns an empty optional.
+ * 
+ * The time complexity of this function is O(n^2), where n is the size of the clique.
+ * 
+ * @param clique The clique to get the weight of
+ * @return std::optional<long unsigned int> The weight of the clique, an empty optional
+ * if the clique is not a clique
+*/
+std::optional<long unsigned int> getCliqueWeight(Clique clique)
+{
+    // variable to store the weight of the clique
+    long unsigned int weight = 0;
+    // get a vector of all vertices in the clique
+    std::vector<std::shared_ptr<Vertex>> vertices = clique.getVertices();
+    // get the graph of the clique
+    Graph graph = clique.getGraph();
+    // iterate over all possible pairs of vertices in the clique
+    for (long unsigned int i = 0; i < vertices.size(); i++)
+        for (long unsigned int j = i + 1; j < vertices.size(); j++)
+            // check if there is an edge between the vertices
+            if (auto edge = graph.getEdge(vertices[i], vertices[j]))
+                // add the weight of the edge to the clique
+                weight += edge.value()->getWeight();
+            else
+                // if there is no edge, the clique is not a clique
+                return {};
+    // return the weight of the clique
+    return weight;
+}
+
+/**
  * @brief Generates all possible subsets of vertices
  *
  * This function generates all possible subsets of vertices of size `size` from
@@ -58,13 +92,13 @@ std::vector<std::vector<std::shared_ptr<Vertex>>> generateVerticesSubsets(
  * This function finds the maximum weight clique in a graph by generating all
  * possible subsets of vertices and checking if they form a clique.
  *
- * The time complexity of this function is O(n * n^n * m), where n is the number
- * of vertices in the graph and m is the number of edges in the graph.
+ * The time complexity of this function is O(n^n), where n is the number
+ * of vertices in the graph.
  *
  * @param g The graph
  * @return The maximum weight clique
  */
-Clique exactMEWC(Graph g) // O(n * n^n * m)
+Clique exactMEWC(Graph g) // O(n^n)
 {
     // variable to store the maximum weight clique
     Clique max_clique(g);
@@ -89,24 +123,13 @@ Clique exactMEWC(Graph g) // O(n * n^n * m)
             for (auto vertex : vertices_subset) // O(k)
                 clique.addVertex(vertex);
 
-            // Check if the clique is a clique
-            bool isClique = true;
-            // nested loop to check all pairs of vertices in the subset
-            for (long unsigned int i = 0; i < vertices_subset.size(); i++)
-                for (long unsigned int j = i + 1; j < vertices_subset.size(); j++) // O(m)
-                    // check if there is an edge between the vertices
-                    if (auto edge = g.getEdge(vertices_subset[i], vertices_subset[j]))
-                        // add the weight of the edge to the clique
-                        clique.addWeight(edge.value()->getWeight());
-                    else
-                    {
-                        // if there is no edge, the clique is not a clique
-                        isClique = false;
-                        break;
-                    }
-            // if the clique is not a clique, continue to the next subset
-            if (!isClique)
+            if (auto weight = getCliqueWeight(clique)) // O(k^2)
+                // if the clique is a clique, set the weight of the clique
+                clique.setWeight(weight.value());
+            else
+                // if the clique is not a clique, skip to the next subset
                 continue;
+
             // if the clique is a clique and has a greater weight than the
             // current maximum clique, update the maximum clique
             if (clique.getWeight() > max_clique.getWeight())

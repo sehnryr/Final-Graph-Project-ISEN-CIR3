@@ -1,3 +1,4 @@
+#include <iostream>
 #include <unordered_set>
 #include <vector>
 
@@ -61,12 +62,21 @@ void BronKerbosch(
     Clique &R,
     std::unordered_set<VertexPtr> &P,
     std::unordered_set<VertexPtr> &X,
-    std::vector<Clique> &cliques,
-    int depth = 0)
+    std::vector<Clique> &cliques)
 {
     // Base case : if P and X are empty, add the clique R to the vector of cliques
     if (P.empty() && X.empty())
         cliques.push_back(R);
+
+    // Chose a pivot vertex from P and X
+    VertexPtr pivot = std::make_shared<Vertex>(0); // dummy vertex (the graph will never have a vertex with id 0)
+    if (!P.empty() && !X.empty())
+    {
+        if (P.size() > X.size())
+            pivot = *P.begin();
+        else
+            pivot = *X.begin();
+    }
 
     // Create a copy of P to iterate through
     std::unordered_set<VertexPtr> P_copy = P;
@@ -74,26 +84,30 @@ void BronKerbosch(
     // Recursive case : iterate through the vector of vertices in P
     for (auto v : P_copy)
     {
-        // Create a new clique with the current vertex
-        Clique R_new = R;
-        R_new.addVertex(v);
+        // If the current vertex is not adjacent to the pivot vertex
+        if (!graph.hasEdge(v, pivot))
+        {
+            // Create a new clique with the current vertex
+            Clique R_new = R;
+            R_new.addVertex(v);
 
-        // Create a new vector of vertices for the recursive call with the
-        // vertices in P that are adjacent to the current vertex
-        std::unordered_set<VertexPtr> P_new;
-        for (auto w : P)
-            if (graph.getEdge(v, w))
-                P_new.insert(w);
+            // Create a new vector of vertices for the recursive call with the
+            // vertices in P that are adjacent to the current vertex
+            std::unordered_set<VertexPtr> P_new;
+            for (auto w : P)
+                if (graph.getEdge(v, w))
+                    P_new.insert(w);
 
-        // Create a new vector of vertices for the recursive call with the
-        // vertices in X that are adjacent to the current vertex
-        std::unordered_set<VertexPtr> X_new;
-        for (auto w : X)
-            if (graph.getEdge(v, w))
-                X_new.insert(w);
+            // Create a new vector of vertices for the recursive call with the
+            // vertices in X that are adjacent to the current vertex
+            std::unordered_set<VertexPtr> X_new;
+            for (auto w : X)
+                if (graph.getEdge(v, w))
+                    X_new.insert(w);
 
-        // Recursive call
-        BronKerbosch(graph, R_new, P_new, X_new, cliques, depth + 1);
+            // Recursive call
+            BronKerbosch(graph, R_new, P_new, X_new, cliques);
+        }
 
         // Remove the current vertex from P and add it to X
         P.erase(v);

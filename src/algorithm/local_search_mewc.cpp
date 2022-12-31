@@ -3,7 +3,6 @@
 
 Clique localSearchMEWC(Graph g)
 {
-    UNUSED(g);
     // TODO : implement the local search algorithm
-    return Clique();
+    return Clique(g);
 }

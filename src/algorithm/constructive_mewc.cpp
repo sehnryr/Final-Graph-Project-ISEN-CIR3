@@ -3,7 +3,6 @@
 
 Clique constructiveMEWC(Graph g)
 {
-    UNUSED(g);
     // TODO : implement the constructive algorithm
-    return Clique();
+    return Clique(g);
 }

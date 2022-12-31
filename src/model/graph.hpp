@@ -21,23 +21,23 @@ class Graph
 public:
     Graph();
     ~Graph();
-    void addVertex(std::shared_ptr<Vertex> v);
-    void addEdge(std::shared_ptr<Edge>);
-    std::vector<std::shared_ptr<Vertex>> getVertices() const;
-    std::vector<std::shared_ptr<Edge>> getEdges() const;
-    bool hasVertex(std::shared_ptr<Vertex>) const;
-    bool hasEdge(std::shared_ptr<Edge>) const;
-    bool hasEdge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) const;
-    std::optional<std::shared_ptr<Vertex>> getVertex(unsigned int id) const;
-    std::optional<std::shared_ptr<Edge>> getEdge(std::shared_ptr<Vertex> v1,
-                                                 std::shared_ptr<Vertex> v2) const;
-    std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> getAdjacencyMatrix() const;
+    void addVertex(VertexPtr v);
+    void addEdge(EdgePtr);
+    std::vector<VertexPtr> getVertices() const;
+    std::vector<EdgePtr> getEdges() const;
+    bool hasVertex(VertexPtr) const;
+    bool hasEdge(EdgePtr) const;
+    bool hasEdge(VertexPtr v1, VertexPtr v2) const;
+    std::optional<VertexPtr> getVertex(unsigned int id) const;
+    std::optional<EdgePtr> getEdge(VertexPtr v1,
+                                                 VertexPtr v2) const;
+    std::map<unsigned int, std::map<unsigned int, EdgePtr>> getAdjacencyMatrix() const;
 
 private:
-    std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> adjacencyMatrix;
-    std::map<unsigned int, std::shared_ptr<Vertex>> verticesMap;
-    std::vector<std::shared_ptr<Vertex>> vertices;
-    std::vector<std::shared_ptr<Edge>> edges;
+    std::map<unsigned int, std::map<unsigned int, EdgePtr>> adjacencyMatrix;
+    std::map<unsigned int, VertexPtr> verticesMap;
+    std::vector<VertexPtr> vertices;
+    std::vector<EdgePtr> edges;
 };
 
 #endif // GRAPH_HPP

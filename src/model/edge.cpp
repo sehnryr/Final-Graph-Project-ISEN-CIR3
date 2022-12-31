@@ -7,8 +7,8 @@
  * @param v2 The second vertex
  * @param weight The weight of the edge
  */
-Edge::Edge(std::shared_ptr<Vertex> v1,
-           std::shared_ptr<Vertex> v2,
+Edge::Edge(VertexPtr v1,
+           VertexPtr v2,
            unsigned int weight)
 {
     this->v1 = v1;
@@ -26,9 +26,9 @@ Edge::~Edge()
 /**
  * @brief Get the first vertex
  *
- * @return std::shared_ptr<Vertex> The first vertex
+ * @return VertexPtr The first vertex
  */
-std::shared_ptr<Vertex> Edge::getV1() const
+VertexPtr Edge::getV1() const
 {
     return v1;
 }
@@ -36,9 +36,9 @@ std::shared_ptr<Vertex> Edge::getV1() const
 /**
  * @brief Get the second vertex
  *
- * @return std::shared_ptr<Vertex> The second vertex
+ * @return VertexPtr The second vertex
  */
-std::shared_ptr<Vertex> Edge::getV2() const
+VertexPtr Edge::getV2() const
 {
     return v2;
 }
@@ -50,10 +50,10 @@ std::shared_ptr<Vertex> Edge::getV2() const
  * as an optional. If it doesn't, it returns an empty optional.
  *
  * @param v The vertex to check
- * @return std::optional<std::shared_ptr<Vertex>> The vertex if the edge has it,
+ * @return std::optional<VertexPtr> The vertex if the edge has it,
  * otherwise an empty optional
  */
-std::optional<std::shared_ptr<Vertex>> Edge::hasVertex(std::shared_ptr<Vertex> v) const
+std::optional<VertexPtr> Edge::hasVertex(VertexPtr v) const
 {
     if (v1 == v)
         return v1;
@@ -70,10 +70,10 @@ std::optional<std::shared_ptr<Vertex>> Edge::hasVertex(std::shared_ptr<Vertex> v
  * it returns an empty optional.
  *
  * @param e The edge to check
- * @return std::optional<std::shared_ptr<Vertex>> The vertex if the edge is
+ * @return std::optional<VertexPtr> The vertex if the edge is
  * incident to the other edge, otherwise an empty optional
  */
-std::optional<std::shared_ptr<Vertex>> Edge::isIncident(std::shared_ptr<Edge> e) const
+std::optional<VertexPtr> Edge::isIncident(EdgePtr e) const
 {
     if (auto v = hasVertex(e->getV1()))
         return *v;

@@ -26,7 +26,7 @@ Clique::~Clique()
  *
  * @param v The vertex to add
  */
-void Clique::addVertex(std::shared_ptr<Vertex> v)
+void Clique::addVertex(VertexPtr v)
 {
     if (!hasVertex(v))
     {
@@ -38,9 +38,9 @@ void Clique::addVertex(std::shared_ptr<Vertex> v)
 /**
  * @brief Get the vertices of the clique
  *
- * @return std::vector<std::shared_ptr<Vertex>> The vertices of the clique
+ * @return std::vector<VertexPtr> The vertices of the clique
  */
-std::vector<std::shared_ptr<Vertex>> Clique::getVertices() const
+std::vector<VertexPtr> Clique::getVertices() const
 {
     return vertices;
 }
@@ -52,7 +52,7 @@ std::vector<std::shared_ptr<Vertex>> Clique::getVertices() const
  * @return true If the vertex is in the clique
  * @return false If the vertex is not in the clique
  */
-bool Clique::hasVertex(std::shared_ptr<Vertex> v) const // Time complexity: O(1)
+bool Clique::hasVertex(VertexPtr v) const // Time complexity: O(1)
 {
     if (getVertex(v->getId()))
         return true;
@@ -66,10 +66,10 @@ bool Clique::hasVertex(std::shared_ptr<Vertex> v) const // Time complexity: O(1)
  * the vertex as an optional. If it does not, it returns an empty optional.
  *
  * @param id The id of the vertex to get
- * @return std::optional<std::shared_ptr<Vertex>> The vertex if it exists, an empty
+ * @return std::optional<VertexPtr> The vertex if it exists, an empty
  * optional otherwise
  */
-std::optional<std::shared_ptr<Vertex>> Clique::getVertex(unsigned int id) const // Time complexity: O(1)
+std::optional<VertexPtr> Clique::getVertex(unsigned int id) const // Time complexity: O(1)
 {
     try
     {

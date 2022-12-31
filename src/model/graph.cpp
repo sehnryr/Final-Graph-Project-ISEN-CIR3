@@ -25,7 +25,7 @@ Graph::~Graph()
  *
  * @param v The vertex to add
  */
-void Graph::addVertex(std::shared_ptr<Vertex> v) // Time complexity: O(1)
+void Graph::addVertex(VertexPtr v) // Time complexity: O(1)
 {
     // If the vertex already exists, do nothing
     if (hasVertex(v))
@@ -44,7 +44,7 @@ void Graph::addVertex(std::shared_ptr<Vertex> v) // Time complexity: O(1)
  *
  * @param e The edge to add
  */
-void Graph::addEdge(std::shared_ptr<Edge> e) // Time complexity: O(1)
+void Graph::addEdge(EdgePtr e) // Time complexity: O(1)
 {
     // If the edge already exists, do nothing
     if (hasEdge(e))
@@ -60,9 +60,9 @@ void Graph::addEdge(std::shared_ptr<Edge> e) // Time complexity: O(1)
 /**
  * @brief Get the vertices of the graph
  *
- * @return std::vector<std::shared_ptr<Vertex>> The vertices of the graph
+ * @return std::vector<VertexPtr> The vertices of the graph
  */
-std::vector<std::shared_ptr<Vertex>> Graph::getVertices() const // Time complexity: O(1)
+std::vector<VertexPtr> Graph::getVertices() const // Time complexity: O(1)
 {
     return vertices;
 }
@@ -70,9 +70,9 @@ std::vector<std::shared_ptr<Vertex>> Graph::getVertices() const // Time complexi
 /**
  * @brief Get the edges of the graph
  *
- * @return std::vector<std::shared_ptr<Edge>> The edges of the graph
+ * @return std::vector<EdgePtr> The edges of the graph
  */
-std::vector<std::shared_ptr<Edge>> Graph::getEdges() const // Time complexity: O(1)
+std::vector<EdgePtr> Graph::getEdges() const // Time complexity: O(1)
 {
     return edges;
 }
@@ -83,7 +83,7 @@ std::vector<std::shared_ptr<Edge>> Graph::getEdges() const // Time complexity: O
  * @param v The vertex to check
  * @return true If the vertex is in the graph, false otherwise
  */
-bool Graph::hasVertex(std::shared_ptr<Vertex> v) const // Time complexity: O(1)
+bool Graph::hasVertex(VertexPtr v) const // Time complexity: O(1)
 {
     if (getVertex(v->getId()))
         return true;
@@ -96,7 +96,7 @@ bool Graph::hasVertex(std::shared_ptr<Vertex> v) const // Time complexity: O(1)
  * @param e The edge to check
  * @return true If the edge is in the graph, false otherwise
  */
-bool Graph::hasEdge(std::shared_ptr<Edge> e) const // Time complexity: O(1)
+bool Graph::hasEdge(EdgePtr e) const // Time complexity: O(1)
 {
     return hasEdge(e->getV1(), e->getV2());
 }
@@ -108,7 +108,7 @@ bool Graph::hasEdge(std::shared_ptr<Edge> e) const // Time complexity: O(1)
  * @param v2 The second vertex of the edge
  * @return true If the edge is in the graph, false otherwise
  */
-bool Graph::hasEdge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) const // Time complexity: O(1)
+bool Graph::hasEdge(VertexPtr v1, VertexPtr v2) const // Time complexity: O(1)
 {
     if (getEdge(v1, v2))
         return true;
@@ -122,10 +122,10 @@ bool Graph::hasEdge(std::shared_ptr<Vertex> v1, std::shared_ptr<Vertex> v2) cons
  * the vertex as an optional. If it does not, it returns an empty optional.
  *
  * @param id The id of the vertex
- * @return std::optional<std::shared_ptr<Vertex>> The vertex if it exists,
+ * @return std::optional<VertexPtr> The vertex if it exists,
  * an empty optional otherwise
  */
-std::optional<std::shared_ptr<Vertex>> Graph::getVertex(unsigned int id) const // Time complexity: O(1)
+std::optional<VertexPtr> Graph::getVertex(unsigned int id) const // Time complexity: O(1)
 {
     try
     {
@@ -146,11 +146,11 @@ std::optional<std::shared_ptr<Vertex>> Graph::getVertex(unsigned int id) const /
  *
  * @param v1 The first vertex of the edge
  * @param v2 The second vertex of the edge
- * @return std::optional<std::shared_ptr<Edge>> The edge if it exists,
+ * @return std::optional<EdgePtr> The edge if it exists,
  * an empty optional otherwise
  */
-std::optional<std::shared_ptr<Edge>> Graph::getEdge(std::shared_ptr<Vertex> v1,
-                                                    std::shared_ptr<Vertex> v2) const // Time complexity: O(1)
+std::optional<EdgePtr> Graph::getEdge(VertexPtr v1,
+                                                    VertexPtr v2) const // Time complexity: O(1)
 {
     try
     {
@@ -166,9 +166,9 @@ std::optional<std::shared_ptr<Edge>> Graph::getEdge(std::shared_ptr<Vertex> v1,
 /**
  * @brief Get the adjacency matrix of the graph
  *
- * @return std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> The adjacency matrix
+ * @return std::map<unsigned int, std::map<unsigned int, EdgePtr>> The adjacency matrix
  */
-std::map<unsigned int, std::map<unsigned int, std::shared_ptr<Edge>>> Graph::getAdjacencyMatrix() const // Time complexity: O(1)
+std::map<unsigned int, std::map<unsigned int, EdgePtr>> Graph::getAdjacencyMatrix() const // Time complexity: O(1)
 {
     return adjacencyMatrix;
 }

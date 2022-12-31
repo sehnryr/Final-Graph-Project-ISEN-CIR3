@@ -1,5 +1,9 @@
+#include <memory>
+
 #ifndef VERTEX_HPP
 #define VERTEX_HPP
+
+#define VertexPtr std::shared_ptr<Vertex>
 
 /**
  * @brief The Vertex class

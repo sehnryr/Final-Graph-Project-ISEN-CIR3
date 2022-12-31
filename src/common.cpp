@@ -114,7 +114,7 @@ Graph read_file(std::string path)
     Graph graph = Graph();
 
     // Create a vector of vertices of size num_vertices and initialize them
-    std::vector<std::shared_ptr<Vertex>> vertices(num_vertices);
+    std::vector<VertexPtr> vertices(num_vertices);
     for (unsigned int i = 0; i < num_vertices; i++)
     {
         vertices[i] = std::make_shared<Vertex>(i + 1);
@@ -158,11 +158,11 @@ Graph read_file(std::string path)
         }
 
         // Get the source and destination vertices
-        std::shared_ptr<Vertex> source_vertex = vertices[source - 1];
-        std::shared_ptr<Vertex> destination_vertex = vertices[destination - 1];
+        VertexPtr source_vertex = vertices[source - 1];
+        VertexPtr destination_vertex = vertices[destination - 1];
 
         // Create the edge
-        std::shared_ptr<Edge> edge = std::make_shared<Edge>(source_vertex, destination_vertex, weight);
+        EdgePtr edge = std::make_shared<Edge>(source_vertex, destination_vertex, weight);
         graph.addEdge(edge);
     }
 

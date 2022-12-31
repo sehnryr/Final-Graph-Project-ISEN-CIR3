@@ -23,10 +23,10 @@ class Clique
 public:
     Clique();
     ~Clique();
-    void addVertex(std::shared_ptr<Vertex> v);
-    std::vector<std::shared_ptr<Vertex>> getVertices() const;
-    bool hasVertex(std::shared_ptr<Vertex> v) const;
-    std::optional<std::shared_ptr<Vertex>> getVertex(unsigned int id) const;
+    void addVertex(VertexPtr v);
+    std::vector<VertexPtr> getVertices() const;
+    bool hasVertex(VertexPtr v) const;
+    std::optional<VertexPtr> getVertex(unsigned int id) const;
     void setWeight(long unsigned int weight);
     void addWeight(long unsigned int weight);
     long unsigned int getWeight() const;
@@ -34,8 +34,8 @@ public:
     bool isEmpty() const;
 
 private:
-    std::map<unsigned int, std::shared_ptr<Vertex>> verticesMap;
-    std::vector<std::shared_ptr<Vertex>> vertices;
+    std::map<unsigned int, VertexPtr> verticesMap;
+    std::vector<VertexPtr> vertices;
     long unsigned int weight;
 };
 

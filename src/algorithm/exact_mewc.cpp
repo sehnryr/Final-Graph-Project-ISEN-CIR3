@@ -1,5 +1,4 @@
 #include "mewc.hpp"
-#include "../common.hpp"
 
 /**
  * @brief Generates all possible subsets of vertices

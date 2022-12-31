@@ -1,5 +1,4 @@
 #include "mewc.hpp"
-#include "../common.hpp"
 
 Clique constructiveMEWC(Graph g)
 {

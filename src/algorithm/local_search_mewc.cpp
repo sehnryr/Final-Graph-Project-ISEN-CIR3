@@ -1,5 +1,4 @@
 #include "mewc.hpp"
-#include "../common.hpp"
 
 Clique localSearchMEWC(Graph g)
 {

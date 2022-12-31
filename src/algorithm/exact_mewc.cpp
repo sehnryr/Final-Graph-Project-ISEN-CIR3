@@ -2,16 +2,16 @@
 
 /**
  * @brief Get the weight of a clique
- * 
+ *
  * This function calculates the weight of a clique. If the clique is not a clique,
  * it returns an empty optional.
- * 
+ *
  * The time complexity of this function is O(n^2), where n is the size of the clique.
- * 
+ *
  * @param clique The clique to get the weight of
  * @return std::optional<long unsigned int> The weight of the clique, an empty optional
  * if the clique is not a clique
-*/
+ */
 std::optional<long unsigned int> getCliqueWeight(Clique clique)
 {
     // variable to store the weight of the clique

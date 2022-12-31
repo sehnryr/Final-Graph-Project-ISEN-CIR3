@@ -205,17 +205,16 @@ std::vector<std::string> split(const std::string &s, char delim)
 /**
  * @brief Find an option in the arguments
  * 
- * This method finds an option in the arguments and returns an iterator to the option
- * as an optional. If the option is not found, it returns an empty optional.
+ * This method finds an option in the arguments and returns its index.
  * 
  * @param args The arguments
  * @param option The option
- * @return std::optional<std::vector<std::string>::iterator> The iterator to the option
+ * @return std::optional<long unsigned int> The index of the option or an empty optional
  */
-std::optional<std::vector<std::string>::iterator> find_option(std::vector<std::string> args, std::string option)
+std::optional<long unsigned int> find_option(std::vector<std::string> args, std::string option)
 {
     for (auto it = args.begin(); it != args.end(); ++it)
-        if ((*it).substr(0, option.size()) == option)
-            return it;
+        if (it->substr(0, option.size()) == option)
+            return it - args.begin();
     return {};
 }

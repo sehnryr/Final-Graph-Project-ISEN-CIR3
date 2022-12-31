@@ -14,7 +14,7 @@ void check_file(std::string path);
 void check_directory(std::string path);
 Graph read_file(std::string path);
 std::vector<std::string> split(const std::string &s, char delim);
-std::optional<std::vector<std::string>::iterator> find_option(std::vector<std::string> args, std::string option);
+std::optional<long unsigned int> find_option(std::vector<std::string> args, std::string option);
 
 
 #endif // COMMON_HPP

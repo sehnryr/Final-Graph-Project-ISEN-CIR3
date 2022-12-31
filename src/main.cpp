@@ -41,34 +41,35 @@ int main(int argc, char **argv)
 
     // Find and pop the algorithm type argument
     Algorithm algorithm = Algorithm::Exact;
-    if (auto it = find_option(args, "--type="))
+    if (auto i = find_option(args, "--type="))
     {
         try
         {
-            algorithm = getAlgorithm((**it).substr(7));
+            std::string algorithm_name = args.at(i.value()).substr(7);
+            algorithm = getAlgorithm(algorithm_name);
         }
         catch (const std::invalid_argument &e)
         {
             print_usage(argv);
             exit(1);
         }
-        args.erase(*it);
+        args.erase(args.begin() + i.value());
     }
 
     // Find and pop the output-dir argument
     std::string output_dir = "//unset";
-    if (auto it = find_option(args, "--output-dir="))
+    if (auto i = find_option(args, "--output-dir="))
     {
-        output_dir = (**it).substr(13);
-        args.erase(*it);
+        output_dir = args.at(i.value()).substr(13);
+        args.erase(args.begin() + i.value());
     }
 
     // Find and pop the runs argument
     int runs = 1;
-    if (auto it = find_option(args, "--runs="))
+    if (auto i = find_option(args, "--runs="))
     {
-        runs = std::stoi((**it).substr(7));
-        args.erase(*it);
+        runs = std::stoi(args.at(i.value()).substr(7));
+        args.erase(args.begin() + i.value());
     }
 
     // Check if the input-file argument is set

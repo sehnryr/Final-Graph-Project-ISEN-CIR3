@@ -4,10 +4,10 @@
 
 /**
  * @brief Run the algorithm
- * 
+ *
  * This function runs the algorithm specified by the algorithm argument. It is
  * called by the main function.
- * 
+ *
  * @param graph The graph to run the algorithm on
  * @param algorithm The algorithm to run
  * @param argv The command line arguments
@@ -33,10 +33,10 @@ Clique runMEWC(Graph graph, Algorithm algorithm)
 
 /**
  * @brief Get the algorithm from a string
- * 
+ *
  * This function returns the algorithm corresponding to the string passed as
  * argument. It is called by the main function.
- * 
+ *
  * @param algorithm The string to convert
  * @return Algorithm The algorithm corresponding to the string
  * @throws std::invalid_argument If the string is invalid
@@ -57,10 +57,10 @@ Algorithm getAlgorithm(std::string algorithm)
 
 /**
  * @brief Get the name of the algorithm
- * 
+ *
  * This function returns the name of the algorithm passed as argument. It is
  * called by the main function.
- * 
+ *
  * @param algorithm The algorithm to get the name of
  * @return std::string The name of the algorithm
  */

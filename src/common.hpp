@@ -16,5 +16,4 @@ Graph read_file(std::string path);
 std::vector<std::string> split(const std::string &s, char delim);
 std::optional<long unsigned int> find_option(std::vector<std::string> args, std::string option);
 
-
 #endif // COMMON_HPP

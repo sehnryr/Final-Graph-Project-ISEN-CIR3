@@ -11,7 +11,7 @@
 
 /**
  * @brief The Graph class
- * 
+ *
  * This class represents a graph. It contains a vector of vertices and a vector
  * of edges. It also contains a map of vertices and a map of edges for faster
  * lookup.

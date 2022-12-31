@@ -1,8 +1,8 @@
 #include "vertex.hpp"
 
-/** 
+/**
  * @brief Construct a new Vertex:: Vertex object
- * 
+ *
  * @param id The id of the vertex
  */
 Vertex::Vertex(unsigned int id)
@@ -19,7 +19,7 @@ Vertex::~Vertex()
 
 /**
  * @brief Get the id of the vertex
- * 
+ *
  * @return unsigned int The id of the vertex
  */
 unsigned int Vertex::getId() const // Time complexity: O(1)
@@ -29,7 +29,7 @@ unsigned int Vertex::getId() const // Time complexity: O(1)
 
 /**
  * @brief Compare two vertices
- * 
+ *
  * @param v The vertex to compare to
  * @return true If the vertices have the same id
  * @return false If the vertices have different ids

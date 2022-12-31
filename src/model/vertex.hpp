@@ -3,7 +3,7 @@
 
 /**
  * @brief The Vertex class
- * 
+ *
  * This class represents a vertex in a graph. It contains the id of the vertex.
  */
 class Vertex

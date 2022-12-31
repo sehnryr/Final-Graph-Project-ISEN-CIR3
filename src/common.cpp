@@ -6,11 +6,11 @@
 
 /**
  * @brief Check if the input file is valid
- * 
+ *
  * This method checks if the input file is valid. If it is not, it exits the program.
- * The validity of the input file is checked by checking if the path exists, 
+ * The validity of the input file is checked by checking if the path exists,
  * if the path is a file and if the path is in the correct format.
- * 
+ *
  * @param path The path to the input file
  */
 void check_file(std::string path)
@@ -39,11 +39,11 @@ void check_file(std::string path)
 
 /**
  * @brief Check if the output directory is valid
- * 
+ *
  * This method checks if the output directory is valid. If it is not, it exits the program.
- * The validity of the output directory is checked by checking if the path exists 
+ * The validity of the output directory is checked by checking if the path exists
  * and if the path is a directory.
-*/
+ */
 void check_directory(std::string path)
 {
     // Check if the path exists
@@ -63,16 +63,16 @@ void check_directory(std::string path)
 
 /**
  * @brief Read the input file and return a graph
- * 
+ *
  * This method reads the input file and returns a graph.
  * The input file must be composed of the number of vertices and edges on the first line,
  * followed by the edges on the next lines. The edges must be composed of three numbers
  * separated by a space char. The first number is the id of the first vertex, the second
  * number is the id of the second vertex and the third number is the weight of the edge.
- * 
+ *
  * @param path The path to the input file
  * @return Graph The graph
-*/
+ */
 Graph read_file(std::string path)
 {
     // Read the input file
@@ -182,10 +182,10 @@ Graph read_file(std::string path)
 
 /**
  * @brief Split a string by a delimiter
- * 
+ *
  * This method splits a string by a delimiter and returns a vector of strings.
  * (from https://stackoverflow.com/a/236803)
- * 
+ *
  * @param s The string to split
  * @param delim The delimiter
  * @return std::vector<std::string> The vector of strings
@@ -204,9 +204,9 @@ std::vector<std::string> split(const std::string &s, char delim)
 
 /**
  * @brief Find an option in the arguments
- * 
+ *
  * This method finds an option in the arguments and returns its index.
- * 
+ *
  * @param args The arguments
  * @param option The option
  * @return std::optional<long unsigned int> The index of the option or an empty optional

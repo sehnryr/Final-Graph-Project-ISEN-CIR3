@@ -13,10 +13,10 @@ void print_usage(char **argv);
 
 /**
  * @brief Main function
- * 
+ *
  * This method is the main function of the program. It parses the command line arguments
  * and runs the algorithm.
- * 
+ *
  * @param argc The number of command line arguments
  * @param argv The command line arguments
  * @return int The exit code
@@ -140,11 +140,11 @@ int main(int argc, char **argv)
 
 /**
  * @brief Print the usage message
- * 
+ *
  * This function prints the usage message to the console. It is called when the
  * program is run with no arguments or with the --help argument or when the
  * the arguments are invalid.
- * 
+ *
  * @param argv The command line arguments
  */
 void print_usage(char **argv)

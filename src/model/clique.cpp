@@ -20,10 +20,10 @@ Clique::~Clique()
 
 /**
  * @brief Add a vertex to the clique
- * 
+ *
  * This method adds a vertex to the clique. If the vertex is already in the clique,
  * it does nothing.
- * 
+ *
  * @param v The vertex to add
  */
 void Clique::addVertex(std::shared_ptr<Vertex> v)
@@ -37,7 +37,7 @@ void Clique::addVertex(std::shared_ptr<Vertex> v)
 
 /**
  * @brief Get the vertices of the clique
- * 
+ *
  * @return std::vector<std::shared_ptr<Vertex>> The vertices of the clique
  */
 std::vector<std::shared_ptr<Vertex>> Clique::getVertices() const
@@ -47,7 +47,7 @@ std::vector<std::shared_ptr<Vertex>> Clique::getVertices() const
 
 /**
  * @brief Check if the clique contains a vertex
- * 
+ *
  * @param v The vertex to check
  * @return true If the vertex is in the clique
  * @return false If the vertex is not in the clique
@@ -61,10 +61,10 @@ bool Clique::hasVertex(std::shared_ptr<Vertex> v) const // Time complexity: O(1)
 
 /**
  * @brief Get a vertex from the clique
- * 
+ *
  * This method returns a vertex from the graph if it exists. If it does, it returns
  * the vertex as an optional. If it does not, it returns an empty optional.
- * 
+ *
  * @param id The id of the vertex to get
  * @return std::optional<std::shared_ptr<Vertex>> The vertex if it exists, an empty
  * optional otherwise
@@ -84,9 +84,9 @@ std::optional<std::shared_ptr<Vertex>> Clique::getVertex(unsigned int id) const 
 
 /**
  * @brief Set the weight of the clique
- * 
+ *
  * @param weight The weight of the clique
-*/
+ */
 void Clique::setWeight(long unsigned int weight)
 {
     this->weight = weight;
@@ -94,7 +94,7 @@ void Clique::setWeight(long unsigned int weight)
 
 /**
  * @brief Add a weight to the clique
- * 
+ *
  * @param weight The weight to add
  */
 void Clique::addWeight(long unsigned int weight)
@@ -104,7 +104,7 @@ void Clique::addWeight(long unsigned int weight)
 
 /**
  * @brief Get the weight of the clique
- * 
+ *
  * @return long unsigned int The weight of the clique
  */
 long unsigned int Clique::getWeight() const // Time complexity: O(n^2)
@@ -114,7 +114,7 @@ long unsigned int Clique::getWeight() const // Time complexity: O(n^2)
 
 /**
  * @brief Get the size of the clique
- * 
+ *
  * @return long unsigned int The size of the clique
  */
 long unsigned int Clique::getSize() const
@@ -124,7 +124,7 @@ long unsigned int Clique::getSize() const
 
 /**
  * @brief Check if the clique is empty
- * 
+ *
  * @return true If the clique is empty
  * @return false If the clique is not empty
  */

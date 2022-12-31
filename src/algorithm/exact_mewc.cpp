@@ -6,13 +6,13 @@
  *
  * This function generates all possible subsets of vertices of size `size` from
  * the vector `vertices`. The subsets are generated recursively.
- * 
+ *
  * The time complexity of this function is O(n^k), where n is the size of the
  * vector of vertices and k is the size of the subsets.
  * Worst case the time complexity is O(n^n).
- * 
+ *
  * @param vertices The vector of vertices
- * @param vertices_subset The vector of vertices that will be used to generate 
+ * @param vertices_subset The vector of vertices that will be used to generate
  * the subsets
  * @param size The size of the subsets
  * @param offset The offset of the vector of vertices
@@ -55,13 +55,13 @@ std::vector<std::vector<std::shared_ptr<Vertex>>> generateVerticesSubsets(
 
 /**
  * @brief Finds the maximum weight clique in a graph using an exact algorithm
- * 
- * This function finds the maximum weight clique in a graph by generating all 
+ *
+ * This function finds the maximum weight clique in a graph by generating all
  * possible subsets of vertices and checking if they form a clique.
- * 
+ *
  * The time complexity of this function is O(n * n^n * m), where n is the number
  * of vertices in the graph and m is the number of edges in the graph.
- * 
+ *
  * @param g The graph
  * @return The maximum weight clique
  */
@@ -80,7 +80,7 @@ Clique exactMEWC(Graph g) // O(n * n^n * m)
         // generate all subsets of size i
         std::vector<std::vector<std::shared_ptr<Vertex>>> vertices_subsets =
             generateVerticesSubsets(vertices, vertices_subset, i);
-        
+
         // iterate over the subsets
         for (std::vector<std::shared_ptr<Vertex>> vertices_subset : vertices_subsets) // O(n^k)
         {

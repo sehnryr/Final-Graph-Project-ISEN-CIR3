@@ -5,25 +5,9 @@
 
 /**
  * @brief Construct a new Clique:: Clique object
- *
- * @param graph The graph of the clique
  */
-Clique::Clique(Graph graph)
-    : graph(graph),
-      weight(0)
-{
-}
-
-/**
- * @brief Copy constructor of the Clique:: Clique object
- *
- * @param clique The clique to copy
- */
-Clique::Clique(Clique &clique)
-    : graph(clique.graph),
-      weight(clique.weight),
-      vertices(clique.vertices),
-      verticesMap(clique.verticesMap)
+Clique::Clique()
+    : weight(0)
 {
 }
 
@@ -136,16 +120,6 @@ long unsigned int Clique::getWeight() const // Time complexity: O(n^2)
 long unsigned int Clique::getSize() const
 {
     return vertices.size();
-}
-
-/**
- * @brief Get the graph of the clique
- *
- * @return Graph The graph of the clique
- */
-Graph Clique::getGraph() const
-{
-    return graph;
 }
 
 /**

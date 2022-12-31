@@ -21,8 +21,7 @@
 class Clique
 {
 public:
-    Clique(Graph graph);
-    Clique(Clique &clique);
+    Clique();
     ~Clique();
     void addVertex(std::shared_ptr<Vertex> v);
     std::vector<std::shared_ptr<Vertex>> getVertices() const;
@@ -32,14 +31,12 @@ public:
     void addWeight(long unsigned int weight);
     long unsigned int getWeight() const;
     long unsigned int getSize() const;
-    Graph getGraph() const;
     bool isEmpty() const;
 
 private:
     std::map<unsigned int, std::shared_ptr<Vertex>> verticesMap;
     std::vector<std::shared_ptr<Vertex>> vertices;
     long unsigned int weight;
-    Graph graph;
 };
 
 #endif // CLIQUE_HPP

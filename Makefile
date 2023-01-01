@@ -31,4 +31,7 @@ clean:
 
 # build generator
 generate:
-	$(CXX) $(CXX_FLAGS) -o $(BUILD_DIR)/generate graph-gen/generate.cpp
+	$(CXX) $(CXX_FLAGS) \
+	-o $(BUILD_DIR)/generate \
+	$(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)) \
+	graph-gen/generate.cpp

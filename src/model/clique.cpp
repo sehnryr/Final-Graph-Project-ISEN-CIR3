@@ -1,3 +1,11 @@
+/**
+ * @file clique.cpp
+ * @brief Implementation of the Clique class
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-26
+ */
+
 #include <iostream>
 
 #include "clique.hpp"

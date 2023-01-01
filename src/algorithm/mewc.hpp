@@ -1,3 +1,11 @@
+/**
+ * @file mewc.hpp
+ * @brief This file contains the interface of the MEWC algorithm
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-27
+ */
+
 #include <string>
 
 #include "../model/clique.hpp"

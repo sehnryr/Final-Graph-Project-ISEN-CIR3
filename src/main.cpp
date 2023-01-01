@@ -1,3 +1,11 @@
+/**
+ * @file main.cpp
+ * @brief Implementation of the main function
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-12
+ */
+
 #include <algorithm>
 #include <chrono>
 #include <filesystem>

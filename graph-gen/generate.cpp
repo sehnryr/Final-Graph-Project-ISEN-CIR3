@@ -1,3 +1,11 @@
+/**
+ * @file generate.cpp
+ * @brief This file contains the main function of the graph generator
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-27
+ */
+
 #include <fstream>
 #include <iostream>
 #include <string>
@@ -102,7 +110,7 @@ int main(int argc, char **argv)
             }
             max_edges--;
         }
-    
+
     // Close the output file
     output_file.close();
 

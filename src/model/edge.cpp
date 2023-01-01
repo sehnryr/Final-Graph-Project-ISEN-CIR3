@@ -1,3 +1,11 @@
+/**
+ * @file edge.cpp
+ * @brief Implementation of the Edge class
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-26
+ */
+
 #include "edge.hpp"
 
 /**

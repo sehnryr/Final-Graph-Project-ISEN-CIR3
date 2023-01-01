@@ -1,3 +1,11 @@
+/**
+ * @file vertex.hpp
+ * @brief Declaration of the Vertex class
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-26
+ */
+
 #include <memory>
 
 #ifndef VERTEX_HPP

@@ -1,3 +1,11 @@
+/**
+ * @file vertex.cpp
+ * @brief Implementation of the Vertex class
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-26
+ */
+
 #include "vertex.hpp"
 
 /**

@@ -1,3 +1,11 @@
+/**
+ * @file common.hpp
+ * @brief Declaration of the common functions
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-26
+ */
+
 #include <optional>
 #include <string>
 #include <vector>

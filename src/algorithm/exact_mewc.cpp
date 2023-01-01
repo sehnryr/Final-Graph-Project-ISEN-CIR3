@@ -1,3 +1,11 @@
+/**
+ * @file exact_mewc.cpp
+ * @brief This file contains the implementation of the exact MEWC algorithm
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-30
+ */
+
 #include <iostream>
 #include <unordered_set>
 #include <vector>

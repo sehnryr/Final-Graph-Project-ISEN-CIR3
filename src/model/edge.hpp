@@ -1,3 +1,11 @@
+/**
+ * @file edge.hpp
+ * @brief Declaration of the Edge class
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-26
+ */
+
 #include <memory>
 #include <optional>
 

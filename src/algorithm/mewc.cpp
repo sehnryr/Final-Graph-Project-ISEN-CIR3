@@ -1,3 +1,11 @@
+/**
+ * @file mewc.cpp
+ * @brief This file contains the implementation of generic MEWC functions
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-30
+ */
+
 #include <iostream>
 
 #include "mewc.hpp"

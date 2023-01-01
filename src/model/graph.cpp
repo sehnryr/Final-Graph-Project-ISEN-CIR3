@@ -1,3 +1,11 @@
+/**
+ * @file graph.cpp
+ * @brief Implementation of the Graph class
+ * @authors
+ * - Youn Mélois <youn@melois.dev>
+ * @date 2022-12-26
+ */
+
 #include <iostream>
 
 #include "graph.hpp"

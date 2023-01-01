@@ -19,7 +19,7 @@ cd Final-Graph-Project-ISEN-CIR3
 To build the project, you first need to install the c++ compiler and make.
 
 ```bash
-sudo apt install build-essential
+sudo apt install build-essential make
 ```
 
 Then, you can build the project with the following command.

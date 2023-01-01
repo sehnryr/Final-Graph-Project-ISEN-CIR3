@@ -48,3 +48,18 @@ The `algorithm-type` can be one of the following values:
 - `constructive`
 - `local-search`
 - `grasp`
+
+The program will output the time taken to solve the problem in milliseconds.
+The argument `--runs` can be used to perform multiple runs and output each time taken.
+
+The program will also output the results in the `output-dir` directory with the
+first line containing the number of vertices and the weight of the clique, and
+the second line containing the vertices of the clique. The output file name will
+be in the following file:
+- `<input-file-name>-<algorithm>.out`: The output file containing the results.
+
+> **Note:**
+> You can get the average time taken by using the following command:
+> ```bash
+> ./build/main <input-file> --runs=<n> | awk '{sum+=$1} END {print sum/NR}'
+> ```

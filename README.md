@@ -9,6 +9,7 @@ The Maximum Edge Weight Clique (MEWC) problem
   - [Build](#build)
   - [Usage](#usage)
   - [Graph generator](#graph-generator)
+  - [Common issues](#common-issues)
 
 ## Introduction
 
@@ -134,3 +135,9 @@ The program will output the graph in the `output-dir` directory with the first
 line containing the number of vertices and the number of edges, and the following
 lines containing the edges. The output file name will be in the following file:
 - `<num-vertices>-<connectivity>.in`: The output file containing the graph.
+
+## Common issues
+You may see that your IDE won't recognize some syntaxes, it might be because it
+is using the c++11 standard. You can change the standard to c++17 in your IDE
+settings.
+- on VSCode, you can do it by setting the `C_Cpp.default.cppStandard` setting to `c++17`

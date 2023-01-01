@@ -4,8 +4,20 @@
 #include <vector>
 #include <map>
 
+#include "../src/common.hpp"
+
 void print_usage(char **argv);
 
+/**
+ * @brief Main function
+ *
+ * This method is the main function of the program. It parses the command line arguments
+ * and runs the algorithm.
+ *
+ * @param argc The number of command line arguments
+ * @param argv The command line arguments
+ * @return int The exit code
+ */
 int main(int argc, char **argv)
 {
     // Guard against no arguments
@@ -15,53 +27,49 @@ int main(int argc, char **argv)
         exit(1);
     }
 
-    std::vector<std::string> args(argv + 3, argv + argc);
+    std::vector<std::string> args(argv + 1, argv + argc);
 
-    for (auto it = args.begin(); it != args.end(); ++it)
+    // Find the --help argument
+    if (find_option(args, "--help"))
     {
-        if (*it == "--help")
-        {
-            print_usage(argv);
-            exit(0);
-        }
+        print_usage(argv);
+        exit(0);
     }
 
-    // Find and pop the --output= argument
-    std::string output_dir = "";
-    for (auto it = args.begin(); it != args.end(); ++it)
+    // Find and pop the output-dir argument
+    std::string output_dir = ".";
+    if (auto i = find_option(args, "--output-dir="))
     {
-        if ((*it).substr(0, 13) == "--output-dir=")
-        {
-            output_dir = (*it).substr(13);
-            args.erase(it);
-            break;
-        }
+        output_dir = args.at(i.value()).substr(13);
+        args.erase(args.begin() + i.value());
     }
 
-    // Check if there are any extra arguments
-    if (args.size() > 0)
+    // Check if the num-vertices and connectivity arguments are set
+    if (args.size() != 2)
     {
         print_usage(argv);
         exit(1);
     }
 
     // Check if the number of vertices and connectivity are valid integers
-    if (std::string(argv[1]).find_first_not_of("0123456789") != std::string::npos ||
-        std::stoi(argv[1]) < 0)
+    if (args[0].find_first_not_of("0123456789") != std::string::npos ||
+        std::stoi(args[0]) < 0)
     {
         std::cout << "Error: Invalid number of vertices" << std::endl;
         exit(1);
     }
-    if (std::string(argv[2]).find_first_not_of("0123456789") != std::string::npos ||
-        std::stoi(argv[2]) < 0 ||
-        std::stoi(argv[2]) > 100)
+    if (args[1].find_first_not_of("0123456789") != std::string::npos ||
+        std::stoi(args[1]) < 0 ||
+        std::stoi(args[1]) > 100)
     {
         std::cout << "Error: Invalid connectivity" << std::endl;
         exit(1);
     }
 
-    unsigned int num_vertices = std::stoi(argv[1]);
-    unsigned int connectivity = std::stoi(argv[2]);
+    std::string output_path = output_dir + "/" + args[0] + "_" + args[1] + ".in";
+
+    unsigned int num_vertices = std::stoi(args[0]);
+    unsigned int connectivity = std::stoi(args[1]);
 
     long unsigned int max_edges = num_vertices * (num_vertices - 1) / 2;
     long unsigned int num_edges = (max_edges * connectivity + 50) / 100;
@@ -71,11 +79,7 @@ int main(int argc, char **argv)
     srand(time(NULL));
 
     // Open the output file
-    std::ofstream output_file(output_dir +
-                                  "/" + std::to_string(num_vertices) +
-                                  "_" + std::to_string(connectivity) +
-                                  ".in",
-                              std::ios::out);
+    std::ofstream output_file(output_path, std::ios::out);
 
     // Check if the output file is open
     if (!output_file.is_open())
@@ -105,6 +109,15 @@ int main(int argc, char **argv)
     return 0;
 }
 
+/**
+ * @brief Print the usage message
+ *
+ * This function prints the usage message to the console. It is called when the
+ * program is run with no arguments or with the --help argument or when the
+ * the arguments are invalid.
+ *
+ * @param argv The command line arguments
+ */
 void print_usage(char **argv)
 {
     std::cout << "Usage: " << argv[0] << " <num-vertices> <connectivity> [options]" << std::endl;

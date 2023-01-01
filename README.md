@@ -1,11 +1,38 @@
 # Final-Graph-Project-ISEN-CIR3
-The Maximum Edge Weight Clique Problem
+The Maximum Edge Weight Clique (MEWC) problem
 
+## Table of Contents
 - [Final-Graph-Project-ISEN-CIR3](#final-graph-project-isen-cir3)
+  - [Table of Contents](#table-of-contents)
+  - [Introduction](#introduction)
   - [Installation](#installation)
   - [Build](#build)
   - [Usage](#usage)
 
+## Introduction
+
+Graph theory is a branch of mathematics that deals with the study of graphs,
+which are mathematical structures used to model pairwise relationships between objects.
+Graphs consist of vertices (also called nodes) that are connected by edges.
+The edges can be directed (one-way) or undirected (two-way).
+
+The Maximum Edge Weight Clique (MEWC) problem is an optimization problem in graph
+theory that asks for the clique (a subset of vertices, all adjacent to one another)
+with the maximum total weight in an edge-weighted undirected graph.
+In the MEWC problem, each edge has a weight,
+and the weight of a clique is the sum of the weights of its edges.
+The goal is to find a clique with the maximum possible weight.
+
+Now, the MEWC problem is NP-hard, which means that it is not possible to find an
+efficient algorithm to solve it in polynomial time. It is also the generalization
+of the Maximum Clique Problem (MCP), which is the special case where all edges
+have the same weight.
+
+In this project, we will implement four algorithms to solve the MEWC problem:
+- Exact algorithm
+- Constructive algorithm
+- Local search algorithm
+- GRASP algorithm
 
 ## Installation
 To install the project, you need to clone the repository.

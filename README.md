@@ -8,6 +8,7 @@ The Maximum Edge Weight Clique (MEWC) problem
   - [Installation](#installation)
   - [Build](#build)
   - [Usage](#usage)
+  - [Graph generator](#graph-generator)
 
 ## Introduction
 
@@ -107,3 +108,29 @@ be in the following file:
 > ```bash
 > ./build/main <input-file> --runs=<n> | awk '{sum+=$1} END {print sum/NR}'
 > ```
+
+## Graph generator
+To generate a graph, you can compile the graph generator with the following command.
+
+```bash
+make generate
+```
+
+Then, you can run the graph generator with the following command.
+
+```bash
+./build/generate <num-vertices> <connectivity> [options]
+```
+
+The `num-vertices` is the number of vertices in the graph.
+The `connectivity` is the connectivity of the graph, which is the probability
+that an edge exists between two vertices.
+
+The `options` are the following:
+- `--output-dir=<dir>`: The directory to output the graph to. (default: the current directory)
+- `--help`: Display the help message.
+
+The program will output the graph in the `output-dir` directory with the first
+line containing the number of vertices and the number of edges, and the following
+lines containing the edges. The output file name will be in the following file:
+- `<num-vertices>-<connectivity>.in`: The output file containing the graph.

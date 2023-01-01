@@ -58,7 +58,7 @@ the second line containing the vertices of the clique. The output file name will
 be in the following file:
 - `<input-file-name>-<algorithm>.out`: The output file containing the results.
 
-> **Note:**
+> **Note**:
 > You can get the average time taken by using the following command:
 > ```bash
 > ./build/main <input-file> --runs=<n> | awk '{sum+=$1} END {print sum/NR}'

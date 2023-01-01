@@ -28,11 +28,28 @@ efficient algorithm to solve it in polynomial time. It is also the generalizatio
 of the Maximum Clique Problem (MCP), which is the special case where all edges
 have the same weight.
 
+The Maximum Edge Weight Clique (MEWC) problem can be used to model various types
+of real-world situations where the goal is to find a subset of objects with the
+maximum total weight, and the objects are connected by weighted edges.
+Here are a few examples of such situations:
+1. Network design: In a communication network, the MEWC problem can be used to 
+   find the optimal subset of devices (vertices) to include in the network, 
+   such that the total cost of communication between the devices (edges) is maximum.
+1. Facility location: In a supply chain management problem, the MEWC problem can be
+   used to find the optimal locations (vertices) for warehouses or distribution centers,
+   such that the total transportation cost (edges) between the facilities is maximum.
+1. Protein interaction: In biology, the MEWC problem can be used to find the optimal subset
+   of proteins (vertices) in a protein-protein interaction network, such that the total
+   interaction strength (edges) between the proteins is maximum.
+1. Social network analysis: In a social network, the MEWC problem can be used to 
+   find the optimal subset of individuals (vertices) with the maximum total
+   relationship strength (edges) between them.
+
 In this project, we will implement four algorithms to solve the MEWC problem:
-- Exact algorithm
-- Constructive algorithm
-- Local search algorithm
-- GRASP algorithm
+1. Exact algorithm
+1. Constructive algorithm
+1. Local search algorithm
+1. GRASP algorithm
 
 ## Installation
 To install the project, you need to clone the repository.

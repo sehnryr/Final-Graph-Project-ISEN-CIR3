@@ -107,7 +107,7 @@ be in the following file:
 > **Note**:
 > You can get the average time taken by using the following command:
 > ```bash
-> ./build/main <input-file> --runs=<n> | awk '{sum+=$1} END {print sum/NR}'
+> ./build/main <input-file> --runs=<n> | awk '{sum+=$1} END {printf "%.0f\n", sum/NR}'
 > ```
 
 ## Graph generator

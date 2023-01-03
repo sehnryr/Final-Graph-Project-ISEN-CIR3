@@ -95,7 +95,7 @@ The `algorithm-type` can be one of the following values:
 - `local-search`
 - `grasp`
 
-The program will output the time taken to solve the problem in milliseconds.
+The program will output the time taken to solve the problem in microseconds.
 The argument `--runs` can be used to perform multiple runs and output each time taken.
 
 The program will also output the results in the `output-dir` directory with the

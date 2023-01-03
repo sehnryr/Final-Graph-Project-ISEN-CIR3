@@ -12,7 +12,7 @@
 \geometry{margin=1in, headsep=0.25in}
 \pagestyle{fancy}
 \setlength{\headheight}{65pt}
-\lhead{\textcolor{red}{\LARGE ISEN Nantes}}  
+\lhead{\textcolor{red}{\Huge ISEN Nantes}}  
 \rhead{Graph Theory}
 \begin{document}
 \title{Graph Theory - Graphs}
@@ -34,13 +34,14 @@
 \end{flushleft}
 
 % jsp comment justifier proprement comme sur word
-\begin{flushleft}
+
 
     Given an undirected simple connected graph $G =(V,E)$, a clique is a complete maximal induced subgraph of $G$. The Maximum Clique Problem consists in finding a clique of maximum size. This is a classic graph theory problem that has many-real life applications in various fields such as social networks, chemistry, bioinformatics. In addition, this problem is $NP$-Hard and it has been studied as a combinatorial optimization problem, being very important in operations research and theoretical computer science.
-    \newline \newline
+    \newline
+
     Let $G = (V,E,w)$ be an undirected simple weigheted connected graph such taht $|V| = n, |E|=m$ and $w : E \rightarrow \mathbb{R}_{[1,100]}$ is the weight function. That is, G is a graph with bounded weights on its edges. The Maximum Edge Weight Clique Problem (MEWC) consists in finding a clique that maximises the sum of the weights of its edges. Clearly MEWC is also a $NP$-Hard problem since the Maximum Clique Problem is the special case in which all weights are equal.
 
-\end{flushleft}
+
 
 % ----- Exercices -----
 
@@ -48,14 +49,16 @@
     {\LARGE \bf{Exercices}}
 \end{flushleft}
 
-\begin{flushleft}
 
     \textbf{An example of real-life situations that can be modelled as MEWC} is \underline{the team formation process} during a project for example. 
-    \newline \newline
+    \newline
+
     Indeed, we could imagine that Nils Baussé need to make a team for a robotic event in Nantes during the hollidays. As the students of CIR3 do not all live in Nantes during their vacation period, he needs to form a group that is geographically close to each other so that they can meet quickly, do tests and participate in the event to present the project. Here, forming a team from a group of individuals can be considered as a maximum edge weight clique problem because the goal is to select a subset of individuals in order to optimize the global location of the team.
-    \newline \newline
+    \newline
+
     To model this problem as a maximum edge weight clique problem, you can represent each individual as a node in a graph and add an edge between two nodes if the corresponding individuals are located within 10 km of each other. The weight of the edge could represent a number proportional to the distance between the two people. The closer they are, the bigger the number would be and the further they are, the smaller the number would be. We will take the weight $w$ as : $$w = \frac{1}{\text{distance between the two individuals}} \times 100$$
     \newline
+
     For example, we could imagine that Youn lives 7km away from Martin, the weigth between these two will be : $$w_{Youn/Martin} = \frac{1}{7} \times 100 = 14.3$$
     \newline
     \begin{center}
@@ -66,8 +69,6 @@
         \end{tikzcd} 
     \end{center}
 
-    The goal of the maximum edge weight clique problem in this context would be to find a subset of individuals such that the sum of the weights of the edges between the individuals is maximized. In this example, the maximum weight clique would be the clique consisting of nodes Valentin, Aubin, Maxence with a total weight of 255(100+170+85).
-
-\end{flushleft}
+    The goal of the maximum edge weight clique problem in this context would be to find a subset of individuals such that the sum of the weights of the edges between the individuals is maximized. In this example, the maximum weight clique would be the clique consisting of nodes Valentin, Aubin, Maxence with a total weight of $255(100+170+85)$.
 
 \end{document}

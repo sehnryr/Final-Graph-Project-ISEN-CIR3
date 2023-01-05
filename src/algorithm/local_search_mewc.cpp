@@ -10,11 +10,16 @@
 #include "mewc.hpp"
 #include "../common.hpp"
 
-void findMaxClique(Graph g){
+void findMaxClique(Graph g, VertexPtr v){
+    std::cout << "12" << std::endl;
     Clique clique;
     auto verticies = g.getVertices();
 
     for(auto vertex : verticies){
+        if(vertex->getId() == v->getId()){
+            std::cout << "SAME" << std::endl;
+            continue;
+        }
         std::cout << vertex->getId() << std::endl;
     }
 }
@@ -33,7 +38,14 @@ Clique findNeighboor(Graph g){
 
 Clique localSearchMEWC(Graph g)
 {
-    findMaxClique(g);
+    auto verticies = g.getVertices();
+
+    for(auto vertex : verticies){
+        std::cout << vertex->getId() << std::endl;
+    }
+    VertexPtr v = g.getVertex(6).value();
+    std::cout << "wsh" << std::endl;
+    findMaxClique(g, v);
 
     // Find init solution
     // while(some stop condition) // Smg like "if no improvement log(n) times, then stop"

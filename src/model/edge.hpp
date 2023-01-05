@@ -42,4 +42,71 @@ private:
     unsigned int weight;
 };
 
+// Hash and equal functions for the Edge class and EdgePtr class
+namespace std
+{
+    /**
+     * @brief Hash function for the Edge class
+     *
+     * @param e The edge to hash
+     * @return std::size_t The hash of the edge
+     */
+    template <>
+    struct hash<Edge>
+    {
+        std::size_t operator()(const Edge &e) const
+        {
+            return hash<unsigned int>()(e.getV1()->getId()) ^
+                   hash<unsigned int>()(e.getV2()->getId());
+        }
+    };
+
+    /**
+     * @brief Equal function for the Edge class
+     *
+     * @param e1 The first edge
+     * @param e2 The second edge
+     * @return true If the edges are equal
+     */
+    template <>
+    struct equal_to<Edge>
+    {
+        bool operator()(const Edge &e1, const Edge &e2) const
+        {
+            return e1 == e2;
+        }
+    };
+
+    /**
+     * @brief Hash function for the EdgePtr class
+     *
+     * @param e The edge to hash
+     * @return std::size_t The hash of the edge
+     */
+    template <>
+    struct hash<EdgePtr>
+    {
+        std::size_t operator()(const EdgePtr &e) const
+        {
+            return hash<Edge>()(*e);
+        }
+    };
+
+    /**
+     * @brief Equal function for the EdgePtr class
+     *
+     * @param e1 The first edge
+     * @param e2 The second edge
+     * @return true If the edges are equal
+     */
+    template <>
+    struct equal_to<EdgePtr>
+    {
+        bool operator()(const EdgePtr &e1, const EdgePtr &e2) const
+        {
+            return *e1 == *e2;
+        }
+    };
+} // namespace std
+
 #endif // EDGE_HPP

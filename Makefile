@@ -14,7 +14,7 @@ DEPS = $(OBJ_FILES:.o=.d)
 
 # default target
 $(TARGET): $(OBJ_FILES)
-	$(CXX) $(CXX_FLAGS) -o $@ $^
+	$(CXX) $(CXX_FLAGS) -o $@ $^ -lstdc++fs
 
 # include dependencies
 -include $(DEPS)

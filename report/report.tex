@@ -11,13 +11,13 @@
 \usepackage[english]{babel} % permet l'utilisation d'un sommaire
 \usepackage{hyperref} % permet que le sommaire redirige
 \usepackage{graphicx} % permet d'ajouter des images
-
+\setlength{\parindent}{0pt}
 % ------ en tête ------
 \geometry{margin=1in, headsep=0.5in}
 \pagestyle{fancy}
 \setlength{\headheight}{10pt}
 \lhead{\textcolor{red}{\Huge ISEN Nantes}}  
-\rhead{Projet de merde}
+\rhead{Graph Theory}
 \begin{document}
 \title{Graph Theory - Graphs}
 
@@ -89,7 +89,7 @@
     On this project, we decide to use \textbf{the C++ language} to developp and implement our algorithms. Nevertheless, a debate took place, especially on the choice of the language. We hesitated between Python and C++. The first one was for us easier to handle and was a tool in which we had more confidence in our ability to use it efficiently. The latter was nevertheless preferred because of its speed of execution, which was an important criterion for the study. We did have some problems with memory allocation, which made us regret this choice at times.  \\ \\
     To share the code between us, we used \textbf{Github}\footnotemark. A tool that was difficult for some to get used to quickly, especially on the configuration of the project at home, but which brought us a significant gain in efficiency once we had understood how to use it. To share information and communicate between us, we used \textbf{Discord}.
     
-    \footnotetext{https://github.com/sehnryr/Final-Graph-Project-ISEN-CIR3.git}
+    \footnotetext{\url{https://github.com/sehnryr/Final-Graph-Project-ISEN-CIR3.git}}
 
 % ----- Applications -----
 
@@ -98,7 +98,7 @@
     As we said, the MEWC has many real-life applications in various fields such as social networks, chemistry, bioinformatics. We will take a practical example which could include and involve ISEN students in our future. We will reuse the presented case to illustrate the different algorithms that we will implement later in the report.\\ \\
     \textbf{An example of real-life situations that can be modelled as MEWC} is \underline{the team formation process} during a project, or in the search for a particular social group. 
     \\ \\
-    We can imagine that the Student Office of ISEN Nantes is looking to reinforce the video games club of its school. Indeed, the latter has no succession for the following year and is thus led to die if no member presents himself. The future members of the office will have to be in contact with each other during a whole year and it is thus important to find people with common interests so that no tension is formed during their studies. The office has access to the Steam profiles of the students within ISEN (Steam is a video game digital distribution service that gives information about the games played by each one). The fact of playing games in common could bring some people closer, and this makes it a good criterion to create a group that could take over the club because it would share common interests. Otherwise, it would allow to see which games and which group could be present at different events they could organize. Here, forming a team from a group of individuals can be considered as a maximum edge weight clique problem because the goal is to select a subset of individuals such such that the members share a common interest that could.
+    We can imagine that the Student Office of ISEN Nantes is looking to reinforce the video games club of its school. Indeed, the latter has no succession for the following year and is thus led to die if no member presents himself. The future members of the office will have to be in contact with each other during a whole year and it is thus important to find people with common interests so that no tension is formed during their studies. The office has access to the Steam profiles of the students within ISEN (Steam is a video game digital distribution service that gives information about the games played by each one) as well as a record made by the gaming club of the different games played by their members. The fact of playing games in common could bring some people closer, and this makes it a good criterion to create a group that could take over the club because it would share common interests. Otherwise, it would allow to see which games and which group could be present at different events they could organize. Here, forming a team from a group of individuals can be considered as a maximum edge weight clique problem because the goal is to select a subset of individuals such that the members share a common interest that could.
     \newpage
     To model this problem as a maximum edge weight clique problem, you can represent each \textbf{individual} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding individuals \textbf{share atleast one game on Steam}. The weight of the edge could represent the number of game that they have in common.
     \\ \\
@@ -137,6 +137,7 @@
             Martin \arrow[r, dash, "1"] & Maxence & Dorian & Thomas \arrow[ur, dash, "1"]
         \end{tikzcd} 
     \end{center}
+    
     The goal of the maximum edge weight clique problem in this context would be to find a complete subset of individuals such that the sum of the weights of the edges between the individuals is maximized. In this example, the maximum weight clique would be the clique consisting of nodes Youn, Valentin, Martin, Maxence with a total weight of $10(2+1+1+1+3+2)$.
 
     % Indeed, we could imagine that Nils Baussé need to make a team for a robotic event in Nantes during the hollidays. As the students of CIR3 do not all live in Nantes during their vacation period, he needs to form a group that is geographically close to each other so that they can meet quickly, do tests and participate in the event to present the project. Here, forming a team from a group of individuals can be considered as a maximum edge weight clique problem because the goal is to select a subset of individuals in order to optimize the global location of the team.

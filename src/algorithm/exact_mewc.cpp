@@ -45,8 +45,8 @@ std::optional<long unsigned int> getCliqueWeight(Graph graph, Clique clique)
             else
                 return {};
 
-    // return the weight of the clique
-    return weight;
+    // return the weight of the clique divided by 2 because each edge is counted twice
+    return weight / 2;
 }
 
 /**

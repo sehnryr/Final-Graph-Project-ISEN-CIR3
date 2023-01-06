@@ -37,7 +37,7 @@
 \end{center}
 \rule{\linewidth}{0.5mm}
 
-\vspace{1\baselineskip}
+\vspace{2\baselineskip}
 % \begin{flushleft} \Large
 %     \emph{Authors :}\\
 %     Alexandre \textsc{Auguste}\\
@@ -48,7 +48,7 @@
 % \end{flushleft}
 \begin{center}
 \begin{tikzpicture}[commutative diagrams/every diagram]
-    \node (P0) at (90:4.5cm) {Alexandre \textsc{Auguste}};
+    \node (P0) at (90:4cm) {Alexandre \textsc{Auguste}};
     \node (P1) at (90+72:4cm) {Antoine \textsc{Esnault}} ;
     \node (P2) at (90+2*72:4cm) {Valentin \textsc{Herv\'e}};
     \node (P3) at (90+3*72:4cm) {Martin \textsc{Lobel}};
@@ -66,16 +66,16 @@
     (P3) edge node {} (P4);
 \end{tikzpicture}
 \end{center}
-
-\begin{flushleft} \Large
+\vspace{2\baselineskip}
+\begin{center} \Large
     \emph{Class group :}\\
-    \textsc{CIR3} - Team X \\
-\end{flushleft}
+    \textsc{CIR3} - Team 1 \\
+\end{center}
 
-\begin{flushleft} \Large
+\begin{center} \Large
     \emph{Teacher :}\\
     Leandro \textsc{Montero}
-\end{flushleft}
+\end{center}
 
 \vfill
 
@@ -110,7 +110,7 @@
     On this project, we decide to use \textbf{the C++ language} to developp and implement our algorithms. Nevertheless, a debate took place, especially on the choice of the language. We hesitated between Python and C++. The first one was for us easier to handle and was a tool in which we had more confidence in our ability to use it efficiently. The latter was nevertheless preferred because of its speed of execution, which was an important criterion for the study. We did have some problems with memory allocation, which made us regret this choice at times.  \\ \\
     To share the code between us, we used \textbf{Github}\footnotemark. A tool that was difficult for some to get used to quickly, especially on the configuration of the project at home, but which brought us a significant gain in efficiency once we had understood how to use it. To share information and communicate between us, we used \textbf{Discord}.
     
-    \footnotetext{\url{https://github.com/sehnryr/Final-Graph-Project-ISEN-CIR3.git}}
+    \footnotetext{\url{https://github.com/sehnryr/Final-Graph-Project-ISEN-CIR3}}
 
 % ----- Applications -----
 
@@ -191,6 +191,19 @@
 
     \subsection{How it works}
 
+    \hspace*{1cm} \textbf{Etape 1 :}
+    \\
+        \begin{tikzcd} 
+            \color{red} \textcircled{1} \arrow[dd, dash, "1"] \arrow[r, dash, "2"] \arrow[ddr, dash, "3"] & \textcircled{2} \arrow[r, dash, "1"] \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] & \textcircled{5} \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] \arrow[r, dash, "1"] & \textcircled{7} \arrow[dd, dash, "1"] \arrow[dr, dash, "1"] \\
+            & & & & \textcircled{9} \\
+            \textcircled{3} \arrow[r, dash, "1"] & \textcircled{4} & \textcircled{6} & \textcircled{8} \arrow[ur, dash, "1"]
+        \end{tikzcd}
+        \hspace{1em}
+        \begin{minipage}{29em}
+            J'analyse ici le graphique, par exemple ici le graph prendra 1 en entree bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+        \end{minipage}
+
+    
     % ----- Pseudo - Code -----
 
     \subsection{Pseudo code}

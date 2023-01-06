@@ -135,7 +135,7 @@ Graph read_file(std::string path)
         // Check if the line has only numbers and spaces
         if (line.find_first_not_of("0123456789 ") != std::string::npos)
         {
-            std::cout << "I1nput file has an invalid edge" << std::endl;
+            std::cout << "Input file has an invalid edge" << std::endl;
             exit(1);
         }
 
@@ -146,7 +146,7 @@ Graph read_file(std::string path)
         // Check if the line has the correct number of elements
         if (splitted.size() != 3)
         {
-            std::cout << "I2nput file has an invalid edge" << std::endl;
+            std::cout << "Input file has an invalid edge" << std::endl;
             exit(1);
         }
 

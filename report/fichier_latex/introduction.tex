@@ -5,17 +5,18 @@
 % ----- presentation du sujet (je reprends le truc du prof et j'ai add ce que Youn a mis sur discord) -----
 \subsection{Presentation of the subject}
 
-    Given an undirected simple connected graph $G =(V,E)$, a clique is a complete maximal induced subgraph of $G$. The Maximum Clique Problem consists in finding a clique of maximum size. This is a classic graph theory problem that has many-real life applications in various fields such as social networks, chemistry, bioinformatics. In addition, this problem is $NP$-Hard and it has been studied as a combinatorial optimization problem, being very important in operations research and theoretical computer science.
+    Given an undirected simple connected graph $G =(V,E)$, a clique is a complete maximal induced subgraph of $G$. The Maximum Clique Problem consists in finding a clique of maximum size. This is a classic graph theory problem that has many-real life applications in various fields such as social networks, chemistry, bioinformatics. It has been studied since the early 1990s \cite{mewcf}. In addition, this problem is $NP$-Hard. It means, this is a problem where the veracity of any solution can be verified quickly (that is, in polynomial time) and a brute-force search algorithm can find a solution by trying all possible solutions. Moreover, NP-complete problems are a type of problem in computer science that are known to be very difficult to solve. These problems are special because if we can find a solution to any one of them, we can use that solution to quickly solve all other problems of the same type. This is because the solutions to NP-complete problems can be easily checked or verified. So, NP-complete problems are kind of like the "benchmark" for how difficult it is to solve a problem. In facts, if we can solve one of them quickly, we should be able to solve any other problem in the same class just as quickly.  As a result, it has been studied as a combinatorial optimization problem, being very important in operations research and theoretical computer science.
     \\ \\
-    Let $G = (V,E,w)$ be an undirected simple weigheted connected graph such taht $|V| = n, |E|=m$ and $w : E \rightarrow \mathbb{R}_{[1,100]}$ is the weight function. That is, G is a graph with bounded weights on its edges. The Maximum Edge Weight Clique Problem (MEWC) consists in finding a clique that maximises the sum of the weights of its edges. Clearly MEWC is also a $NP$-Hard problem since the Maximum Clique Problem is the special case in which all weights are equal.
+    Let $G = (V,E,w)$ be an undirected simple weighted connected graph such that $|V| = n, |E|=m$ and $w : E \rightarrow \mathbb{R}_{[1,100]}$ is the weight function. That is, G is a graph with bounded weights on its edges. The Maximum Edge Weight Clique Problem (MEWC) consists in finding a clique that maximises the sum of the weights of its edges. Clearly MEWC is also a $NP$-Hard problem since the Maximum Clique Problem is the special case in which all weights are equal.
 
 % ----- Configuration -----
 
 \subsection{Configuration}
 
     -  Ajouter les configurations que l'on a utilise pour les tests du style la config\\ \\
+
     On this project, we decide to use \textbf{the C++ language} to developp and implement our algorithms. Nevertheless, a debate took place, especially on the choice of the language. We hesitated between Python and C++. The first one was for us easier to handle and was a tool in which we had more confidence in our ability to use it efficiently. The latter was nevertheless preferred because of its speed of execution, which was an important criterion for the study. We did have some problems with memory allocation, which made us regret this choice at times.  \\ \\
-    To share the code between us, we used \textbf{Github}\footnotemark. A tool that was difficult for some to get used to quickly, especially on the configuration of the project at home, but which brought us a significant gain in efficiency once we had understood how to use it. To share information and communicate between us, we used \textbf{Discord}.
+    To share the code between us, we used \textbf{Github}\footnotemark. It is a web-based platform for version control, collaboration, and sharing of code, as well as a community of developers who contribute to open source projects and share their knowledge. It was a tool that was difficult for some to get used to quickly, especially on the configuration of the project at home, but which brought us a significant gain in efficiency once we had understood how to use it. To share information and communicate between us, we used \textbf{Discord}.
     
     \footnotetext{\url{https://github.com/sehnryr/Final-Graph-Project-ISEN-CIR3}}
 
@@ -23,12 +24,16 @@
 
 \subsection{Example of real-life situations}
 
-    As we said, the MEWC has many real-life applications in various fields such as social networks, chemistry, bioinformatics. We will take a practical example which could include and involve ISEN students in our future. We will reuse the presented case to illustrate the different algorithms that we will implement later in the report.\\ \\
+    As we said, the MEWC has many real-life applications in various fields such as social networks, chemistry, bioinformatics. We could model this problem with :
+    \begin{itemize}
+        \item We can model this problem on social \textbf{social networks}, indeed we can represent each \textbf{users} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding individuals \textbf{have some kinds of relationships together}. The weight of the edge could represent \textbf{the degree of relationships} between the two users. 
+    \end{itemize}
+    We will take a practical example which could include and involve ISEN students in our future. We will reuse the presented case to illustrate the different algorithms that we will implement later in the report.\\ \\
     \textbf{An example of real-life situations that can be modelled as MEWC} is \underline{the team formation process} during a project, or in the search for a particular social group. 
     \\ \\
     We can imagine that the Student Office of ISEN Nantes is looking to reinforce the video games club of its school. Indeed, the latter has no succession for the following year and is thus led to die if no member presents himself. The future members of the office will have to be in contact with each other during a whole year and it is thus important to find people with common interests so that no tension is formed during their studies. The office has access to the Steam profiles of the students within ISEN (Steam is a video game digital distribution service that gives information about the games played by each one) as well as a record made by the gaming club of the different games played by their members. The fact of playing games in common could bring some people closer, and this makes it a good criterion to create a group that could take over the club because it would share common interests. Otherwise, it would allow to see which games and which group could be present at different events they could organize. Here, forming a team from a group of individuals can be considered as a maximum edge weight clique problem because the goal is to select a subset of individuals such that the members share a common interest that could.
-    \newpage
-    To model this problem as a maximum edge weight clique problem, you can represent each \textbf{individual} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding individuals \textbf{share atleast one game on Steam}. The weight of the edge could represent the number of game that they have in common.
+    \\ \\
+    To model this problem as a maximum edge weight clique problem, we can represent each \textbf{individual} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding individuals \textbf{share atleast one game on Steam}. The weight of the edge could represent \textbf{the number of game} that they have in common.
     \\ \\
     For example, on a small scale we could imagine :
     \\ \\
@@ -60,9 +65,9 @@
 
     \begin{center}
         \begin{tikzcd} 
-            Youn \arrow[dd, dash, "1"] \arrow[r, dash, "2"] \arrow[ddr, dash, "3"] & Valentin \arrow[r, dash, "1"] \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] & Aubin \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] \arrow[r, dash, "1"] & Antoine \arrow[dd, dash, "1"] \arrow[dr, dash, "1"] \\
+            Youn \arrow[dd, dash, "1"] \arrow[r, dash, "2"] \arrow[ddr, dash, "3"] & Valentin \arrow[r, dash, "1"] \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] & Guillaume \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] \arrow[r, dash, "1"] & Antoine \arrow[dd, dash, "1"] \arrow[dr, dash, "1"] \\
             & & & & Alexandre \\
-            Martin \arrow[r, dash, "1"] & Maxence & Dorian & Thomas \arrow[ur, dash, "1"]
+            Martin \arrow[r, dash, "1"] & Bastien & Dorian & Thomas \arrow[ur, dash, "1"]
         \end{tikzcd} 
     \end{center}
     

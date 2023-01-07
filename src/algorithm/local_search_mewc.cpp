@@ -118,13 +118,14 @@ unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr
     return weight_improvement + improveClique(g, clique, banned_verticies); // If I improve, see if I can improve more
 }
 
-bool findNeighboor(Graph g, Clique init_clique){
-    bool modified = false;
-    
+Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>* tested_verticies){
     auto clique_verticies = init_clique.getVertices();
-    unsigned int min_weigth = clique_verticies.size() * 100; // edge weight is less than 100 so the weight of the edges of a vertex in the clique is less than 100 times the number of verticies in the clique
-    VertexPtr min_weight_vertex;
+    unsigned int min_weight = clique_verticies.size() * 100; // edge weight is less than 100 so the weight of the edges of a vertex in the clique is less than 100 times the number of verticies in the clique
+    VertexPtr min_weight_vertex = nullptr;
     for(auto clique_vertex : clique_verticies){
+        if(tested_verticies->find(clique_vertex) != tested_verticies->end()){ // do not try 2 times the same improvement
+            continue;
+        }
         unsigned int weight = 0;
         for(auto clique_vertex2 : clique_verticies){
             if(clique_vertex == clique_vertex2){
@@ -132,13 +133,18 @@ bool findNeighboor(Graph g, Clique init_clique){
             }
             weight += g.getEdge(clique_vertex, clique_vertex2).value()->getWeight();
         }
-        if(weight < min_weigth){
-            min_weigth = weight;
+        if(weight < min_weight){
+            min_weight = weight;
             min_weight_vertex = clique_vertex;
         }
     }
 
-    cout << "Min weight vertex in clique : " << min_weight_vertex->getId() << " / weight = " << min_weigth << endl;
+    if(min_weight_vertex == nullptr){ // If no improvement, return the original clique
+        cout << "No improvement found" << endl;
+        return init_clique;
+    }
+
+    cout << "Min weight vertex in clique : " << min_weight_vertex->getId() << " / weight = " << min_weight << " / New clique verticies : ";
 
     Clique new_clique;
     for(auto clique_vertex : clique_verticies){
@@ -146,11 +152,24 @@ bool findNeighboor(Graph g, Clique init_clique){
             continue;
         }
         new_clique.addVertex(clique_vertex);
+        cout << clique_vertex->getId();
     }
 
+    cout << endl;
 
+    std::unordered_set<VertexPtr> banned_verticies;
+    banned_verticies.insert(min_weight_vertex);
+    unsigned int improvement = improveClique(g, &new_clique, banned_verticies);
+    cout << "Total improvement : " << improvement << endl;
 
-    return modified;
+    // if no improvement
+    if(improvement <= min_weight){
+        tested_verticies->insert(min_weight_vertex);
+        return init_clique;
+    }
+
+    cout << "Better found !" << endl;
+    return new_clique;
 
     // Pseudo-code
     // -
@@ -166,14 +185,21 @@ bool findNeighboor(Graph g, Clique init_clique){
 
 Clique localSearchMEWC(Graph g)
 {
-    Clique c = findMaxClique(g, g.getVertex(6).value());
-    // findNeighboor(g, clique);
+    // Clique c = findMaxClique(g, g.getVertex(6).value());
     Clique clique;
-    clique.addVertex(g.getVertex(5).value());
-    std::unordered_set<VertexPtr> banned_verticies;
-    banned_verticies.insert(g.getVertex(10).value());
-    int t = improveClique(g, &clique, banned_verticies);
-    cout << "Total improvement : " << t << endl;
+    clique.addVertex(g.getVertex(8).value());
+    clique.addVertex(g.getVertex(6).value());
+    std::unordered_set<VertexPtr> tested_verticies; // do not try 2 times the same improvement
+    for(int i = 0; i < 5; i++){
+        clique = findNeighboor(g, clique, &tested_verticies);
+    }
+
+    cout << "\n\n------- Best solution found -------" << endl;
+    auto cv = clique.getVertices();
+    for(auto v : cv){
+        cout << v->getId() << " ";
+    }
+    cout << endl;
 
     // Find init solution
     // while(some stop condition) // Smg like "if no improvement log(n) times, then stop"

@@ -4,24 +4,53 @@
 
 % ----- Presentation -----
 
-    \subsection{Presentation}
+\subsection{Presentation}
+
+An exact algorithm for solving the MEWC problem works by exploring all potential
+cliques in the graph and selecting the clique with the maximum weight. To do this,
+the algorithm uses a recursive function to explore all possible subsets of V.
+For each subset, the algorithm computes the weight of the clique formed by the
+vertices in the subset. If the weight is greater than the current maximum weight,
+the clique is selected as the current maximum. This process is repeated until all
+possible cliques have been explored, at which point the algorithm returns the
+clique the the maximum weight.
+\newline \newline
+The time complexity of this approach is $\mathcal{O}(n^2\times2^n)$, where $n$ 
+is the number of vertices in the graph. This is due to the fact that there are 
+$2^n$ possible subsets of V, and the algorithm must compute the weight of the clique, 
+which by itself has a complexity of $\mathcal{O}(n^2)$ because there are at most
+$\frac{n(n-1)}{2}$ edges in a complete graph, and compare it to the current 
+maximum weight. Therefore, the algorithm is only feasible for small-scale graphs.
+\newline \newline
+However, there is a better algorithm called the \textbf{Bron-Kerbosch}
+algorithm\cite{finding-all-cliques-of-an-undirected-graph} that can find all 
+maximal cliques in a graph with a time complexity of $\mathcal{O}(3^{\frac{n}{3}})$, 
+where $n$ is the number of vertices in the graph. 
+This algorithm is optimal, as it has been proven by J. W. Moon \& L. Moser in 
+1965\cite{on-cliques-in-graphs} that there are at most $3^{\frac{n}{3}}$ maximal 
+cliques in any n-vertex graph.
+\newline \newline
+We can use the Bron-Kerbosch algorithm to find all maximal cliques in the graph,
+and then compute the weight of each clique. This approach has a time complexity of
+$\mathcal{O}(n^2\times3^{\frac{n}{3}})$, which is much better than the previous
+approach. However, this algorithm is still not feasible for large-scale graphs.
 
 % ----- Fonctionnement -----
 
 \subsection{How it works}
 
-    \hspace*{1cm} \textbf{Etape 1 :}
-    \\
-    \begin{minipage}{0.5\textwidth}
-        \begin{tikzcd} 
-            \color{red} \textcircled{1} \arrow[dd, dash, "1"] \arrow[r, dash, "2"] \arrow[ddr, dash, "3"] & \textcircled{2} \arrow[r, dash, "1"] \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] & \textcircled{5} \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] \arrow[r, dash, "1"] & \textcircled{7} \arrow[dd, dash, "1"] \arrow[dr, dash, "1"] \\
-            & & & & \textcircled{9} \\
-            \textcircled{3} \arrow[r, dash, "1"] & \textcircled{4} & \textcircled{6} & \textcircled{8} \arrow[ur, dash, "1"]
-        \end{tikzcd}
-    \end{minipage}
-    \begin{minipage}{0.5\textwidth}
-            J'analyse ici le graphique, par exemple ici le graph prendra 1 en entree bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
-    \end{minipage}
+\hspace*{1cm} \textbf{Etape 1 :}
+\\
+\begin{minipage}{0.5\textwidth}
+    \begin{tikzcd}
+        \color{red} \textcircled{1} \arrow[dd, dash, "1"] \arrow[r, dash, "2"] \arrow[ddr, dash, "3"] & \textcircled{2} \arrow[r, dash, "1"] \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] & \textcircled{5} \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] \arrow[r, dash, "1"] & \textcircled{7} \arrow[dd, dash, "1"] \arrow[dr, dash, "1"] \\
+        & & & & \textcircled{9} \\
+        \textcircled{3} \arrow[r, dash, "1"] & \textcircled{4} & \textcircled{6} & \textcircled{8} \arrow[ur, dash, "1"]
+    \end{tikzcd}
+\end{minipage}
+\begin{minipage}{0.5\textwidth}
+    J'analyse ici le graphique, par exemple ici le graph prendra 1 en entree bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla
+\end{minipage}
 
 % ----- Pseudo - Code -----
 

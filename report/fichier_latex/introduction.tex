@@ -5,9 +5,28 @@
 % ----- presentation du sujet (je reprends le truc du prof et j'ai add ce que Youn a mis sur discord) -----
 \subsection{Presentation of the subject}
 
-    Given an undirected simple connected graph $G =(V,E)$, a clique is a complete maximal induced subgraph of $G$. The Maximum Clique Problem consists in finding a clique of maximum size. This is a classic graph theory problem that has many-real life applications in various fields such as social networks, chemistry, bioinformatics. It has been studied since the early 1990s \cite{mewcf}. In addition, this problem is $NP$-Hard. It means, this is a problem where the veracity of any solution can be verified quickly (that is, in polynomial time) and a brute-force search algorithm can find a solution by trying all possible solutions. Moreover, NP-complete problems are a type of problem in computer science that are known to be very difficult to solve. These problems are special because if we can find a solution to any one of them, we can use that solution to quickly solve all other problems of the same type. This is because the solutions to NP-complete problems can be easily checked or verified. So, NP-complete problems are kind of like the "benchmark" for how difficult it is to solve a problem. In facts, if we can solve one of them quickly, we should be able to solve any other problem in the same class just as quickly.  As a result, it has been studied as a combinatorial optimization problem, being very important in operations research and theoretical computer science.
+    Graph theory is a branch of mathematics that deals with the study of graphs, which are mathematical structures used to model pairwise relationships between objects. Graphs consist of vertices (also called nodes) that are connected by edges. The edges can be directed (one-way) or undirected (two-way) and can have weight. An induced subgraph of a graph is a subgraph that includes all the vertices and edges of the original graph that are present in the subset of vertices chosen for the subgraph. A clique is a complete maximal induced subgraph of a graph. It means, that it will take its most improved form possible and that it cannot be extended to include any more vertices or edges.
     \\ \\
-    Let $G = (V,E,w)$ be an undirected simple weighted connected graph such that $|V| = n, |E|=m$ and $w : E \rightarrow \mathbb{R}_{[1,100]}$ is the weight function. That is, G is a graph with bounded weights on its edges. The Maximum Edge Weight Clique Problem (MEWC) consists in finding a clique that maximises the sum of the weights of its edges. Clearly MEWC is also a $NP$-Hard problem since the Maximum Clique Problem is the special case in which all weights are equal.
+    \begin{minipage}{0.5\textwidth}
+        For example, in the following graph, $A$ is a vertex, the link between $A$ and $B$ is an edge. The edge $(CF)$ have a weight of 5. The graph colored in red is an example of induced graph (there are a lot of them). $ABC$ is an induced graph and a clique, the maximal clique here is $ABEC$. 
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        \begin{center}
+            \begin{tikzcd}
+                & & A \arrow[dd, dash] \arrow[dl, dash] \arrow[dr, dash] \\
+                & \color{red} B \arrow[rr, dash, crossing over] \arrow[dl, dash, red] \arrow[dr, dash, red] & & C \arrow[dl, dash] \arrow[dr, dash, "5"] \\
+                \color{red} D \arrow[rr, dash, red] & & \color{red} E \arrow[rr, dash, red] & & \color{red} F 
+            \end{tikzcd}
+        \end{center}
+    \end{minipage}
+    \\ \\ \\
+    The Maximum Clique Problem (MCP) consists in finding a clique of maximum size. This is a classic graph theory problem that has many-real life applications in various fields such as social networks, chemistry, bioinformatics. It has been studied since the early 1990s \cite{mewcf}.
+    \\ \\
+    In addition, this problem is $NP$-Hard. It means, this is a problem where the veracity of any solution can be verified quickly (that is, in polynomial time) and a brute-force search algorithm can find a solution by trying all possible solutions. Moreover, NP-complete problems are a type of problem in computer science that are known to be very difficult to solve. These problems are special because if we can find a solution to any one of them, we can use that solution to quickly solve all other problems of the same type. This is because the solutions to NP-complete problems can be easily checked or verified. So, NP-complete problems are kind of like the "benchmark" for how difficult it is to solve a problem. 
+    \\ \\
+    As a result, it has been studied as a combinatorial optimization problem, being very important in operations research and theoretical computer science.
+    \\ \\
+    The Maximum Edge Weight Clique Problem (MEWC) consists in finding a clique that maximises the sum of the weights of its edges. Clearly MEWC is also a $NP$-Hard problem since the Maximum Clique Problem is the special case in which all weights are equal.
 
 % ----- Configuration -----
 
@@ -16,9 +35,9 @@
     -  Ajouter les configurations que l'on a utilise pour les tests du style la config\\ \\
 
     On this project, we decide to use \textbf{the C++ language} to developp and implement our algorithms. Nevertheless, a debate took place, especially on the choice of the language. We hesitated between Python and C++. The first one was for us easier to handle and was a tool in which we had more confidence in our ability to use it efficiently. The latter was nevertheless preferred because of its speed of execution, which was an important criterion for the study. We did have some problems with memory allocation, which made us regret this choice at times.  \\ \\
-    To share the code between us, we used \textbf{Github}\footnotemark. It is a web-based platform for version control, collaboration, and sharing of code, as well as a community of developers who contribute to open source projects and share their knowledge. It was a tool that was difficult for some to get used to quickly, especially on the configuration of the project at home, but which brought us a significant gain in efficiency once we had understood how to use it. To share information and communicate between us, we used \textbf{Discord}.
+    To share the code between us, we used \textbf{Github}\footnotemark \footnotetext{\url{https://github.com/sehnryr/Final-Graph-Project-ISEN-CIR3}}. It is a web-based platform for version control, collaboration, and sharing of code, as well as a community of developers who contribute to open source projects and share their knowledge. It was a tool that was difficult for some to get used to quickly, especially on the configuration of the project at home, but which brought us a significant gain in efficiency once we had understood how to use it. To share information and communicate between us, we used \textbf{Discord}.
     
-    \footnotetext{\url{https://github.com/sehnryr/Final-Graph-Project-ISEN-CIR3}}
+    
 
 % ----- Applications -----
 
@@ -26,7 +45,8 @@
 
     As we said, the MEWC has many real-life applications in various fields such as social networks, chemistry, bioinformatics. We could model this problem with :
     \begin{itemize}
-        \item We can model this problem on social \textbf{social networks}, indeed we can represent each \textbf{users} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding individuals \textbf{have some kinds of relationships together}. The weight of the edge could represent \textbf{the degree of relationships} between the two users. 
+        \item We can model this problem on social \textbf{social networks}, indeed we can represent each \textbf{users} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding individuals \textbf{have some kinds of relationships together}. The weight of the edge could represent \textbf{the degree of relationships} between the two users.
+        \item Furthermore, we can model the MEWC problem on \textbf{chemistry}, indeed we can represeant each \textbf{} 
     \end{itemize}
     We will take a practical example which could include and involve ISEN students in our future. We will reuse the presented case to illustrate the different algorithms that we will implement later in the report.\\ \\
     \textbf{An example of real-life situations that can be modelled as MEWC} is \underline{the team formation process} during a project, or in the search for a particular social group. 

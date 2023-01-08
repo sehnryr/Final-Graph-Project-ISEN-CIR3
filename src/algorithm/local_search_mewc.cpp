@@ -71,6 +71,7 @@ unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr
     for(auto clique_vertex : cv){
         clique2.addVertex(clique_vertex);
     }
+    clique2.setWeight(clique->getWeight());
 
     auto verticies = g.getVertices();
     auto v = *(clique->getVertices().begin());
@@ -102,6 +103,7 @@ unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr
                     weight_improvement += g.getEdge(clique_vertex, vertex).value()->getWeight();
                 }
                 clique2.addVertex(vertex);
+                clique2.addWeight(weight_improvement);
                 total_weight_improvement = weight_improvement + improveClique(g, &clique2, banned_verticies, min_weight, actual_weight_improvement + weight_improvement);
                 if(total_weight_improvement + actual_weight_improvement <= min_weight){
                     weight_improvement = 0;
@@ -179,6 +181,7 @@ Clique findInitialSolution(Graph g){
     Clique clique;
     clique.addVertex(g.getVertex(max_vertex).value());
     clique.addVertex(g.getVertex(max_vertex2).value());
+    clique.setWeight(g.getEdge(g.getVertex(max_vertex).value(), g.getVertex(max_vertex2).value()).value()->getWeight());
 
     improveClique(g, &clique, std::unordered_set<VertexPtr>(), 0, 0);
 
@@ -223,6 +226,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>*
         new_clique.addVertex(clique_vertex);
         cout << clique_vertex->getId() << " ";
     }
+    new_clique.setWeight(init_clique.getWeight() - min_weight);
 
     cout << endl;
 
@@ -281,16 +285,33 @@ Clique localSearchMEWC(Graph g)
     // cout << endl;
 
     Clique max_clique = findInitialSolution(g);
+    unsigned int no_improvement_found = 0; // Count the number of try with no improvement found
+    unsigned int max_number_of_tries = 5; // After 5 no better solution found -> Say that the current solution is the best one
+    std::unordered_set<VertexPtr> tested_verticies;
+
+    while(no_improvement_found < max_number_of_tries){
+        unsigned int c_weight = max_clique.getWeight();
+        unsigned int tested_verticies_size = tested_verticies.size();
+        max_clique = findNeighboor(g, max_clique, &tested_verticies);
+        if(max_clique.getWeight() == c_weight){ // Means that we didn't improve
+            if(tested_verticies.size() == tested_verticies_size){ // Means that we don't have any other vertex to test
+                break;
+            }
+            no_improvement_found++;
+        }
+        else{
+            tested_verticies = std::unordered_set<VertexPtr>();
+            no_improvement_found = 0;
+        }
+    }
+
     auto cv = max_clique.getVertices();
     for(auto v : cv){
         cout << v->getId() << " ";
     }
     cout << endl;
+    cout << "WEIGHT : " << max_clique.getWeight() << endl;
 
-
-    // ------------------------------------------------------------------------------------------------------------
-    // ADD WEIGHT TO CLIQUE !
-    // ------------------------------------------------------------------------------------------------------------
 
     // Find init solution
     // while(some stop condition) // Smg like "if no improvement log(n) times, then stop"
@@ -298,5 +319,5 @@ Clique localSearchMEWC(Graph g)
     //      if(better solution found)
     //          solution become the better one
 
-    return Clique();
+    return max_clique;
 }

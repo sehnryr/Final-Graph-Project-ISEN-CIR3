@@ -143,8 +143,6 @@ int main(int argc, char **argv)
     // Close the output file
     output.close();
 
-    localSearchMEWC(graph);
-
     return 0;
 }
 

@@ -13,7 +13,7 @@
 
 using namespace std;
 
-Clique findMaxClique(Graph g, VertexPtr init_vertex){ // add banned verticies ?
+Clique findMaxClique(Graph g, VertexPtr init_vertex){ // Delete this useless thing
     Clique clique;
     clique.addVertex(init_vertex);
     auto verticies = g.getVertices();
@@ -279,7 +279,14 @@ Clique localSearchMEWC(Graph g)
     //     cout << v->getId() << " ";
     // }
     // cout << endl;
-    findInitialSolution(g);
+
+    Clique max_clique = findInitialSolution(g);
+    auto cv = max_clique.getVertices();
+    for(auto v : cv){
+        cout << v->getId() << " ";
+    }
+    cout << endl;
+
 
     // ------------------------------------------------------------------------------------------------------------
     // ADD WEIGHT TO CLIQUE !

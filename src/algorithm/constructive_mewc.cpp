@@ -66,7 +66,7 @@ void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set
         {
             // L'élément n'est pas dans neighbors, on le supprime de P
             i = P.erase(i);
-        } else if(vertex = *i) // Si l'élement est déjà dans R
+        } else if(vertex == *i) // Si l'élement est déjà dans R
         {
             // L'élement est déjà dans R, on le supprime de P
             i = P.erase(i);

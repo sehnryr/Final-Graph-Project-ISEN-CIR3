@@ -11,13 +11,31 @@
         \State $P \gets V$
         \State $X \gets \emptyset$
         \State $maximalCliques \gets \emptyset$ \Comment{The set of cliques to add the maximal cliques to}
-        \State \Call{BronKerbosch}{$G$,$R$,$P$,$X$,$maximalCliques$} \Comment{Call the BronKerbosch algorithm to get the maximal cliques of the graph $G$}
+        \State \Call{BronKerbosch}{$R$,$P$,$X$,$maximalCliques$} \Comment{Call the BronKerbosch algorithm to get the maximal cliques of the graph}
         \ForAll{$clique \in maximalCliques$}
         \State $weight \gets$ \Call{getCliqueWeight}{$clique$} \Comment{Get the weight of the current clique}
         \If{$weight > maxCliqueWeight$}
         \State $maxClique \gets clique$
         \State $maxCliqueWeight \gets maxClique$
         \EndIf
+        \EndFor
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{Bron-Kerbosch algorithm}
+    \label{bron-kerbosch-pseudocode}
+    \begin{algorithmic}[1]
+        \Procedure{BronKerbosch}{$R$,$P$,$X$,$maximalCliques$}
+        \If{$P=\emptyset \And X=\emptyset$}
+        \State $maximalCliques \gets maximalCliques \cup \{R\}$ \Comment{If $P$ and $X$ are both empty sets, $R$ is a maximal clique of the graph}
+        \EndIf
+        \State $u\in P\cup X$ \Comment{Chose a pivot vertex from $P\cup X$}
+        \ForAll{$v \in P \backslash N(u)$}
+        \State \Call{BronKerbosch}{$N \cup \{v\}$,$P \cap N(v)$,$X \cap N(v)$} \Comment{Make recusive call with reduced candidate set}
+        \State $P \gets P \backslash \{v\}$
+        \State $X \gets X \cup \{v\}$
         \EndFor
         \EndProcedure
     \end{algorithmic}

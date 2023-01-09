@@ -76,27 +76,47 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
     \end{minipage}
 \end{minipage} \newline
 
-\hspace*{1cm}  \textbf{Step 1 :}
-\\
-\begin{minipage}{0.4\textwidth}
-    \begin{tikzcd}
-        6 \arrow[r, dash] & 4 \arrow[r, dash] \arrow[dd, dash] & 5 \arrow[dr, dash] \arrow[dd, dash] \\
-        & & & 1 \\
-        & 3 \arrow[r, dash] & \color{red} 2 \arrow[ur, dash]
-    \end{tikzcd}
-\end{minipage}
-\begin{minipage}{0.6\textwidth}
-    Now, to begin the algorithm, we will need to chose a pivot $u$. The pivot $u$ should be chosen as one of the degree-three vertices, to minimize the number of recursive calls. Now, we suppose that $u$ is chosen to be vertex 2. We see, that there is 2 vertices that are not adjacent to 2 which are 4 and 5.
-\end{minipage}
-Then we know that we will work by starting with these 3 configurations (we know the first, but we don't know yet for the vertex $4$ and $6$ because some vertex could be added to $X$ or removed from $P$ when we process on $2$ or $4$) :
-$$ \boxed{
-        \begin{array}{lll}
-            R = \{2\} & P = \{1,3,5\} & X =\{\} \\
-            R = \{4\}                           \\
-            R = \{6\}                           \\
-        \end{array}
-    }$$
-\\
+\textbf{Step 1:} \newline
+\begin{minipage}{\linewidth}
+    \begin{minipage}{0.5\textwidth}
+        \begin{figure}[H]
+            \centering
+            \begin{tikzpicture}[node distance=2cm]
+                \node[red] (1) {1};
+                \node[Cerulean] (2) at ([shift=(210:2)] 1) {2};
+                \node (3) [left of=2] {3};
+                \node (4) [above of=3] {4};
+                \node[Cerulean] (5) [above of=2] {5};
+                \node (6) at ([shift=(150:2)] 4) {6};
+
+                \draw (1) -- (2);
+                \draw (1) -- (5);
+                \draw (2) -- (3);
+                \draw (2) -- (5);
+                \draw (3) -- (4);
+                \draw (4) -- (5);
+                \draw (4) -- (6);
+            \end{tikzpicture}
+            \caption{Graph illustration for the exact algorithm at step 1}
+            \label{fig:exact-mewc-step1}
+        \end{figure}
+    \end{minipage}
+    \begin{minipage}{0.5\textwidth}
+        In the first call of the function, since $P$ is not empty, we chose a
+        pivot vertex $u$ in $P\cup X$. As it would be more time consuming to
+        search for an appropriate pivot vertex, we simply chose the first one
+        available, which will be represented in \textcolor{red}{red}. In this 
+        example we will always take the first element of $P$. The neighboring
+        vertices of $u$ are represented in \textcolor{Cerulean}{blue}. \newline
+
+        After that, we will iterate over the vertices of $P\backslash N(u)$,
+        or in this case, $\{1,3,4,6\}$, and for each vertex $v$ we will make a
+        recursive call to the function with $v$ added to $R$ and $P$ and $X$
+        restricted to $N(v)$, which will find and report all cliques extensions
+        of $R$ that contains $v$. \newline
+    \end{minipage}
+\end{minipage} \newline
+
 \hspace*{1cm}  \textbf{Step 2 :}
 \\
 \begin{minipage}{0.4\textwidth}

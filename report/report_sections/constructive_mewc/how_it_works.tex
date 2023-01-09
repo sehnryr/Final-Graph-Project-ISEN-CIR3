@@ -1,3 +1,7 @@
 % ----- Fonctionnement -----
 
 \subsection{How it works}
+
+    Our algorithm searches in a first time for a vertex, this one must be chosen with care because it will be the first element of our solution (thus of the maximal clique). To do this, an interesting thing is to take the neighbor of our graph of the highest degree (ie, the one with the most neighbors). We choose the vertex with the most neighbors to maximize the chances of it being part of a clique, particularly a large clique with a high weight that may potentially be the maximal edge weight clique we are looking for. 
+
+

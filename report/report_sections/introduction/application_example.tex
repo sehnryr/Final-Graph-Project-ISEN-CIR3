@@ -1,70 +1,91 @@
-
 \subsection{Example of real-life situations}
 
-As we said, the MEWC has many real-life applications in various fields such as social networks, chemistry, bioinformatics. We could model this problem with some fast example like these :
-\begin{itemize}
-    \item We can model this problem on social \textbf{social networks}, indeed we can represent each \textbf{users} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding individuals \textbf{have some kinds of relationships together}. The weight of the edge could represent \textbf{the degree of relationships} between the two users. The goal here is to identify the group of individuals with the strongest connections within a social network. Some example can be Twitter or Netflix.
-    \item Furthermore, we can model the MEWC problem on \textbf{chemistry}, indeed we can represeant each \textbf{chemical compounds} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding chemical compounds \textbf{have an intermolecular interaction between them}. The weight of the edge could represent the \textbf{he strength of the corresponding intermolecular interaction}. The goal here is to identify the compound with the strongest intermolecular interactions from a set of potential drug candidates. Some example can be found on research.
-\end{itemize}
-We will take a practical example which could include and involve ISEN students in our future. We will reuse the presented case to illustrate the different algorithms that we will implement later in the report.\\ \\
-\textbf{An example of real-life situations that can be modelled as MEWC} is \ul{the team formation process} during a project, or in the search for a particular social group.
-\\ \\
-We can imagine that the Student Office of ISEN Nantes is looking to reinforce the video games club of its school. Indeed, the latter has no succession for the following year and is thus led to die if no member presents himself. The future members of the office will have to be in contact with each other during a whole year and it is thus important to find people with common interests so that no tension is formed during their studies. The office has access to the Steam profiles of the students within ISEN (Steam is a video game digital distribution service that gives information about the games played by each one) as well as a record made by the gaming club of the different games played by their members. The fact of playing games in common could bring some people closer, and this makes it a good criterion to create a group that could take over the club because it would share common interests. Otherwise, it would allow to see which games and which group could be present at different events they could organize. Here, forming a team from a group of individuals can be considered as a maximum edge weight clique problem because the goal is to select a subset of individuals such that the members share a common interest.
-\\ \\
-To model this problem as a maximum edge weight clique problem, we can represent each \textbf{individual} as a \textbf{vertex} in a graph and add an \textbf{edge} between two vertices if the corresponding individuals \textbf{share atleast one game}. The weight of the edge could represent \textbf{the number of game} that they have in common.
-\\ \\
-For example, on a small scale we could imagine :
-\\ \\
+As we said before, the MEWC has many real-world applications in various fields
+such as social networks, chemistry, bioinformatics. Now, we will give an concrete
+example of a real-life situation that can be modelled as a MEWC problem. \newline
+
+\textbf{The team formation process} for a project, or for the search for a particular
+social group, is a situation that can be viewed as a MEWC problem. Let's imagine that
+the Student Office of ISEN Nantes is looking to reinforce the video games club of its
+school. Indeed, the latter has no succession for the following year and is thus led to
+die if no member presents himself. The future members of the office will have to be
+in contact with each other during a whole year and it is thus important to find people
+with common interests so that no tension is formed during their studies. The office has
+access to the Steam profiles of the students within ISEN (Steam is a video game digital
+distribution service that gives information about the games played by each one) as well
+as a record made by the gaming club of the different games played by their members. The
+fact of playing games in common could bring some people closer, and this makes it a good
+criterion to create a group that could take over the club because it would share common
+interests. \newline
+
+To model this problem, we can represent each student as a vertex and each the games
+played in common as an edge. The weight of each edge will be the number of games played
+in common. The goal of the office is to find a group of students that will take over the
+club. To do this, we will use the MEWC algorithm to find a group of students that
+has the highest affinity. \newline
+
+In the following example, we will restrict ourselves to 9 students of the CIR3 class
+of ISEN Nantes since it would be too complicated to represent every student of the
+school. We will also assume that the students have played the game listed in the table
+below. \newline
+
+\rowcolors{2}{gray!10}{gray!30}
 \begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
     \hline
     \textbf{Students} & \textbf{Game played}                         \\
     \hline
     Youn              & Minecraft, Civilisations, Lost ARK, Among US \\
-    \hline
     Martin            & Minecraft                                    \\
-    \hline
     Valentin          & Genshin, Minecraft, Civilisations            \\
-    \hline
     Bastien           & Genshin, Minecraft, Lost ARK, Among US       \\
-    \hline
     Guillaume         & CSGO, Genshin, Overwatch, Stardew Valley     \\
-    \hline
     Dorian            & CSGO, Paladins, Overwatch                    \\
-    \hline
     Antoine           & League of Legends, Stardew Valley            \\
-    \hline
     Thomas            & League of Legends, The Last of US            \\
-    \hline
     Alexandre         & League of Legends, Dofus                     \\
     \hline
 \end{tabular}
 \vspace{1\baselineskip} \\
 Which would give us this graph :
 
-\begin{center}
-    \begin{tikzcd}
-        Youn \arrow[dd, dash, "1"] \arrow[r, dash, "2"] \arrow[ddr, dash, "3"] & Valentin \arrow[r, dash, "1"] \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] & Guillaume \arrow[ddl, dash, "1"] \arrow[dd, dash, "2"] \arrow[r, dash, "1"] & Antoine \arrow[dd, dash, "1"] \arrow[dr, dash, "1"] \\
-        & & & & Alexandre \\
-        Martin \arrow[r, dash, "1"] & Bastien & Dorian & Thomas \arrow[ur, dash, "1"]
-    \end{tikzcd}
-\end{center}
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}[node distance=3cm]
+        \node (youn) {Youn};
+        \node (valentin) [right of=youn] {Valentin};
+        \node (guillaume) [right of=valentin] {Guillaume};
+        \node (antoine) [right of=guillaume] {Antoine};
+        \node (martin) [below of=youn] {Martin};
+        \node (bastien) [right of=martin] {Bastien};
+        \node (dorian) [right of=bastien] {Dorian};
+        \node (thomas) [right of=dorian] {Thomas};
+        \node (alexandre) at ([shift=(-30:3)] antoine) {Alexandre};
 
-The goal of the maximum edge weight clique problem in this context would be to find a complete subset of individuals such that the sum of the weights of the edges between the individuals is maximized. In this example, the maximum weight clique would be the clique consisting of nodes Youn, Valentin, Martin, Maxence with a total weight of $10(2+1+1+1+3+2)$.
+        \draw (youn)
+        edge node[above, sloped] {$2$} (valentin)
+        edge node[above, sloped] {$1$} (martin)
+        edge node[above right, sloped] {$3$} (bastien);
+        \draw (valentin)
+        edge node[above right, sloped] {$1$} (martin)
+        edge node[above, sloped] {$2$} (bastien)
+        edge node[above, sloped] {$1$} (guillaume);
+        \draw (martin)
+        edge node[above, sloped] {$1$} (bastien);
+        \draw (guillaume)
+        edge node[above, sloped] {$1$} (bastien)
+        edge node[above, sloped] {$2$} (dorian)
+        edge node[above, sloped] {$1$} (antoine);
+        \draw (antoine)
+        edge node[above, sloped] {$1$} (thomas)
+        edge node[above, sloped] {$1$} (alexandre);
+        \draw (thomas)
+        edge node[above,sloped] {$1$} (alexandre);
+    \end{tikzpicture}
+    \caption{Graph representing the games played between the students}
+\end{figure}
 
-% Indeed, we could imagine that Nils Baussé need to make a team for a robotic event in Nantes during the hollidays. As the students of CIR3 do not all live in Nantes during their vacation period, he needs to form a group that is geographically close to each other so that they can meet quickly, do tests and participate in the event to present the project. Here, forming a team from a group of individuals can be considered as a maximum edge weight clique problem because the goal is to select a subset of individuals in order to optimize the global location of the team.
-% \newline
-
-% To model this problem as a maximum edge weight clique problem, you can represent each individual as a node in a graph and add an edge between two nodes if the corresponding individuals are located within 10 km of each other. The weight of the edge could represent a number proportional to the distance between the two people. The closer they are, the bigger the number would be and the further they are, the smaller the number would be. We will take the weight $w$ as : $$w = \frac{1}{\text{distance between the two individuals}} \times 100$$
-% \newline
-
-% For example, we could imagine that Youn lives 7km away from Martin, the weigth between these two will be : $$w_{Youn/Martin} = \frac{1}{7} \times 100 = 14.3$$
-% \newline
-% \begin{center}
-%     \begin{tikzcd} 
-%         Youn \arrow[dd, dash, "14.3"] \arrow[r, dash, "23"] \arrow[ddr, dash, "43"] & Valentin \arrow[r, dash, "70"] \arrow[ddl, dash, "15"] \arrow[dd, dash, "100"] & Aubin \arrow[ddl, dash, "85"] \arrow[dd, dash, "15"] \arrow[r, dash, "13"] & Antoine \arrow[dd, dash, "12"] \arrow[dr, dash, "10"] \\
-%         & & & & Alexandre \\
-%         Martin \arrow[r, dash, "16"] & Maxence & Dorian & Thomas \arrow[ur, dash, "12"]
-%     \end{tikzcd} 
-% \end{center}
-
-% The goal of the maximum edge weight clique problem in this context would be to find a subset of individuals such that the sum of the weights of the edges between the individuals is maximized. In this example, the maximum weight clique would be the clique consisting of nodes Valentin, Aubin, Maxence with a total weight of $255(100+170+85)$.
+The goal of the Maximum Edge Weight Clique problem in this context would be to
+find a complete subset of individuals such that the sum of the weights of the
+edges between the individuals is maximized. In this example, the maximum weight
+clique would be the clique consisting of nodes Youn, Valentin, Martin, Maxence
+with a total weight of $10(2+1+1+1+3+2)$.

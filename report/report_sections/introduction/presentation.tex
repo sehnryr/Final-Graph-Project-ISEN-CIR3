@@ -23,14 +23,15 @@ have the same weight. \newline
     For example, the following graph $G=(V,E)$ has for its set of vertices
     $V=\{1,2,3,4,5,6\}$ and for its set of edges
     $E=\{(1,2),(1,5),(2,3),(2,5),(3,4),(4,5),(4,6)\}$.
-    As we can see, the red edges form a clique of size 3 and the other colored
-    edges are each cliques of size 1. We can also easily deduct that the maximum
-    clique of G is the red clique of size 3.
+    As we can see, the \textcolor{red}{red} edges $\{(1,2),(1,5),(2,5)\}$ form a 
+    clique of size 3 and the other colored edges are each cliques of size 1. 
+    We can also easily deduct that the maximum clique of G is the 
+    \textcolor{red}{red} clique of size 3.
 \end{minipage}
 \begin{minipage}{0.5\textwidth}
     \begin{figure}[H]
         \centering
-        \begin{tikzpicture}[node distance=2cm]
+        \begin{tikzpicture}[node distance=2cm, nodes={circle,draw}]
             \node (1) {1};
             \node (2) at ([shift=(210:2)] 1) {2};
             \node (3) [left of=2] {3};
@@ -38,13 +39,13 @@ have the same weight. \newline
             \node (5) [above of=2] {5};
             \node (6) at ([shift=(150:2)] 4) {6};
 
-            \draw[red] (1) -- (2);
-            \draw[red] (1) -- (5);
-            \draw[green] (2) -- (3);
-            \draw[red] (2) -- (5);
-            \draw[blue] (3) -- (4);
-            \draw[orange] (4) -- (5);
-            \draw[cyan] (4) -- (6);
+            \draw[Red, very thick] (1) -- (2);
+            \draw[Red, very thick] (1) -- (5);
+            \draw[YellowGreen, very thick] (2) -- (3);
+            \draw[Red, very thick] (2) -- (5);
+            \draw[RoyalBlue, very thick] (3) -- (4);
+            \draw[Orange, very thick] (4) -- (5);
+            \draw[Cyan, very thick] (4) -- (6);
         \end{tikzpicture}
         \caption{Basic graph example}
         \label{fig:basic-graph-example}

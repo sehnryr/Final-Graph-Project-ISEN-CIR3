@@ -10,11 +10,11 @@
 
     \begin{enumerate}
         \item Add The First Vertex to solution.
-        \item Seek for his most weighted neighbors. And add it to solution if it's a neighbor of all vertex in solution.
+        \item Seek for his most weighted neighbors. And add it to solution if it's a neighbor of all vertices in solution.
         \item Repeat the step 2 until no vertices is available to add
     \end{enumerate}
 
-    In these choices of criteria, we can notice one that is quite important. The one to choose the First Vertex. Indeed, it is him which will define the quality of our solution. Taking it randomly would be useless and counter productive. We had a debate on how to choose it, we hesitated between two solutions:
+    In these choices of criteria, we can notice one that is quite important. The one to choose the First Vertex. Indeed, it is him which will define the quality of our solution. Taking it randomly would be useless and counter productive for the sake of solving MEWC. As it was important, we thought about how to choose it and 2 answers appeared to us and we have a debate on the subject because we could not reach a consensus on it. We hesitated between these two solutions:
 
     \begin{itemize}
         \item The first idea was to take the highest degree vertex of the graph given as input. 
@@ -29,10 +29,10 @@
         \end{itemize}
     \end{itemize}
 
-
-
+    We implemented both ideas and performed tests on a number of graph to see which was the most consistent and we concluded that it was the vertex with the highest sum of weights of the edges. Moreover, in most graphs (at least the randomly generated ones), we had, in general, a rather homogeneous weights of edges which worked better with this one.
+    \\ \\
     Constructive heuristic can be contrasted with other types of heuristics, such as local search heuristics, which try to find a solution by making small changes to an existing solution, or random heuristics, which generate solutions randomly and then choose the best one. Constructive heuristics are often used when it is important to find a solution that is complete and comprehensive, rather than just a local improvement.
     \\ \\
     Examples of some famous problems that are solved using constructive heuristics are the flow shop scheduling, the vehicle routing problem and the open shop problem.
-    \\ \\
+    
     

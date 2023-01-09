@@ -1,33 +1,40 @@
 \subsection{How it works}
 
-As said before, our algorithm first uses Bron-Kerbosc to obtain all the maximal 
-cliques of the input graph. Then, it looks for which cliques have the highest weight.
-So we will explain how it does to get the different maximal cliques. \newline
+As said before, our algorithm first uses the Bron-Kerbosch algorithm to obtain
+all the maximal cliques of the input graph. Then, it iterate through those maximal
+cliques to looks for which cliques have the highest weight. \newline
 
-The Bron-Kerbosch pivot algorithm that we used is a more efficient variant of 
-the Bron-Kerbosch algorithm that is used to find all the cliques in a graph. 
-It works in a similar way to the original Bron-Kerbosch algorithm, but uses a 
-pivot vertex to guide the search for cliques. \newline
+\textbf{The Bron-Kerbosch pivot algorithm} that we use is a more efficient variant
+of the initial algorithm. The basic form of the algorithm is inefficient in the
+case of graphs with many non-maximal cliques as it makes a recursive call for
+every clique, maximal or not. To save time and allow the algorithm to backtrack
+more quickly in branches of the search that contain no maximal cliques, Bron and
+Kerbosch introduced a variant of the algorithm involving a "pivot vertex". \newline
 
-At each step of the algorithm, the pivot algorithm keeps track of three groups 
-of vertices: the candidates, which are the set $P$ of vertices that could 
-potentially be part of the clique, the already-selected vertices, which are the 
-set $R$ of vertices that are definitely part of the clique, and the set $X$ of 
-vertices that have been considered but not selected. \newline
+At each step, the algorithm keeps track of three groups of vertices: $R$ which is
+which is the subset of vertices that must be in a clique, $P$ which is the candidates
+that could be included in the clique and $X$ which is the excluded vertices that
+already have been searched. In each call of the algorithm, $P$ and $X$ are disjoint
+sets whose union consists of vertices that form cliques when added to $R$.
+When $P$ and $X$ are both empty there are no further elements that can be added
+to $R$, so $R$ is a maximal clique and the algorithm outputs $R$. \newline
 
-The algorithm selects a pivot vertex from the set of candidates and already-selected 
-vertices, and then adds to the candidate set any vertices that are connected to 
-all of the vertices in the already-selected set, as well as the pivot vertex. 
-It then removes from the candidate set any vertices that are not connected to all 
-of the vertices in the already-selected set, and adds those vertices to the set X 
-of vertices that have been considered but not selected. \newline
+The recursion is initiated by setting $R$ and $X$ to be the empty set and $P$ to
+be the vertex set of the graph. Within each recursive call, the algorithm considers
+the vertices $P$ in turn; if there a no such vertices, it either reports $R$ as
+a maximal clique if $X$ is also empty, or continue. Then, a pivot vertex $u$ is
+chosen from $P\cup X$ since any maximal clique must include either $u$ or one of
+its non-neighbors, for otherwise the clique could be augmented by adding $u$ to it.
+Only $u$ and its non-neighbors needs to be tested as the choices for the vertex
+$v$ that is added to $R$ in each recusive call to the algorithm. For each vertex
+$v$ chosen from $P\backslash N(u)$, with $N(u)$ being the neighbor set of $u$,
+it makes a recursive call in which $v$ is added to $R$ and in which $P$ and $X$
+are restriced to $N(v)$, which finds and reports all cliques extensions of $R$
+that contains $v$. Then, it moves $v$ from $P$ to $X$ to exclude it from consideration
+in future cliques and continues with the next vertex in $P\backslash N(u)$. \newline
 
-This process is repeated until the candidate set is empty. At that point, all of 
-the vertices in the already-selected set form a clique. The algorithm is then run 
-again on the remaining candidates and already-selected vertices to find any 
-additional cliques. \newline
-
-We will now illustrate it step by step with a practical example : \newline
+To illustrate the Bron-Kerbosch algorithm, let's use the example in the 
+first figure: \newline
 
 \hspace*{1cm} \textbf{Step 0 :}
 \\

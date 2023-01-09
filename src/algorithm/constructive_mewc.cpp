@@ -18,13 +18,13 @@ VertexPtr getFirstVertex(Graph graph)
     auto adjMatrix = graph.getAdjacencyMatrix();
     auto vertices = graph.getVertices();
 
-    for (int i = 0; i < vertices.size(); i++)
+    for (auto vertex : vertices)
     {
-        auto neighbors = adjMatrix[vertices[i].getId()];
+        auto neighbors = adjMatrix[vertex->getId()];
         if(neighbors.size() > MaxNumberOfNeighbors)
         {
             MaxNumberOfNeighbors = neighbors.size();
-            BestVertex = vertices[i].getId();
+            BestVertex = vertex;
         }
     }
 
@@ -120,6 +120,7 @@ void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> 
     }
 
     R.addVertex(BestVertex);
+    vertex = BestVertex;
     R.addWeight(CliqueWeight);
 }
 
@@ -132,9 +133,8 @@ Clique constructiveMEWC(Graph g)
     Clique R; //  clique qui forme la solution
     std::unordered_set<VertexPtr> P; // Liste de sommets candidats
 
-    VertexPtr vertice;
-
     auto FirstVertex = getFirstVertex(g); // vertex avec le plus grand nombre de sommets
+    VertexPtr lastvertex = FirstVertex;
 
     R.addVertex(FirstVertex); // On ajoute le vertex à notre clique
     getPotentielCandidate(g, FirstVertex, R, P); // On recupère les neighbors de FirstVertex et on les mets dans P
@@ -148,11 +148,9 @@ Clique constructiveMEWC(Graph g)
 
     while (P.size() != 0) // le but de mon algo va de réduire tout les candidats possible à 0, il n'y aura aucun autre candidats ajoutable à la clique
     {
-        vertice = (R.getVertices()).end();
-        updateClique(g, vertice, P, R); // (R.getVertices()).end() correspond à FirstVertex (dernier element de la clique)
+        updateClique(g, lastvertex, P, R); // (R.getVertices()).end() correspond à FirstVertex (dernier element de la clique)
         // j'ajoute le neighbors au plus haut poids à ma clique et j'ajoute son poids au poids de la clique
-        vertice = (R.getVertices()).end();
-        updatePotentielCandidate(g, vertice, P, R); // je recupere dernier element de la clique ajouté (celui qui a été ajouté par updateClique) et j'vais actualisé P
+        updatePotentielCandidate(g, lastvertex, P, R); // je recupere dernier element de la clique ajouté (celui qui a été ajouté par updateClique) et j'vais actualisé P
     }
 
     return R;

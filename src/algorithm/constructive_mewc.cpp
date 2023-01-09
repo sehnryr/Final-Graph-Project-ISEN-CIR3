@@ -2,7 +2,7 @@
  * @file constructive_mewc.cpp
  * @brief This file contains the implementation of the constructive MEWC algorithm
  * @authors 
- * - Alexandre AUGUSTE <alexandre.auguste@isen-ouest.yncrea.fr>
+ * - Alexandre AUGUSTE <alexandre.auguste@isen-ouest.yncrea.fr> / Martin LOBEL <martin.lobel@isen-ouest.yncrea.fr>
  * @date 2022-12-30
  */
 
@@ -132,6 +132,8 @@ Clique constructiveMEWC(Graph g)
     Clique R; //  clique qui forme la solution
     std::unordered_set<VertexPtr> P; // Liste de sommets candidats
 
+    VertexPtr vertice;
+
     auto FirstVertex = getFirstVertex(g); // vertex avec le plus grand nombre de sommets
 
     R.addVertex(FirstVertex); // On ajoute le vertex à notre clique
@@ -146,9 +148,11 @@ Clique constructiveMEWC(Graph g)
 
     while (P.size() != 0) // le but de mon algo va de réduire tout les candidats possible à 0, il n'y aura aucun autre candidats ajoutable à la clique
     {
-        updateClique(g, (R.getVertices()).end(), P, R); // (R.getVertices()).end() correspond à FirstVertex (dernier element de la clique)
+        vertice = (R.getVertices()).end();
+        updateClique(g, vertice, P, R); // (R.getVertices()).end() correspond à FirstVertex (dernier element de la clique)
         // j'ajoute le neighbors au plus haut poids à ma clique et j'ajoute son poids au poids de la clique
-        updatePotentielCandidate(g, (R.getVertices()).end(), P, R); // je recupere dernier element de la clique ajouté (celui qui a été ajouté par updateClique) et j'vais actualisé P
+        vertice = (R.getVertices()).end();
+        updatePotentielCandidate(g, vertice, P, R); // je recupere dernier element de la clique ajouté (celui qui a été ajouté par updateClique) et j'vais actualisé P
     }
 
     return R;

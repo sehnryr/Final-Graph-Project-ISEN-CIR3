@@ -270,6 +270,47 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
     \end{minipage}
 \end{minipage} \newline
 
+\begin{minipage}{\linewidth}
+    \textbf{Step 5:} \newline
+    \begin{minipage}{0.4\textwidth}
+        \begin{figure}[H]
+            \centering
+            \begin{tikzpicture}[node distance=2cm]
+                \node (1) {1};
+                \node (2) at ([shift=(210:2)] 1) {2};
+                \node (3) [left of=2] {3};
+                \node[Cerulean] (4) [above of=3] {4};
+                \node (5) [above of=2] {5};
+                \node[red] (6) at ([shift=(150:2)] 4) {6};
+
+                \draw (1) -- (2);
+                \draw (1) -- (5);
+                \draw (2) -- (3);
+                \draw (2) -- (5);
+                \draw (3) -- (4);
+                \draw (4) -- (5);
+                \draw (4) -- (6);
+            \end{tikzpicture}
+            \caption{Graph illustration for the exact algorithm at step 5}
+            \label{fig:exact-mewc-step5}
+        \end{figure}
+    \end{minipage}
+    \begin{minipage}{0.6\textwidth}
+        At this step, since $P$ is empty and $X$ is not, the algorithm will
+        choose a pivot vertex $u$ in $X$. Here $u = 4$ but the algorithm will
+        not be able to iterate further as $P\backslash N(4) = \{\}$. \newline
+
+        The recursive call process looks like this:
+        \begin{center}
+            \begin{tabular}{|lll|}
+                \hline
+                R = \{6\} & P = \{\} & X = \{4\} \\
+                \hline
+            \end{tabular}
+        \end{center}
+    \end{minipage}
+\end{minipage} \newline
+
 The algorithm is therefore \textbf{finished}, and we have obtained the cliques :
 $$\{(2,3),(1,2,5),(3,4),(4,5),(5,6)\}$$
 

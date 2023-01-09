@@ -311,8 +311,18 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
     \end{minipage}
 \end{minipage} \newline
 
-The algorithm is therefore \textbf{finished}, and we have obtained the cliques :
-$$\{(2,3),(1,2,5),(3,4),(4,5),(5,6)\}$$
+The Bron-Kerbosch algorithm is now finished, and we have obtained the following
+maximal cliques:
+\begin{center}
+    $\{(1,2,5),(2,3),(3,4),(4,5),(4,6)\}$
+\end{center}
+
+Now that we obtained the maximal cliques of the graph, we can compare them to find
+the maximal edge-weighted clique. \newline
+
+We will simply iterate over the maximal cliques and sum the weights of the edges
+that are in the clique. The clique with the highest weight will be the maximal
+edge-weighted clique. \newline
 
 To summarize things and try to make things even clearer, we will take another example and make the call tree of it (the precedent example is too big) :
 

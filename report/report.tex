@@ -1,9 +1,6 @@
-% J'utilise Latex Workshop sur VSCODE pour compiler et générer le pdf depuis un fichier Latex comme celui ci
-% lien d'une vidéo permettant de le DL : https://www.youtube.com/watch?v=4lyHIQl4VM8
-
 \documentclass{article}
 
-\usepackage[table]{xcolor}
+\usepackage[table]{xcolor} % use colors on tables using \rowcolors
 \usepackage{amsmath,amsthm,amsfonts,amssymb,amscd} % package mathématiques permettant de faciliter l'utilisation de symboles mathématiques et de théorèmes
 \usepackage{tikz-cd} % package permettant de faire des graphs
 \usepackage{fancyhdr} % permet de personnaliser l'entete et le pied de page
@@ -15,14 +12,16 @@
 \usepackage[nottoc]{tocbibind} % permet d'ajouter la page de garde dans le sommaire
 \usepackage{soul} % pour que \ul compile
 \usepackage{float} % for flexible figure placement
-\setlength{\parindent}{0pt}
 
 % ------ en tête ------
+
+\setlength{\parindent}{0pt}
 \geometry{margin=2.5cm, headsep=0.5cm}
 \pagestyle{fancy}
 \setlength{\headheight}{1cm}
 \lhead{\includegraphics[width=0.2\textwidth]{image/ISEN2.png}}
 \rhead{Final Project - Graph Theory}
+
 \begin{document}
 \title{Graph Theory - Graphs}
 
@@ -36,7 +35,6 @@
 \newpage
 
 % ------ Introduction ------
-% jsp si il faut que je la remette mais osef, ca présente le projet
 
 \include{report_sections/introduction/introduction.tex}
 

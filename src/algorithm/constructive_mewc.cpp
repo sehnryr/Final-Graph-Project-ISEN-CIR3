@@ -13,8 +13,7 @@
 VertexPtr getFirstVertex(Graph graph)
 {
     VertexPtr BestVertex;
-    auto NumberOfNeighbors = 0;
-    auto MaxNumberOfNeighbors = 0;
+    long unsigned int MaxNumberOfNeighbors = 0;
     auto adjMatrix = graph.getAdjacencyMatrix();
     auto vertices = graph.getVertices();
 
@@ -32,7 +31,7 @@ VertexPtr getFirstVertex(Graph graph)
 }
 
 // Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique pour la première itération (en gros tout les voisins du vertex choisi)
-void getPotentielCandidate(Graph graph, VertexPtr &vertex, Clique &R, std::unordered_set<VertexPtr> &P)
+void getPotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P)
 {
     // Par example sur notre instance, on va avoir P = {2,3,4}
 
@@ -47,7 +46,7 @@ void getPotentielCandidate(Graph graph, VertexPtr &vertex, Clique &R, std::unord
 }
 
 // Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique (en gros tout les voisins du vertex choisi)
-void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &R)
+void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P)
 {
     // Par exemple, si notre vertex c'est 2, et qu'il a comme voisin (1,4), on doit obtenir P = {1,2,4} et donc supprimer 3
 
@@ -144,7 +143,7 @@ Clique constructiveMEWC(Graph g)
     VertexPtr lastvertex = FirstVertex;
 
     R.addVertex(FirstVertex); // On ajoute le vertex à notre clique
-    getPotentielCandidate(g, FirstVertex, R, P); // On recupère les neighbors de FirstVertex et on les mets dans P
+    getPotentielCandidate(g, FirstVertex, P); // On recupère les neighbors de FirstVertex et on les mets dans P
     // imaginons l'instance
     // 4 4
     // 1 3 3
@@ -157,7 +156,7 @@ Clique constructiveMEWC(Graph g)
     {
         updateClique(g, lastvertex, P, R); // (R.getVertices()).end() correspond à FirstVertex (dernier element de la clique)
         // j'ajoute le neighbors au plus haut poids à ma clique et j'ajoute son poids au poids de la clique
-        updatePotentielCandidate(g, lastvertex, P, R); // je recupere dernier element de la clique ajouté (celui qui a été ajouté par updateClique) et j'vais actualisé P
+        updatePotentielCandidate(g, lastvertex, P); // je recupere dernier element de la clique ajouté (celui qui a été ajouté par updateClique) et j'vais actualisé P
     }
 
     return R;

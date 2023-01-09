@@ -105,7 +105,7 @@ void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> 
             if(weight > BestWeight)
             {
                 BestWeight = weight;
-                VertexPtr BestVertex = *i;
+                BestVertex = *i;
                 weight = 0;
                 i++;
             }

@@ -8,12 +8,92 @@
 
 #include <iostream>
 #include <unordered_map>
+#include <vector>
 #include "mewc.hpp"
 #include "../common.hpp"
 
 using namespace std;
 
-unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr> banned_verticies = std::unordered_set<VertexPtr>(), unsigned int min_weight = 0, unsigned int actual_weight_improvement = 0){
+std::vector<VertexPtr> sortVerticiesByDegrees(Graph g){
+    auto adjacency_matrix = g.getAdjacencyMatrix();
+    std::vector<VertexPtr> sorted_verticies;
+    std::unordered_map<VertexPtr, unsigned int> verticies_degrees;
+    for(unsigned int i = 1; i <= adjacency_matrix.size(); i++){
+        unsigned int degree = 0;
+        for(unsigned int j = 1; j <= adjacency_matrix[i].size(); j++){
+            if(adjacency_matrix[i][j] != nullptr){
+                degree ++;
+            }
+        }
+        verticies_degrees[g.getVertex(i).value()] = degree;
+    }
+
+    while(verticies_degrees.size() > 0){
+        unsigned int max = 0;
+        VertexPtr max_degree_vertex = nullptr;
+        for(unsigned int i = 1; i <= adjacency_matrix.size(); i++){
+            if(verticies_degrees.find(g.getVertex(i).value()) == verticies_degrees.end()){
+                continue;
+            }
+            if(verticies_degrees[g.getVertex(i).value()] > max || max == 0){
+                max = verticies_degrees[g.getVertex(i).value()];
+                max_degree_vertex = g.getVertex(i).value();
+            }
+        }
+        sorted_verticies.push_back(max_degree_vertex);
+        verticies_degrees.erase(max_degree_vertex);
+    }
+
+    return sorted_verticies;
+}
+
+/*
+std::unordered_set<VertexPtr> findCliqueNeighbors(Graph g, Clique clique, std::vector<VertexPtr> sorted_verticies, std::unordered_map<VertexPtr, unsigned int> verticies_degrees){
+    std::unordered_set<VertexPtr> clique_neighbors;
+    auto adjacency_matrix = g.getAdjacencyMatrix();
+    for(unsigned int i = 1; i <= adjacency_matrix.size(); i++){
+        if(clique.hasVertex(g.getVertex(i).value())){
+            continue;
+        }
+
+        bool valid = true;
+        for(auto vertex : clique.getVertices()){
+            if(adjacency_matrix[i][vertex->getId()] == nullptr){
+                valid = false;
+            }
+        }
+
+        if(valid){
+            unsigned int degree = 0; // this degree is the neighbors verticies of the clique common with this vertex
+            for(unsigned int j = 1; j <= adjacency_matrix[i].size(); j++){
+                if(adjacency_matrix[i][j] != nullptr && adjacency_matrix[max_vertex][j] != nullptr && adjacency_matrix[max_vertex2][j] != nullptr){
+                    degree ++;
+                }
+            }
+            clique_neighbors[g.getVertex(i).value()] = degree;
+        }
+
+        if(adjacency_matrix[max_vertex][i] != nullptr && adjacency_matrix[max_vertex2][i] != nullptr){
+            unsigned int degree = 0; // this degree is the neighbors verticies of the clique common with this vertex
+            for(unsigned int j = 1; j <= adjacency_matrix[i].size(); j++){
+                if(adjacency_matrix[i][j] != nullptr && adjacency_matrix[max_vertex][j] != nullptr && adjacency_matrix[max_vertex2][j] != nullptr){
+                    degree ++;
+                }
+            }
+            clique_neighbors[g.getVertex(i).value()] = degree;
+        }
+    }
+
+    for(auto vertex : g.getVertices()){
+        if(clique_neighbors.find(vertex) == clique_neighbors.end()){
+            continue;
+        }
+
+
+    }
+}*/
+
+unsigned int improveClique(Graph g, Clique* clique, std::vector<VertexPtr> sorted_verticies, std::unordered_set<VertexPtr> banned_verticies = std::unordered_set<VertexPtr>(), unsigned int min_weight = 0, unsigned int actual_weight_improvement = 0){
     if(clique->isEmpty()){
         return 0;
     }
@@ -55,7 +135,7 @@ unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr
                 }
                 clique2.addVertex(vertex);
                 clique2.addWeight(weight_improvement);
-                total_weight_improvement = weight_improvement + improveClique(g, &clique2, banned_verticies, min_weight, actual_weight_improvement + weight_improvement);
+                total_weight_improvement = weight_improvement + improveClique(g, &clique2, sorted_verticies, banned_verticies, min_weight, actual_weight_improvement + weight_improvement);
                 if(total_weight_improvement + actual_weight_improvement <= min_weight){
                     weight_improvement = 0;
 
@@ -87,55 +167,33 @@ unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr
     return total_weight_improvement;
 }
 
-Clique findInitialSolution(Graph g){
-    auto adjacency_matrix = g.getAdjacencyMatrix();
-    unsigned int max_degree = 0;
-    unsigned int max_vertex = 0;
-    std::unordered_map<unsigned int, unsigned int> verticies_degrees;
-    for(unsigned int i = 1; i <= adjacency_matrix.size(); i++){
-        unsigned int degree = 0;
-        for(unsigned int j = 1; j <= adjacency_matrix[i].size(); j++){
-            if(adjacency_matrix[i][j] != nullptr){
-                degree ++;
-            }
-        }
-        verticies_degrees[i] = degree;
-        if(degree > max_degree){
-            max_degree = degree;
-            max_vertex = i;
-        }
-    }
+Clique findInitialSolution(Graph g, std::vector<VertexPtr> sorted_verticies){
+    VertexPtr max_vertex = sorted_verticies[0];
+    VertexPtr max_vertex2 = nullptr;
 
-    if(max_degree == 0){
-        return Clique();
-    }
-
-    auto verticies = g.getVertices();
-    unsigned int max_degree2 = 0;
-    unsigned int max_vertex2 = 0;
-    for(auto vertex : verticies){
-        if(vertex->getId() == max_vertex){
+    // Take the second vertex with max degree
+    for(auto vertex : sorted_verticies){
+        if(vertex == max_vertex){
             continue;
         }
-        if(g.hasEdge(vertex, g.getVertex(max_vertex).value())){
-            if(verticies_degrees[vertex->getId()] > max_degree2){
-                max_degree2 = verticies_degrees[vertex->getId()];
-                max_vertex2 = vertex->getId();
-            }
+        if(g.hasEdge(vertex, max_vertex)){
+            max_vertex2 = vertex;
+            break;
         }
     }
 
+    // Generate clique with those 2 verticies
     Clique clique;
-    clique.addVertex(g.getVertex(max_vertex).value());
-    clique.addVertex(g.getVertex(max_vertex2).value());
-    clique.setWeight(g.getEdge(g.getVertex(max_vertex).value(), g.getVertex(max_vertex2).value()).value()->getWeight());
+    clique.addVertex(max_vertex);
+    clique.addVertex(max_vertex2);
+    clique.setWeight(g.getEdge(max_vertex, max_vertex2).value()->getWeight());
 
-    improveClique(g, &clique, std::unordered_set<VertexPtr>(), 0, 0);
+    improveClique(g, &clique, sorted_verticies);
 
     return clique;
 }
 
-Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>* tested_verticies){
+Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>* tested_verticies, std::vector<VertexPtr> sorted_verticies){
     auto clique_verticies = init_clique.getVertices();
     unsigned int min_weight = clique_verticies.size() * 101; // edge weight is less than 100 so the weight of the edges of a vertex in the clique is less than 100 times the number of verticies in the clique
     VertexPtr min_weight_vertex = nullptr;
@@ -171,7 +229,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>*
 
     std::unordered_set<VertexPtr> banned_verticies;
     banned_verticies.insert(min_weight_vertex);
-    unsigned int improvement = improveClique(g, &new_clique, banned_verticies, min_weight, 0);
+    unsigned int improvement = improveClique(g, &new_clique, sorted_verticies, banned_verticies, min_weight, 0);
 
     // if keep the removed vertex is better
     if(improvement <= min_weight){
@@ -184,7 +242,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>*
     // Pseudo-code
     // -
     // Remove vertex with min neighboor in clique or min edges' weights
-    // Look a all neighboors of a random vertex in clique
+    // Look a all neighbors of a random vertex in clique
     // if one of them is connected to every one in clique
     //      see if the weights of its edges is better than the old one
     //      if yes
@@ -194,7 +252,9 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>*
 }
 
 Clique localSearchMEWC(Graph g){
-    Clique max_clique = findInitialSolution(g);
+    std::unordered_map<VertexPtr, unsigned int> verticies_degrees;
+    auto sorted_verticies = sortVerticiesByDegrees(g);
+    Clique max_clique = findInitialSolution(g, sorted_verticies);
     unsigned int no_improvement_found = 0; // Count the number of try with no improvement found
     unsigned int max_number_of_tries = g.getVertices().size() / 2; // After 5 no better solution found -> Say that the current solution is the best one
     std::unordered_set<VertexPtr> tested_verticies;
@@ -202,7 +262,7 @@ Clique localSearchMEWC(Graph g){
     while(no_improvement_found < max_number_of_tries){
         unsigned int c_weight = max_clique.getWeight();
         unsigned int tested_verticies_size = tested_verticies.size();
-        max_clique = findNeighboor(g, max_clique, &tested_verticies);
+        max_clique = findNeighboor(g, max_clique, &tested_verticies, sorted_verticies);
         if(max_clique.getWeight() == c_weight){ // Means that we didn't improve
             if(tested_verticies.size() == tested_verticies_size){ // Means that we don't have any other vertex to test
                 break;
@@ -219,7 +279,7 @@ Clique localSearchMEWC(Graph g){
     // -
     // Find init solution
     // while(some stop condition) // Smg like "if no improvement log(n) times, then stop"
-    //      visit neighboors of solution (not the already visited ones)
+    //      visit neighbors of solution (not the already visited ones)
     //      if(better solution found)
     //          solution become the better one
 

@@ -18,7 +18,7 @@ VertexPtr getFirstVertex(Graph graph)
     auto adjMatrix = graph.getAdjacencyMatrix();
     auto vertices = graph.getVertices();
 
-    for (auto vertex : vertices)
+    for (auto vertex : vertices) // je verifie le nombre de voisins et l'ajoute dans MaxNumberOfNeighors et BestVertex si c'est le plus grand encore jamais atteint
     {
         auto neighbors = adjMatrix[vertex->getId()];
         if(neighbors.size() > MaxNumberOfNeighbors)
@@ -29,7 +29,6 @@ VertexPtr getFirstVertex(Graph graph)
     }
 
     return BestVertex;
-    // bon j'ai plein d'erreur mais y'a l'idée je crois
 }
 
 // Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique pour la première itération (en gros tout les voisins du vertex choisi)
@@ -40,13 +39,11 @@ void getPotentielCandidate(Graph graph, VertexPtr &vertex, Clique &R, std::unord
     auto adjMatrix = graph.getAdjacencyMatrix(); // transforme le graph en matrice adjacente
     auto neighbors = adjMatrix[vertex->getId()]; // recupere les neighbors
 
-    auto i = neighbors.begin(); // debut de la liste
-    while(i != neighbors.end()) // TANT QUE je n'ai pas parcouru toute la liste
+    for (const auto& [neighbor, sharededge] : neighbors) // J'ajoute les voisins dans P
     {
-        // std::cout << *it << std::endl;
-        P.insert(*i); // j'ajoute les voisins à P
-        i++;
-    }
+        VertexPtr VertexNeighbor = std::make_shared<Vertex>(neighbor);
+        P.insert(VertexNeighbor);   
+    }   
 }
 
 // Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique (en gros tout les voisins du vertex choisi)
@@ -56,13 +53,21 @@ void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set
 
     auto adjMatrix = graph.getAdjacencyMatrix();
     auto neighbors = adjMatrix[vertex->getId()];
+    std::unordered_set<VertexPtr> voisin; // unordered set des voisins vide
 
-    for (auto i = P.begin(); i != P.end(); ) {
-        if (neighbors.count(*i) == 0) 
+    for (const auto& [neighbor, sharededge] : neighbors) // on remplit le unordered set
+    {
+        VertexPtr VertexNeighbor = std::make_shared<Vertex>(neighbor);
+        voisin.insert(VertexNeighbor);   
+    }
+
+    for (auto i = P.begin(); i != P.end(); ) 
+    {
+        if (voisin.count(*i) == 0) // S'il n'y a pas l'element de P dans les voisins du dernier vertex choisi
         {
             // L'élément n'est pas dans neighbors, on le supprime de P
             i = P.erase(i);
-        } else if(vertex = *i)
+        } else if(vertex = *i) // Si l'élement est déjà dans R
         {
             // L'élement est déjà dans R, on le supprime de P
             i = P.erase(i);
@@ -77,7 +82,7 @@ void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set
 }
 
 
-// Modifie R en y ajoutant le voisin avec l'edge au plus haut poids entre les deux, Modifie TotalWeight pour ajouter le poids de l'edge entre le vertex et
+// Modifie R en y ajoutant le voisin avec l'edge au plus haut poids entre les deux, Modifie TotalWeight pour ajouter le poids de l'edge entre le vertex et le voisin avec l'edge au plus haut poids
 void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &R)
 {
     long unsigned int weight = 0; // variable temporaire correspond au poids de l'edge entre notre vertex et ses voisins
@@ -89,12 +94,12 @@ void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> 
     auto i = P.begin();
     while(i != P.end())
     {
-        if (vertex == *i)
+        if (vertex == *i) // Si le vertex choisi dans P est le mm que le vertex
         {
             i++;
             continue;
         }
-        else
+        else // Ici je vais recupere l'edge entre le dernier vertex de mon unordered set et les vertex présent dans P, jusqu'a verifier qui possède le meilleur poids
         {
             auto edge = graph.getEdge(vertex, *i);
             weight = edge.value()->getWeight();
@@ -103,10 +108,12 @@ void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> 
                 BestWeight = weight;
                 VertexPtr BestVertex = *i;
                 weight = 0;
+                i++;
             }
             else
             {
                 weight = 0;
+                i++;
             }
         }
     }
@@ -127,7 +134,7 @@ void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> 
 
 Clique constructiveMEWC(Graph g)
 {
-    UNUSED(g);
+    // UNUSED(g);
     // TODO : implement the constructive algorithm
 
     Clique R; //  clique qui forme la solution

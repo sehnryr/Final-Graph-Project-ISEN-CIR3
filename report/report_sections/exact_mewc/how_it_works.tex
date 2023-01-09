@@ -1,16 +1,33 @@
 \subsection{How it works}
 
-As said before, our algorithm first uses Bron-Kerbosc to obtain all the maximal cliques of the input graph. Then, it looks for which cliques have the highest weight. So we will explain how it does to get the different maximal cliques. \\
+As said before, our algorithm first uses Bron-Kerbosc to obtain all the maximal 
+cliques of the input graph. Then, it looks for which cliques have the highest weight.
+So we will explain how it does to get the different maximal cliques. \newline
 
-The Bron-Kerbosch pivot algorithm that we used is a more efficient variant of the Bron-Kerbosch algorithm that is used to find all the cliques in a graph. It works in a similar way to the original Bron-Kerbosch algorithm, but uses a pivot vertex to guide the search for cliques. \\
+The Bron-Kerbosch pivot algorithm that we used is a more efficient variant of 
+the Bron-Kerbosch algorithm that is used to find all the cliques in a graph. 
+It works in a similar way to the original Bron-Kerbosch algorithm, but uses a 
+pivot vertex to guide the search for cliques. \newline
 
-At each step of the algorithm, the pivot algorithm keeps track of three groups of vertices: the candidates, which are the set $P$ of vertices that could potentially be part of the clique, the already-selected vertices, which are the set $R$ of vertices that are definitely part of the clique, and the set $X$ of vertices that have been considered but not selected. \\
+At each step of the algorithm, the pivot algorithm keeps track of three groups 
+of vertices: the candidates, which are the set $P$ of vertices that could 
+potentially be part of the clique, the already-selected vertices, which are the 
+set $R$ of vertices that are definitely part of the clique, and the set $X$ of 
+vertices that have been considered but not selected. \newline
 
-The algorithm selects a pivot vertex from the set of candidates and already-selected vertices, and then adds to the candidate set any vertices that are connected to all of the vertices in the already-selected set, as well as the pivot vertex. It then removes from the candidate set any vertices that are not connected to all of the vertices in the already-selected set, and adds those vertices to the set X of vertices that have been considered but not selected. \\
+The algorithm selects a pivot vertex from the set of candidates and already-selected 
+vertices, and then adds to the candidate set any vertices that are connected to 
+all of the vertices in the already-selected set, as well as the pivot vertex. 
+It then removes from the candidate set any vertices that are not connected to all 
+of the vertices in the already-selected set, and adds those vertices to the set X 
+of vertices that have been considered but not selected. \newline
 
-This process is repeated until the candidate set is empty. At that point, all of the vertices in the already-selected set form a clique. The algorithm is then run again on the remaining candidates and already-selected vertices to find any additional cliques. \\
+This process is repeated until the candidate set is empty. At that point, all of 
+the vertices in the already-selected set form a clique. The algorithm is then run 
+again on the remaining candidates and already-selected vertices to find any 
+additional cliques. \newline
 
-We will now illustrate it step by step with a practical example : \\
+We will now illustrate it step by step with a practical example : \newline
 
 \hspace*{1cm} \textbf{Step 0 :}
 \\

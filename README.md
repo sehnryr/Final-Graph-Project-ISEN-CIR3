@@ -74,6 +74,13 @@ Then, you can build the project with the following command.
 make
 ```
 
+You might also want to speed up the compilation time as there are many files to compile.
+You can do so by using the following command.
+
+```bash
+make -j
+```
+
 ## Usage
 To run the project, you can use the following command.
 

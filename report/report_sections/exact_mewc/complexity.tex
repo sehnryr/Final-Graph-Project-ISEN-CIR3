@@ -17,5 +17,13 @@ The complexity of the algorithm is therefore $\mathcal{O}(n^2\times3^{\frac{n}{3
 as we need to iterate through the computed maximal cliques by the Bron-Kerbosch
 algorithm and calculate their weight. \newline
 
+That is the worst case complexity of the algorithm, but realistically, the complexity
+will vary depending on the connectivity of the graph. If the graph is not connected,
+the Bron-Kerbosch algorithm will complete in $n$ steps and the weight calculation
+will be constant as there will be no edge to find. We can easily see the best case
+complexity is $\mathcal{O}(n)$. \newline
+
+$m=\frac{n(n-1)}{2}\times c$
+
 The implementation of the algorithm done with efficient data structures permit us
 to have a complexity of set insertion, deletion and lookup to be constant in average.

@@ -12,12 +12,16 @@ more quickly in branches of the search that contain no maximal cliques, Bron and
 Kerbosch introduced a variant of the algorithm involving a "pivot vertex". \newline
 
 At each step, the algorithm keeps track of three groups of vertices: $R$ which is
-which is the subset of vertices that must be in a clique, $P$ which is the candidates
+a partially constructed (non-maximal) clique, $P$ which is the candidates vertices
 that could be included in the clique and $X$ which is the excluded vertices that
-already have been searched. In each call of the algorithm, $P$ and $X$ are disjoint
-sets whose union consists of vertices that form cliques when added to $R$.
-When $P$ and $X$ are both empty there are no further elements that can be added
-to $R$, so $R$ is a maximal clique and the algorithm outputs $R$. \newline
+already have been searched (because doing so would lead to a clique that has
+already been found). The algorithm tries adding the candidate vertices one by one
+to the partial clique, making a recursive call for each one. After trying each of
+these vertices, it moves it to the set of vertices that should not be added again.
+At each recursion, $P$ and $X$ are restricted to the neighbors of current vertex
+being added to $R$ and when $P$ and $X$ are both empty there are no further
+elements that can be added to $R$, $R$ is a maximal clique and the algorithm
+reports $R$. \newline
 
 The recursion is initiated by setting $R$ and $X$ to be the empty set and $P$ to
 be the vertex set of the graph. Within each recursive call, the algorithm considers

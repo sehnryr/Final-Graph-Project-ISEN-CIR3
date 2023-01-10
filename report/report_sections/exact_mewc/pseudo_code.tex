@@ -7,9 +7,9 @@
         \Procedure{ExactMEWC}{$G=(V,E)$}
         \State $maxClique \gets \emptyset$ \Comment{Variable to store the maximum weight clique}
         \State $maxCliqueWeight \gets 0$
-        \State $R \gets \emptyset$
-        \State $P \gets V$
-        \State $X \gets \emptyset$
+        \State $R \gets \emptyset$ \Comment{Set that will contain the built clique in the recursive calls}
+        \State $P \gets V$ \Comment{Candidate vertices}
+        \State $X \gets \emptyset$ \Comment{Excluded vertices}
         \State $maximalCliques \gets \emptyset$ \Comment{The set of cliques to add the maximal cliques to}
         \State \Call{BronKerbosch}{$R$,$P$,$X$,$maximalCliques$} \Comment{Call the BronKerbosch algorithm to get the maximal cliques of the graph}
         \ForAll{$clique \in maximalCliques$}

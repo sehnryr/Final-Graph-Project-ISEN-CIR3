@@ -82,7 +82,7 @@ void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set
 
 
 // Modifie R en y ajoutant le voisin avec l'edge au plus haut poids entre les deux, Modifie TotalWeight pour ajouter le poids de l'edge entre le vertex et le voisin avec l'edge au plus haut poids
-void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &R)
+void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &S)
 {
     long unsigned int weight = 0; // variable temporaire correspond au poids de l'edge entre notre vertex et ses voisins
     long unsigned int BestWeight = 0; // variable correspondant au poids maximales obtenu lors de la lecture des voisins
@@ -118,16 +118,16 @@ void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> 
     }
 
     // je recupere le poids des edges entre les membres de ma clique et le membre que j'vais ajouté (le voisin au plus haut poids du dernier vertex de R)
-    auto vertices = R.getVertices();
+    auto vertices = S.getVertices();
     for(auto v1 : vertices) // mm méthode que Youn en gros
     {
         auto edge = graph.getEdge(v1, BestVertex); // recupere le poids de l'edge entre de tout les membres de R et BestVertex
         CliqueWeight += edge.value()->getWeight(); // ajoute ce poids à une variable qui va etre ajouté aux poids total de la clique
     }
 
-    R.addVertex(BestVertex);
+    S.addVertex(BestVertex);
     vertex = BestVertex;
-    R.addWeight(CliqueWeight);
+    S.addWeight(CliqueWeight);
 }
 
 
@@ -136,13 +136,13 @@ Clique constructiveMEWC(Graph g)
     // UNUSED(g);
     // TODO : implement the constructive algorithm
 
-    Clique R; //  clique qui forme la solution
+    Clique S; //  clique qui forme la solution
     std::unordered_set<VertexPtr> P; // Liste de sommets candidats
 
     auto FirstVertex = getFirstVertex(g); // vertex avec le plus grand nombre de sommets
     VertexPtr lastvertex = FirstVertex;
 
-    R.addVertex(FirstVertex); // On ajoute le vertex à notre clique
+    S.addVertex(FirstVertex); // On ajoute le vertex à notre clique
     getPotentielCandidate(g, FirstVertex, P); // On recupère les neighbors de FirstVertex et on les mets dans P
     // imaginons l'instance
     // 4 4
@@ -154,10 +154,10 @@ Clique constructiveMEWC(Graph g)
 
     while (P.size() != 0) // le but de mon algo va de réduire tout les candidats possible à 0, il n'y aura aucun autre candidats ajoutable à la clique
     {
-        updateClique(g, lastvertex, P, R); // (R.getVertices()).end() correspond à FirstVertex (dernier element de la clique)
+        updateClique(g, lastvertex, P, S); // (R.getVertices()).end() correspond à FirstVertex (dernier element de la clique)
         // j'ajoute le neighbors au plus haut poids à ma clique et j'ajoute son poids au poids de la clique
         updatePotentielCandidate(g, lastvertex, P); // je recupere dernier element de la clique ajouté (celui qui a été ajouté par updateClique) et j'vais actualisé P
     }
 
-    return R;
+    return S;
 }

@@ -13,19 +13,74 @@
 VertexPtr getFirstVertex(Graph graph)
 {
     VertexPtr bestVertex;
-    long unsigned int maxNumNeighbors = 0;
     auto adjMatrix = graph.getAdjacencyMatrix();
     auto vertices = graph.getVertices();
+
+    auto weight = 0;
+    auto totalWeight = 0;
+    auto bestWeight = 0;
+
+    long unsigned int maxNumNeighbors = 0;
 
     for (auto vertex : vertices) // je verifie le nombre de voisins et l'ajoute dans MaxNumberOfNeighors et BestVertex si c'est le plus grand encore jamais atteint
     {
         auto neighbors = adjMatrix[vertex->getId()];
         if(neighbors.size() > maxNumNeighbors)
         {
+            totalWeight = 0;
             maxNumNeighbors = neighbors.size();
             bestVertex = vertex;
+            for (const auto& [neighbor, sharededge] : neighbors) 
+            {
+                weight = sharededge->getWeight();
+                totalWeight += weight;
+                weight = 0;
+            }
+            bestWeight = totalWeight;
+        }
+        else if(neighbors.size() == maxNumNeighbors)
+        {
+            totalWeight = 0;
+            for (const auto& [neighbor, sharededge] : neighbors) 
+            {
+                weight = sharededge->getWeight();
+                totalWeight += weight;
+                weight = 0;
+            }
+            if(totalWeight > bestWeight)
+            {
+                bestWeight = totalWeight;
+                bestVertex = vertex;
+            }
         }
     }
+
+    // for (auto vertex : vertices)
+    // {
+    //     totalWeight = 0;
+    //     auto neighbors = adjMatrix[vertex->getId()];
+    //     for (const auto& [neighbor, sharededge] : neighbors) 
+    //     {
+    //         weight = sharededge->getWeight();
+    //         totalWeight += weight;
+    //         weight = 0;
+    //     }
+
+    //     if(totalWeight > bestWeight)
+    //     {
+    //         bestWeight = totalWeight;
+    //         bestVertex = vertex;
+    //         maxNumNeighbors = neighbors.size();
+    //     }
+    //     else if(totalWeight == bestWeight)
+    //     {
+    //         if(neighbors.size() > maxNumNeighbors)
+    //         {
+    //             bestVertex = vertex;
+    //             maxNumNeighbors = neighbors.size();
+    //         }
+    //     }   
+    // }
 
     return bestVertex;
 }
@@ -42,7 +97,8 @@ void getPotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<Ve
     {
         VertexPtr vertexNeighbor = std::make_shared<Vertex>(neighbor);
         P.insert(vertexNeighbor);   
-    }   
+    }  
+     
 }
 
 // Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique (en gros tout les voisins du vertex choisi)

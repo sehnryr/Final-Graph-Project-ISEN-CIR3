@@ -21,7 +21,7 @@ mkdir -p $RESULTS_DIR
 # Run the experiment for each connectivity
 for CONNECTIVITY in 25 50 75 ; do
     # Empty .dat file for the results
-    echo "x y" > "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}.dat"
+    cat /dev/null > "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}.dat"
 
     # Run the experiment with 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 vertices
     for VERTEX_COUNT in 10 20 30 40 50 60 70 80 90 100 ; do

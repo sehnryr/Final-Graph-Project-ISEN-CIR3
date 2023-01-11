@@ -94,15 +94,15 @@
     \label{updatepotentielcandidate-pseudocode}
     \begin{algorithmic}[1]
         \Procedure{updatePotentielCandidate}{$G$,$lastVertex$,$P$}
-            \State $voisin \gets \emptyset$
-            \ForAll{$vertex \in N(lastVertex)$}
-                \State $voisin.\text{insert}(N(vertex))$
+            \State $neighbors \gets \emptyset$ \Comment{Variable to store the neighbors of $lastVertex$}
+            \ForAll{$vertex \in N(lastVertex)$} \Comment{add every neighbors of $lastVertex$ in $neighbors$}
+                \State $neighbors.\text{insert}(N(vertex))$
             \EndFor
-            \For{$v \in P$}
-                \If {$voisin.\text{count(i)} = 0$} 
-                    \State $P.erase(i)$
-                \ElsIf {$vertex = i$}
-                    \State $P.\text{erase(i)}$
+            \For{$v \in P$} 
+                \If {$neighbors.\text{count(i)} = 0$} \Comment{if $v \notin$ neighbors, remove $v$ in $P$}
+                    \State $P.erase(v)$
+                \ElsIf {$lastVertex = v$} \Comment{if $lastVertex \in P$, remove it}
+                    \State $P.\text{erase(v)}$
                 \EndIf
             \EndFor
         \EndProcedure

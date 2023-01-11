@@ -37,6 +37,9 @@ for CONNECTIVITY in 25 50 75 ; do
             echo "$VERTEX_COUNT $TIME_EXEC" >> "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}.dat"
         done
     done
+
+    # Create average .dat file with errors
+    awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1} else{x=$1;y+=$2;sy+=$2*$2;n+=1;}} END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}.dat" > "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}_avg.dat"
 done
 
 # Remove the TEMP_DIR

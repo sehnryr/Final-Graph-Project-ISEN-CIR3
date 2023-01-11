@@ -115,11 +115,11 @@ void BronKerbosch(
 
             // Recursive call
             BronKerbosch(graph, R_new, P_new, X_new, cliques);
-        }
 
-        // Remove the current vertex from P and add it to X
-        P.erase(v);
-        X.insert(v);
+            // Remove the current vertex from P and add it to X
+            P.erase(v);
+            X.insert(v);
+        }
     }
 }
 

@@ -28,6 +28,60 @@
             \item Another reason is that we can potentially reduce the search space for the rest of the algorithm. This is because we know that any clique we find must include this vertex, which means that we can eliminate any vertices that are not connected to it as potential members of the clique. This can help to make the algorithm more efficient by reducing the number of vertices that we need to consider.
         \end{itemize}
     \end{itemize}
+    
+    We will illustrate these explanations with figure 11 and 12 which shows the advantages of each over the other.
+    \\ \\
+    \begin{minipage}{\linewidth}
+        \begin{minipage}{0.5\textwidth}
+            \begin{figure}[H]
+                \centering
+                \begin{tikzpicture}[node distance=2cm]
+                    \node[circle, draw] (1) {1};
+                    \node[circle, draw] (2) at ([shift=(210:2)] 1) {2};
+                    \node[circle, draw] (3) [left of=2] {3};
+                    \node[circle, draw] (4) [above of=3] {4};
+                    \node[circle, draw, red] (5) [above of=2] {5};
+                    \node[circle, draw] (6) at ([shift=(150:2)] 4) {6};
+    
+                    \draw  (1) -- (2) node[midway, above, sloped] {2};
+                    \draw (1) -- (5) node[midway, above, sloped] {1};
+                    \draw (2) -- (3) node[midway, above, sloped] {1};
+                    \draw (2) -- (5) node[midway, above, sloped] {3};
+                    \draw (3) -- (4) node[midway, above, sloped] {2};
+                    \draw (4) -- (5) node[midway, above, sloped] {3};
+                    \draw (4) -- (6) node[midway, above, sloped] {4};
+                    \draw (5) -- (3) node[midway, above, sloped] {1};
+                \end{tikzpicture}
+                \caption{Graph illustration for the highest degree vertex}
+                \label{fig:vertex-highest-degree}
+            \end{figure}
+        \end{minipage}
+        \begin{minipage}{0.5\textwidth}
+            \begin{figure}[H]
+                \centering
+                \begin{tikzpicture}[node distance=2cm]
+                    \node[circle, draw] (1) {1};
+                    \node[circle, draw] (2) at ([shift=(210:2)] 1) {2};
+                    \node[circle, draw, red] (3) [left of=2] {3};
+                    \node[circle, draw] (4) [above of=3] {4};
+                    \node[circle, draw] (5) [above of=2] {5};
+                    \node[circle, draw] (6) at ([shift=(150:2)] 4) {6};
+    
+                    \draw  (1) -- (2) node[midway, above, sloped] {2};
+                    \draw (1) -- (5) node[midway, above, sloped] {1};
+                    \draw (2) -- (3) node[midway, above, sloped] {5};
+                    \draw (2) -- (5) node[midway, above, sloped] {1};
+                    \draw (3) -- (4) node[midway, above, sloped] {4};
+                    \draw (4) -- (5) node[midway, above, sloped] {3};
+                    \draw (4) -- (6) node[midway, above, sloped] {1};
+                \end{tikzpicture}
+                \caption{Graph illustration for the vertex with the highest sum of weights of the edges}
+                \label{fig:vertex-best-sum-weight-edge}
+            \end{figure}
+        \end{minipage}
+    \end{minipage}
+
+    \vspace{1\baselineskip}
 
     We implemented both ideas and performed tests on a number of graph to see which was the most consistent and we concluded that it was the vertex with the highest sum of weights of the edges. Moreover, in most graphs (at least the randomly generated ones), we had, in general, a rather homogeneous weights of edges which worked better with this one.
     \\ \\

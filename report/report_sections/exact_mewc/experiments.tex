@@ -1,51 +1,51 @@
 \subsection{Experiments}
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \begin{semilogyaxis}[
-                xlabel = Number of vertices,
-                ylabel = Execution time ($\mu$s),
-                legend style = {
-                        at={(1.05, 0.95)},
-                        anchor=north west,
-                    },
-            ]
-            \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] shell
-            {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
-            else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
-            END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_0.dat};
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}
+%         \begin{semilogyaxis}[
+%                 xlabel = Number of vertices,
+%                 ylabel = Execution time ($\mu$s),
+%                 legend style = {
+%                         at={(1.05, 0.95)},
+%                         anchor=north west,
+%                     },
+%             ]
+%             \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] shell
+%             {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
+%             else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
+%             END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_0.dat};
 
-            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] shell
-            {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
-            else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
-            END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_25.dat};
+%             \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] shell
+%             {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
+%             else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
+%             END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_25.dat};
 
-            \addplot[Green, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] shell
-            {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
-            else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
-            END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_50.dat};
+%             \addplot[Green, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] shell
+%             {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
+%             else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
+%             END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_50.dat};
 
-            \addplot[Red, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] shell
-            {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
-            else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
-            END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_75.dat};
+%             \addplot[Red, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] shell
+%             {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
+%             else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
+%             END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_75.dat};
 
-            \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] shell
-            {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
-            else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
-            END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_100.dat};
+%             \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] shell
+%             {awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1}
+%             else{x=$1;y+=$2;sy+=$2*$2;n+=1;}}
+%             END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' experiment_data/exact_100.dat};
 
-            \addplot[Black, domain=10:100] {0.00667*x^4.95};
-            \addplot[Black, domain=10:100] {2.18*x^1.97};
+%             \addplot[Black, domain=10:100] {0.00667*x^4.95};
+%             \addplot[Black, domain=10:100] {2.18*x^1.97};
 
-            \legend{0\%,25\%,50\%,75\%,100\%}
-        \end{semilogyaxis}
-    \end{tikzpicture}
-    \caption{Execution time of the exact algorithm for different percentages of edges.}
-\end{figure}
+%             \legend{0\%,25\%,50\%,75\%,100\%}
+%         \end{semilogyaxis}
+%     \end{tikzpicture}
+%     \caption{Execution time of the exact algorithm for different percentages of edges.}
+% \end{figure}

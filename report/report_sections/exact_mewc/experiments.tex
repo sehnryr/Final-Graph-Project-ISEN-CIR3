@@ -6,31 +6,27 @@
         \begin{semilogyaxis}[
                 xlabel = Number of vertices,
                 ylabel = Execution time ($\mu$s),
-                legend style = {
-                        at={(1.05, 0.95)},
-                        anchor=north west,
-                    },
+                legend pos = outer north east,
+                grid = major,
+                width = 0.7\textwidth,
             ]
             \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_0_avg.dat};
-
-            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_25_avg.dat};
-
-            \addplot[Green, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_50_avg.dat};
-
+            table[x index=0, y index=1, y error index=2] {experiment_data/exact_100_avg.dat};
+            
             \addplot[Red, error bars/.cd, y dir=both, y explicit]
             table[x index=0, y index=1, y error index=2] {experiment_data/exact_75_avg.dat};
+            
+            \addplot[Green, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/exact_50_avg.dat};
+            
+            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/exact_25_avg.dat};
+            
+            \addplot[Black, dashed, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/exact_0_avg.dat};
 
-            \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_100_avg.dat};
-
-            % \addplot[Black, domain=10:100] {0.00667*x^4.95};
-            % \addplot[Black, domain=10:100] {6.11*x^1.75};
-
-            \legend{0\%,25\%,50\%,75\%,100\%}
+            \legend{100\%, 75\%, 50\%, 25\%, 0\%}
         \end{semilogyaxis}
     \end{tikzpicture}
-    \caption{Execution time of the exact algorithm for different percentages of edges.}
+    \caption{Execution time of the exact algorithm for different percentages of connectivity.}
 \end{figure}

@@ -12,7 +12,7 @@
                     },
             ]
             \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data_second/exact_0_avg.dat};
+            table[x index=0, y index=1, y error index=2] {experiment_data/exact_0_avg.dat};
 
             \addplot[Blue, error bars/.cd, y dir=both, y explicit]
             table[x index=0, y index=1, y error index=2] {experiment_data/exact_25_avg.dat};
@@ -27,7 +27,7 @@
             table[x index=0, y index=1, y error index=2] {experiment_data/exact_100_avg.dat};
 
             % \addplot[Black, domain=10:100] {0.00667*x^4.95};
-            % \addplot[Black, domain=10:100] {2.18*x^1.97};
+            % \addplot[Black, domain=10:100] {6.11*x^1.75};
 
             \legend{0\%,25\%,50\%,75\%,100\%}
         \end{semilogyaxis}

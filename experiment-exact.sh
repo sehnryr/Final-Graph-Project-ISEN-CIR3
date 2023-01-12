@@ -39,6 +39,7 @@ for CONNECTIVITY in 0 25 50 75 100 ; do
     done
 
     # Create average .dat file with errors
+    # (https://tex.stackexchange.com/a/158777)
     awk '/^[0-9]/{if($1!=x&&length(x)!=0){print x, y/n, sqrt((n*sy-y*y)/n/(n-1));x=$1;y=$2;sy=$2*$2;n=1} else{x=$1;y+=$2;sy+=$2*$2;n+=1;}} END{print x,y/n, sqrt((n*sy-y*y)/n/(n-1))}' "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}.dat" > "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}_avg.dat"
 done
 

@@ -13,15 +13,39 @@ The complexity of the weight calculation is $\mathcal{O}(n^2)$, because we need
 to iterate two times over the vertices of the clique to get every edge and by
 extension their cumulative weight. \newline
 
-The complexity of the algorithm is therefore $\mathcal{O}(n^2\times3^{\frac{n}{3}})$,
+The worst case complexity of the algorithm is therefore $\mathcal{O}(n^2\times3^{\frac{n}{3}})$,
 as we need to iterate through the computed maximal cliques by the Bron-Kerbosch
 algorithm and calculate their weight. \newline
 
-That is the worst case complexity of the algorithm, but realistically, the complexity
-will vary depending on the connectivity of the graph. If the graph is not connected,
-the Bron-Kerbosch algorithm will complete in $n$ steps and the weight calculation
-will be constant as there will be no edge to find. We can easily see the best case
-complexity is $\mathcal{O}(n)$. \newline
+Now, the worst case complexity is not the average complexity of the algorithm.
+Realistically, the complexity will vary depending on the connectivity of the
+graph. Thought calculating its average complexity is not trivial, we can still
+give a lower bound of the complexity. \newline
+
+Seeing how the algorithm works by excluding the neighboring vertices of the pivot
+vertex from the iteration, the lower bound of the complexity will be the special
+case where the graph is empty with no edges connecting the vertices. We can
+calculate that complexity by using the following formula:
+
+\begin{equation}
+    T(n)=\begin{cases}
+        1        & \text{if } n=0 \\
+        T(n-1)+n & \text{if } n>0
+    \end{cases}
+\end{equation}
+
+Base case: $T(0)=1$ \newline
+Inductive step: $T(k)=\frac{1}{2}(k^2+k+2)$
+
+\begin{align}
+    T(k+1)&=\frac{1}{2}((k+1)^2+(k+1)+2)\\
+    &=\frac{1}{2}(k^2+2k+1+k+3)\\
+    &=\frac{1}{2}(k^2+k+2)+\frac{1}{2}(2k+2)\\
+    &=T(k)+(k+1)
+\end{align}
+
+Since we proved that $T(n)=\frac{1}{2}(n^2+n+2)$, we can conclude that the complexity
+of the lower bound of the algorithm is $\mathcal{O}(n^2)$. \newline
 
 The implementation of the algorithm done with efficient data structures permit us
 to have a complexity of set insertion, deletion and lookup to be constant in average.

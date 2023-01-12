@@ -2,14 +2,14 @@
 
 As said before, our algorithm first uses the Bron-Kerbosch algorithm to obtain
 all the maximal cliques of the input graph. Then, it iterates through those maximal
-cliques to looks for which cliques have the highest weight. \newline
+cliques to looks for which cliques have the highest weight. \bigskip
 
 \textbf{The Bron-Kerbosch pivot algorithm} that we use is a more efficient variant
 of the initial algorithm. The basic form of the algorithm is inefficient in the
 case of graphs with many non-maximal cliques as it makes a recursive call for
 every clique, maximal or not. To save time and allow the algorithm to backtrack
 more quickly in branches of the search that contain no maximal cliques, Bron and
-Kerbosch introduced a variant of the algorithm involving a "pivot vertex". \newline
+Kerbosch introduced a variant of the algorithm involving a "pivot vertex". \bigskip
 
 At each step, the algorithm keeps track of three groups of vertices: $R$ which is
 a partially constructed (non-maximal) clique, $P$ which is the candidates vertices
@@ -21,7 +21,7 @@ these vertices, it moves it to the set of vertices that should not be added agai
 At each recursion, $P$ and $X$ are restricted to the neighbors of current vertex
 being added to $R$ and when $P$ and $X$ are both empty there are no further
 elements that can be added to $R$, $R$ is a maximal clique and the algorithm
-reports $R$. \newline
+reports $R$. \bigskip
 
 The recursion is initiated by setting $R$ and $X$ to be the empty set and $P$ to
 be the vertex set of the graph. Within each recursive call, the algorithm considers
@@ -35,14 +35,15 @@ $v$ chosen from $P\backslash N(u)$, with $N(u)$ being the neighbor set of $u$,
 it makes a recursive call in which $v$ is added to $R$ and in which $P$ and $X$
 are restricted to $N(v)$, which finds and reports all cliques extensions of $R$
 that contains $v$. Then, it moves $v$ from $P$ to $X$ to exclude it from consideration
-in future cliques and continues with the next vertex in $P\backslash N(u)$. \newline
+in future cliques and continues with the next vertex in $P\backslash N(u)$. \bigskip
 
 To illustrate the Bron-Kerbosch algorithm, let's use the example in
 Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
-\newline
+\bigskip
 
 \begin{minipage}{\linewidth}
-    \textbf{Step 0:} \newline
+    \textbf{Step 0:}
+
     \begin{minipage}{0.4\textwidth}
         \begin{figure}[H]
             \centering
@@ -66,7 +67,8 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \label{fig:exact-mewc-step0}
         \end{figure}
     \end{minipage}
-    \begin{minipage}{0.6\textwidth}
+    \hspace{0.04\linewidth}
+    \begin{minipage}{0.55\textwidth}
         At the initial step, as said before, we will initialize $R$ and $X$ to be the
         empty set and $P$ to be the set of vertices of the graph.
 
@@ -78,10 +80,11 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \end{tabular}
         \end{center}
     \end{minipage}
-\end{minipage} \newline
+\end{minipage} \bigskip
 
 \begin{minipage}{\linewidth}
-    \textbf{Step 1:} \newline
+    \textbf{Step 1:}
+
     \begin{minipage}{0.4\textwidth}
         \begin{figure}[H]
             \centering
@@ -105,24 +108,26 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \label{fig:exact-mewc-step1}
         \end{figure}
     \end{minipage}
-    \begin{minipage}{0.6\textwidth}
+    \hspace{0.04\linewidth}
+    \begin{minipage}{0.55\textwidth}
         In the first call of the function, since $P$ is not empty, we chose a
         pivot vertex $u$ in $P\cup X$. As it would be more time-consuming to
         search for an appropriate pivot vertex, we simply chose the first one
         available, which will be represented in \textcolor{red}{red}. In this
         example we will always take the first element of $P$. The neighboring
-        vertices of $u$ are represented in \textcolor{Cerulean}{blue}. \newline
+        vertices of $u$ are represented in \textcolor{Cerulean}{blue}. \bigskip
 
         After that, we will iterate over the vertices of $P\backslash N(u)$,
         or in this case, $\{1,3,4,6\}$, and for each vertex $v$ we will make a
         recursive call to the function with $v$ added to $R$ and $P$ and $X$
         restricted to $N(v)$, which will find and report all cliques extensions
-        of $R$ that contains $v$. \newline
+        of $R$ that contains $v$. \bigskip
     \end{minipage}
-\end{minipage} \newline
+\end{minipage} \bigskip
 
 \begin{minipage}{\linewidth}
-    \textbf{Step 2:} \newline
+    \textbf{Step 2:}
+
     \begin{minipage}{0.4\textwidth}
         \begin{figure}[H]
             \centering
@@ -146,18 +151,19 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \label{fig:exact-mewc-step2}
         \end{figure}
     \end{minipage}
-    \begin{minipage}{0.6\textwidth}
+    \hspace{0.04\linewidth}
+    \begin{minipage}{0.55\textwidth}
         At this step, since $P$ is not empty, we will choose a pivot vertex $u$
         in $P\cup X$. Here $u = 2$ and the algorithm will iterate over the
-        vertices of $P\backslash N(u)$, which is $\{2\}$. \newline
+        vertices of $P\backslash N(u)$, which is $\{2\}$. \bigskip
 
         The next recursive call will be made with $P = \{5\}$, the pivot vertex
         will be $u = 5$ and then the next recursive call will report the clique
-        $\{1,2,5\}$, which will be added to the list of cliques. \newline
+        $\{1,2,5\}$, which will be added to the list of cliques. \bigskip
 
         After that, the algorithm will backtrack to $R=\{\}$ since there will be
         no more iteration to do, and will add $1$ to $X$ as it was visited in
-        its entirety. \newline
+        its entirety. \bigskip
 
         The recursive call process looks like this:
         \begin{center}
@@ -170,10 +176,11 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \end{tabular}
         \end{center}
     \end{minipage}
-\end{minipage} \newline
+\end{minipage} \bigskip
 
 \begin{minipage}{\linewidth}
-    \textbf{Step 3:} \newline
+    \textbf{Step 3:}
+
     \begin{minipage}{0.4\textwidth}
         \begin{figure}[H]
             \centering
@@ -197,18 +204,19 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \label{fig:exact-mewc-step3}
         \end{figure}
     \end{minipage}
-    \begin{minipage}{0.6\textwidth}
+    \hspace{0.04\linewidth}
+    \begin{minipage}{0.55\textwidth}
         At this step, since $P$ is not empty, we will choose a pivot vertex $u$
         in $P\cup X$. Here $u = 2$ and the algorithm will iterate over the
-        vertices of $P\backslash N(u)$, which is $\{2,4\}$. \newline
+        vertices of $P\backslash N(u)$, which is $\{2,4\}$. \bigskip
 
         The next recursive calls will be made with $P = \{\}$ and $X = \{\}$, so
         they will report the cliques $\{2,3\}$ and $\{3,4\}$, which will be
-        added to the list of cliques. \newline
+        added to the list of cliques. \bigskip
 
         After that, the algorithm will backtrack to $R=\{\}$ since there will be
         no more iteration to do, and will add $3$ to $X$ as it was visited in
-        its entirety. \newline
+        its entirety. \bigskip
 
         The recursive call process looks like this:
         \begin{center}
@@ -221,10 +229,11 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \end{tabular}
         \end{center}
     \end{minipage}
-\end{minipage} \newline
+\end{minipage} \bigskip
 
 \begin{minipage}{\linewidth}
-    \textbf{Step 4:} \newline
+    \textbf{Step 4:}
+
     \begin{minipage}{0.4\textwidth}
         \begin{figure}[H]
             \centering
@@ -248,18 +257,19 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \label{fig:exact-mewc-step4}
         \end{figure}
     \end{minipage}
-    \begin{minipage}{0.6\textwidth}
+    \hspace{0.04\linewidth}
+    \begin{minipage}{0.55\textwidth}
         At this step, since $P$ is not empty, we will choose a pivot vertex $u$
         in $P\cup X$. Here $u = 3$ and the algorithm will iterate over the
-        vertices of $P\backslash N(u)$, which is $\{5,6\}$. \newline
+        vertices of $P\backslash N(u)$, which is $\{5,6\}$. \bigskip
 
         The next recursive calls will be made with $P = \{\}$ and $X = \{\}$, so
         they will report the cliques $\{4,5\}$ and $\{4,6\}$, which will be
-        added to the list of cliques. \newline
+        added to the list of cliques. \bigskip
 
         After that, the algorithm will backtrack to $R=\{\}$ since there will be
         no more iteration to do, and will add $4$ to $X$ as it was visited in
-        its entirety. \newline
+        its entirety. \bigskip
 
         The recursive call process looks like this:
         \begin{center}
@@ -272,11 +282,12 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \end{tabular}
         \end{center}
     \end{minipage}
-\end{minipage} \newline
+\end{minipage} \bigskip
 
 \begin{minipage}{\linewidth}
-    \textbf{Step 5:} \newline
-    \begin{minipage}{0.4\textwidth}
+    \textbf{Step 5:}
+
+    \begin{minipage}{0.4\linewidth}
         \begin{figure}[H]
             \centering
             \begin{tikzpicture}[node distance=2cm, nodes={circle,draw}]
@@ -299,10 +310,11 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \label{fig:exact-mewc-step5}
         \end{figure}
     \end{minipage}
-    \begin{minipage}{0.6\textwidth}
+    \hspace{0.04\linewidth}
+    \begin{minipage}{0.55\linewidth}
         At this step, since $P$ is empty and $X$ is not, the algorithm will
         choose a pivot vertex $u$ in $X$. Here $u = 4$ but the algorithm will
-        not be able to iterate further as $P\backslash N(4) = \{\}$. \newline
+        not be able to iterate further as $P\backslash N(4) = \{\}$. \bigskip
 
         The recursive call process looks like this:
         \begin{center}
@@ -313,7 +325,7 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
             \end{tabular}
         \end{center}
     \end{minipage}
-\end{minipage} \newline
+\end{minipage} \bigskip
 
 The Bron-Kerbosch algorithm is now finished, and we have obtained the following
 maximal cliques:
@@ -322,11 +334,11 @@ maximal cliques:
 \end{center}
 
 Now that we obtained the maximal cliques of the graph, we can compare them to find
-the maximal edge-weighted clique. \newline
+the maximal edge-weighted clique. \bigskip
 
 We will simply iterate over the maximal cliques and sum the weights of the edges
 that are in the clique. The clique with the highest weight will be the maximal
-edge-weighted clique. \newline
+edge-weighted clique. \bigskip
 
 \begin{minipage}{\linewidth}
     If we want to explain everything in a more concise way, we can use the call

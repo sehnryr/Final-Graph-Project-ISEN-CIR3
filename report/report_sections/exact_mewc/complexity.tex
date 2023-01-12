@@ -2,25 +2,25 @@
 
 Let be a graph $G=(V,E)$ such that $n=|V|$, we can now calculate the complexity 
 of our algorithm. The cost of attributing a value to a variable should
-always be $\mathcal{O}(1)$. \newline
+always be $\mathcal{O}(1)$. \bigskip
 
 The worst case complexity of the Bron-Kerbosch algorithm is $\mathcal{O}(\sqrt[3]{3}^n)$,
 we will not prove it here, but it is a well-known fact proven by Moon \& Moser
 \cite{on-cliques-in-graphs} that there are at most $\sqrt[3]{3}^n$ maximal cliques
-in any $n$-vertex graph. \newline
+in any $n$-vertex graph. \bigskip
 
 The complexity of the weight calculation is $\mathcal{O}(n^2)$, because we need
 to iterate two times over the vertices of the clique to get every edge and by
-extension their cumulative weight. \newline
+extension their cumulative weight. \bigskip
 
 The worst case complexity of the algorithm is therefore $\mathcal{O}(n^2\sqrt[3]{3}^n)$,
 as we need to iterate through the computed maximal cliques by the Bron-Kerbosch
-algorithm and calculate their weight. \newline
+algorithm and calculate their weight. \bigskip
 
 Now, the worst case complexity is not the average complexity of the algorithm.
 Realistically, the complexity will vary depending on the connectivity and degeneracy 
 of the graph. Thought calculating its average complexity is not trivial, we can 
-still give a lower bound of the complexity. \newline
+still give a lower bound of the complexity. \bigskip
 
 Seeing how the algorithm works by excluding the neighboring vertices of the pivot
 vertex from the iteration, the lower bound of the complexity will be the special
@@ -34,7 +34,7 @@ calculate that complexity by using the following formula:
     \end{cases}
 \end{equation}
 
-Base case: $T(0)=1$ \newline
+Base case: $T(0)=1$ \\
 Inductive step: $T(k)=\frac{1}{2}(k^2+k+2)$
 
 \begin{align}
@@ -45,7 +45,7 @@ Inductive step: $T(k)=\frac{1}{2}(k^2+k+2)$
 \end{align}
 
 Since we proved that $T(n)=\frac{1}{2}(n^2+n+2)$, we can conclude that the complexity
-of the lower bound of the algorithm is $\mathcal{O}(n^2)$. \newline
+of the lower bound of the algorithm is $\mathcal{O}(n^2)$. \bigskip
 
 Also, to match this theoretical complexity, we need to use efficient data structures
-with constant insertion, deletion and lookup time. \newline
+with constant insertion, deletion and lookup time. \bigskip

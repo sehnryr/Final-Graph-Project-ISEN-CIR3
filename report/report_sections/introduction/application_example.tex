@@ -2,7 +2,7 @@
 
 As we said before, the MEWC has many real-world applications in various fields
 such as social networks, chemistry, bioinformatics. Now, we will give a concrete
-example of a real-life situation that can be modelled as a MEWC problem. \newline
+example of a real-life situation that can be modelled as a MEWC problem. \bigskip
 
 \textbf{The team formation process} for a project, or for the search for a particular
 social group, is a situation that can be viewed as a MEWC problem. Let's imagine that
@@ -16,39 +16,40 @@ distribution service that gives information about the games played by each one) 
 as a record made by the gaming club of the different games played by their members. The
 fact of playing games in common could bring some people closer, and this makes it a good
 criterion to create a group that could take over the club because it would share common
-interests. \newline
+interests. \bigskip
 
 To model this problem, we can represent each student as a vertex and each the games
 played in common as an edge. The weight of each edge will be the number of games played
 in common. The goal of the office is to find a group of students that will take over the
 club. To do this, we will use the MEWC algorithm to find a group of students that
-has the highest affinity. \newline
+has the highest affinity. \bigskip
 
 In the following example, we will restrict ourselves to 9 students of the CIR3 class
 of ISEN Nantes since it would be too complicated to represent every student of the
 school. We will also assume that the students have played the game listed in the table
-below. \newline
+below. \bigskip
 
-\rowcolors{2}{gray!10}{gray!30}
-\begin{tabular}{|p{0.3\textwidth}|p{0.65\textwidth}|}
-    \hline
-    \textbf{Students} & \textbf{Game played}                         \\
-    \hline
-    Youn              & Minecraft, Civilization, Lost ARK, Among US \\
-    Martin            & Minecraft                                    \\
-    Valentin          & Genshin, Minecraft, Civilization            \\
-    Bastien           & Genshin, Minecraft, Lost ARK, Among US       \\
-    Guillaume         & CSGO, Genshin, Overwatch, Stardew Valley     \\
-    Dorian            & CSGO, Paladins, Overwatch                    \\
-    Antoine           & League of Legends, Stardew Valley            \\
-    Thomas            & League of Legends, The Last of US            \\
-    Alexandre         & League of Legends, Dofus                     \\
-    \hline
-\end{tabular}
-\rowcolors{1}{}{}
-\vspace{1\baselineskip} \\
+\begin{center}
+    \rowcolors{2}{gray!10}{gray!30}
+    \begin{tabular}{|p{0.3\textwidth}|p{0.6\textwidth}|}
+        \hline
+        \textbf{Students} & \textbf{Game played}                         \\
+        \hline
+        Youn              & Minecraft, Civilization, Lost ARK, Among US \\
+        Martin            & Minecraft                                    \\
+        Valentin          & Genshin, Minecraft, Civilization            \\
+        Bastien           & Genshin, Minecraft, Lost ARK, Among US       \\
+        Guillaume         & CSGO, Genshin, Overwatch, Stardew Valley     \\
+        Dorian            & CSGO, Paladins, Overwatch                    \\
+        Antoine           & League of Legends, Stardew Valley            \\
+        Thomas            & League of Legends, The Last of US            \\
+        Alexandre         & League of Legends, Dofus                     \\
+        \hline
+    \end{tabular}
+    \rowcolors{1}{}{}
+\end{center}
+% \vspace{1\baselineskip} \\
 Which would give us this graph :
-
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}[node distance=3cm]

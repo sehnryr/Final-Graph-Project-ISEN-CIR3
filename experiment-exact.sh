@@ -19,7 +19,7 @@ mkdir -p $TEMP_DIR
 mkdir -p $RESULTS_DIR
 
 # Run the experiment for each connectivity
-for CONNECTIVITY in 25 50 75 ; do
+for CONNECTIVITY in 0 25 50 75 100 ; do
     # Empty .dat file for the results
     cat /dev/null > "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}.dat"
 

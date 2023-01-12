@@ -1,4 +1,4 @@
-\subsection{Pseudo code}
+\subsection{Pseudocode}
 
 \begin{algorithm}[H]
     \caption{Exact MEWC algorithm}
@@ -34,7 +34,7 @@
         \EndIf
         \State $u\in P\cup X$ \Comment{Chose a pivot vertex from $P\cup X$}
         \ForAll{$v \in P \backslash N(u)$}
-        \State \Call{BronKerbosch}{$N \cup \{v\}$,$P \cap N(v)$,$X \cap N(v)$} \Comment{Make recusive call with reduced candidate set}
+        \State \Call{BronKerbosch}{$N \cup \{v\}$,$P \cap N(v)$,$X \cap N(v)$} \Comment{Make recursive call with reduced candidate set}
         \State $P \gets P \backslash \{v\}$
         \State $X \gets X \cup \{v\}$
         \EndFor

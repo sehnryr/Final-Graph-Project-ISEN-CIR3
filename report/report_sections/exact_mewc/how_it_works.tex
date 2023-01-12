@@ -1,7 +1,7 @@
 \subsection{How it works}
 
 As said before, our algorithm first uses the Bron-Kerbosch algorithm to obtain
-all the maximal cliques of the input graph. Then, it iterate through those maximal
+all the maximal cliques of the input graph. Then, it iterates through those maximal
 cliques to looks for which cliques have the highest weight. \newline
 
 \textbf{The Bron-Kerbosch pivot algorithm} that we use is a more efficient variant
@@ -25,15 +25,15 @@ reports $R$. \newline
 
 The recursion is initiated by setting $R$ and $X$ to be the empty set and $P$ to
 be the vertex set of the graph. Within each recursive call, the algorithm considers
-the vertices $P$ in turn; if there a no such vertices, it either reports $R$ as
+the vertices $P$ in turn; if there are no such vertices, it either reports $R$ as
 a maximal clique if $X$ is also empty, or continue. Then, a pivot vertex $u$ is
 chosen from $P\cup X$ since any maximal clique must include either $u$ or one of
 its non-neighbors, for otherwise the clique could be augmented by adding $u$ to it.
 Only $u$ and its non-neighbors needs to be tested as the choices for the vertex
-$v$ that is added to $R$ in each recusive call to the algorithm. For each vertex
+$v$ that is added to $R$ in each recursive call to the algorithm. For each vertex
 $v$ chosen from $P\backslash N(u)$, with $N(u)$ being the neighbor set of $u$,
 it makes a recursive call in which $v$ is added to $R$ and in which $P$ and $X$
-are restriced to $N(v)$, which finds and reports all cliques extensions of $R$
+are restricted to $N(v)$, which finds and reports all cliques extensions of $R$
 that contains $v$. Then, it moves $v$ from $P$ to $X$ to exclude it from consideration
 in future cliques and continues with the next vertex in $P\backslash N(u)$. \newline
 
@@ -107,7 +107,7 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
     \end{minipage}
     \begin{minipage}{0.6\textwidth}
         In the first call of the function, since $P$ is not empty, we chose a
-        pivot vertex $u$ in $P\cup X$. As it would be more time consuming to
+        pivot vertex $u$ in $P\cup X$. As it would be more time-consuming to
         search for an appropriate pivot vertex, we simply chose the first one
         available, which will be represented in \textcolor{red}{red}. In this
         example we will always take the first element of $P$. The neighboring
@@ -152,11 +152,11 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
         vertices of $P\backslash N(u)$, which is $\{2\}$. \newline
 
         The next recursive call will be made with $P = \{5\}$, the pivot vertex
-        will be $u = 5$ and then the next recusive call will report the clique
+        will be $u = 5$ and then the next recursive call will report the clique
         $\{1,2,5\}$, which will be added to the list of cliques. \newline
 
         After that, the algorithm will backtrack to $R=\{\}$ since there will be
-        no more iteration to do, and will add $1$ to $X$ as is was visited in
+        no more iteration to do, and will add $1$ to $X$ as it was visited in
         its entirety. \newline
 
         The recursive call process looks like this:
@@ -207,7 +207,7 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
         added to the list of cliques. \newline
 
         After that, the algorithm will backtrack to $R=\{\}$ since there will be
-        no more iteration to do, and will add $3$ to $X$ as is was visited in
+        no more iteration to do, and will add $3$ to $X$ as it was visited in
         its entirety. \newline
 
         The recursive call process looks like this:
@@ -258,7 +258,7 @@ Figure \ref{fig:basic-graph-example} on page \pageref{fig:basic-graph-example}:
         added to the list of cliques. \newline
 
         After that, the algorithm will backtrack to $R=\{\}$ since there will be
-        no more iteration to do, and will add $4$ to $X$ as is was visited in
+        no more iteration to do, and will add $4$ to $X$ as it was visited in
         its entirety. \newline
 
         The recursive call process looks like this:

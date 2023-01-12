@@ -20,12 +20,12 @@ However we could only look at the maximal cliques of the graph, which would
 reduce the number of subsets to explore. A clique is maximal if it is not a
 subgraph of any other clique. To find all maximal cliques in a graph, we can use
 the \textbf{Bron-Kerbosch} algorithm\cite{finding-all-cliques-of-an-undirected-graph}.
-This algorithm has a time complexity of $\mathcal{O}(3^{\frac{n}{3}})$, where $n$
+This algorithm has a time complexity of $\mathcal{O}(\sqrt[3]{3}^n)$, where $n$
 is the number of vertices in the graph. This is optimal, as it has been proven by
 J. W. Moon \& L. Moser in 1965\cite{on-cliques-in-graphs} that there are at most
-$3^{\frac{n}{3}}$ maximal cliques in any n-vertex graph.
+$\sqrt[3]{3}^n$ maximal cliques in any n-vertex graph and $\sqrt[3]{3} \approx 1.44 < 2$.
 \newline \newline
 We can use the Bron-Kerbosch algorithm to find all maximal cliques in the graph,
 and then compute the weight of each clique. This approach has a time complexity of
-$\mathcal{O}(n^2\times3^{\frac{n}{3}})$, which is much better than the previous
+$\mathcal{O}(n^2\sqrt[3]{3}^n)$, which is much better than the previous
 approach. However, this algorithm is still not feasible for large-scale graphs.

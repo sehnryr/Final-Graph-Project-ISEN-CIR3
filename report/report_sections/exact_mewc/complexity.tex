@@ -1,26 +1,26 @@
 \subsection{Complexity}
 
-Let be a graph $G=(V,E)$ such that $n=|V|$ and $m=|E|$, we can now calculate the
-complexity of our algorithm. The cost of attributing a value to a variable should
+Let be a graph $G=(V,E)$ such that $n=|V|$, we can now calculate the complexity 
+of our algorithm. The cost of attributing a value to a variable should
 always be $\mathcal{O}(1)$. \newline
 
-The worst case complexity of the Bron-Kerbosch algorithm is $\mathcal{O}(3^{\frac{n}{3}})$,
+The worst case complexity of the Bron-Kerbosch algorithm is $\mathcal{O}(\sqrt[3]{3}^n)$,
 we will not prove it here, but it is a well-known fact proven by Moon \& Moser
-\cite{on-cliques-in-graphs} that there are at most $3^{\frac{n}{3}}$ maximal cliques
+\cite{on-cliques-in-graphs} that there are at most $\sqrt[3]{3}^n$ maximal cliques
 in any $n$-vertex graph. \newline
 
 The complexity of the weight calculation is $\mathcal{O}(n^2)$, because we need
 to iterate two times over the vertices of the clique to get every edge and by
 extension their cumulative weight. \newline
 
-The worst case complexity of the algorithm is therefore $\mathcal{O}(n^2\times3^{\frac{n}{3}})$,
+The worst case complexity of the algorithm is therefore $\mathcal{O}(n^2\sqrt[3]{3}^n)$,
 as we need to iterate through the computed maximal cliques by the Bron-Kerbosch
 algorithm and calculate their weight. \newline
 
 Now, the worst case complexity is not the average complexity of the algorithm.
-Realistically, the complexity will vary depending on the connectivity of the
-graph. Thought calculating its average complexity is not trivial, we can still
-give a lower bound of the complexity. \newline
+Realistically, the complexity will vary depending on the connectivity and degeneracy 
+of the graph. Thought calculating its average complexity is not trivial, we can 
+still give a lower bound of the complexity. \newline
 
 Seeing how the algorithm works by excluding the neighboring vertices of the pivot
 vertex from the iteration, the lower bound of the complexity will be the special

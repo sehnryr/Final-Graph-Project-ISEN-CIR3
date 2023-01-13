@@ -88,3 +88,40 @@ std::string getAlgorithmName(Algorithm algorithm)
         return "invalid";
     }
 }
+
+/**
+ * @brief Get the weight of a clique
+ *
+ * This function calculates the weight of a clique. If the clique is not a clique,
+ * it returns an empty optional.
+ *
+ * The time complexity of this function is O(n^2), where n is the size of the clique.
+ *
+ * @param clique The clique to get the weight of
+ * @return std::optional<long unsigned int> The weight of the clique, an empty optional
+ * if the clique is not a clique
+ */
+std::optional<long unsigned int> getCliqueWeight(Graph graph, Clique clique)
+{
+    // variable to store the weight of the clique
+    long unsigned int weight = 0;
+    // get a set of all vertices in the clique
+    std::unordered_set<VertexPtr> vertices = clique.getVertices();
+
+    // iterate over all possible pairs of vertices in the clique
+    for (auto v1 : vertices)
+        for (auto v2 : vertices)
+            // if the vertices are the same, continue
+            if (v1 == v2)
+                continue;
+            // if the vertices are connected, add the weight of the edge
+            // to the weight of the clique
+            else if (auto edge = graph.getEdge(v1, v2))
+                weight += edge.value()->getWeight();
+            // if the vertices are not connected, the clique is not a clique
+            else
+                return {};
+
+    // return the weight of the clique divided by 2 because each edge is counted twice
+    return weight / 2;
+}

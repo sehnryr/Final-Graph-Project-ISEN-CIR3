@@ -22,65 +22,65 @@ VertexPtr getFirstVertex(Graph graph)
 
     long unsigned int maxNumNeighbors = 0;
 
-    for (auto vertex : vertices) // je verifie le nombre de voisins et l'ajoute dans MaxNumberOfNeighors et BestVertex si c'est le plus grand encore jamais atteint
-    {
-        auto neighbors = adjMatrix[vertex->getId()];
-        if(neighbors.size() > maxNumNeighbors)
-        {
-            totalWeight = 0;
-            maxNumNeighbors = neighbors.size();
-            bestVertex = vertex;
-            for (const auto& [neighbor, sharededge] : neighbors) 
-            {
-                weight = sharededge->getWeight();
-                totalWeight += weight;
-                weight = 0;
-            }
-            bestWeight = totalWeight;
-        }
-        else if(neighbors.size() == maxNumNeighbors)
-        {
-            totalWeight = 0;
-            for (const auto& [neighbor, sharededge] : neighbors) 
-            {
-                weight = sharededge->getWeight();
-                totalWeight += weight;
-                weight = 0;
-            }
-            if(totalWeight > bestWeight)
-            {
-                bestWeight = totalWeight;
-                bestVertex = vertex;
-            }
-        }
-    }
-
-    // for (auto vertex : vertices)
+    // for (auto vertex : vertices) // je verifie le nombre de voisins et l'ajoute dans MaxNumberOfNeighors et BestVertex si c'est le plus grand encore jamais atteint
     // {
-    //     totalWeight = 0;
     //     auto neighbors = adjMatrix[vertex->getId()];
-    //     for (const auto& [neighbor, sharededge] : neighbors) 
+    //     if(neighbors.size() > maxNumNeighbors)
     //     {
-    //         weight = sharededge->getWeight();
-    //         totalWeight += weight;
-    //         weight = 0;
-    //     }
-
-    //     if(totalWeight > bestWeight)
-    //     {
-    //         bestWeight = totalWeight;
-    //         bestVertex = vertex;
+    //         totalWeight = 0;
     //         maxNumNeighbors = neighbors.size();
-    //     }
-    //     else if(totalWeight == bestWeight)
-    //     {
-    //         if(neighbors.size() > maxNumNeighbors)
+    //         bestVertex = vertex;
+    //         for (const auto& [neighbor, sharededge] : neighbors) 
     //         {
-    //             bestVertex = vertex;
-    //             maxNumNeighbors = neighbors.size();
+    //             weight = sharededge->getWeight();
+    //             totalWeight += weight;
+    //             weight = 0;
     //         }
-    //     }   
+    //         bestWeight = totalWeight;
+    //     }
+    //     else if(neighbors.size() == maxNumNeighbors)
+    //     {
+    //         totalWeight = 0;
+    //         for (const auto& [neighbor, sharededge] : neighbors) 
+    //         {
+    //             weight = sharededge->getWeight();
+    //             totalWeight += weight;
+    //             weight = 0;
+    //         }
+    //         if(totalWeight > bestWeight)
+    //         {
+    //             bestWeight = totalWeight;
+    //             bestVertex = vertex;
+    //         }
+    //     }
     // }
+
+    for (auto vertex : vertices) // je verifie le poids des segments de tous les vertex et l'ajoute à bestVertex si c'est le plus grand jamais atteint, en cas d'égalité => ajoute au sommet du plus haut degré
+    {
+        totalWeight = 0;
+        auto neighbors = adjMatrix[vertex->getId()];
+        for (const auto& [neighbor, sharededge] : neighbors) 
+        {
+            weight = sharededge->getWeight();
+            totalWeight += weight;
+            weight = 0;
+        }
+
+        if(totalWeight > bestWeight)
+        {
+            bestWeight = totalWeight;
+            bestVertex = vertex;
+            maxNumNeighbors = neighbors.size();
+        }
+        else if(totalWeight == bestWeight)
+        {
+            if(neighbors.size() > maxNumNeighbors)
+            {
+                bestVertex = vertex;
+                maxNumNeighbors = neighbors.size();
+            }
+        }   
+    }
 
     return bestVertex;
 }
@@ -137,13 +137,15 @@ void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set
 }
 
 
-// Modifie R en y ajoutant le voisin avec l'edge au plus haut poids entre les deux, Modifie TotalWeight pour ajouter le poids de l'edge entre le vertex et le voisin avec l'edge au plus haut poids
+// Modifie R en y ajoutant le voisin avec l'edge au plus haut poids entre les deux, Modifie TotalWeight pour ajouter le poids de l'edge entre le vertex et le voisin avec l'edge au plus haut poids. En cas d'égalité, prend l'edge au plus haut poids
 void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &S)
 {
     long unsigned int weight = 0; // variable temporaire correspond au poids de l'edge entre notre vertex et ses voisins
     long unsigned int bestWeight = 0; // variable correspondant au poids maximales obtenu lors de la lecture des voisins
     VertexPtr bestVertex; // meilleur voisin en gros
     long unsigned int cliqueWeight = 0;
+    long unsigned int maxNumNeighbors = 0;
+    auto adjMatrix = graph.getAdjacencyMatrix();
 
     // je cherche le voisin avec le plus de poids
     auto i = P.begin();
@@ -158,11 +160,22 @@ void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> 
         {
             auto edge = graph.getEdge(vertex, *i);
             weight = edge.value()->getWeight();
+            auto neighbors = adjMatrix[(*i)->getId()]; // (*(*i)).getId();
             if(weight > bestWeight)
             {
                 bestWeight = weight;
                 bestVertex = *i;
                 weight = 0;
+                maxNumNeighbors = neighbors.size();
+                i++;
+            }
+            else if(weight == bestWeight)
+            {
+                if(neighbors.size() > maxNumNeighbors)
+                {
+                    maxNumNeighbors = neighbors.size();
+                    bestVertex = *i;
+                }
                 i++;
             }
             else

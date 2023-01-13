@@ -35,6 +35,7 @@ public:
     std::optional<VertexPtr> isIncident(EdgePtr e) const;
     unsigned int getWeight() const;
     bool operator==(const Edge &e) const;
+    bool operator<(const Edge &e) const;
 
 private:
     VertexPtr v1;

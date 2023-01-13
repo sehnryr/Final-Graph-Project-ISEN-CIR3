@@ -114,3 +114,19 @@ bool Edge::operator==(const Edge &e) const
 {
     return v1 == e.v1 && v2 == e.v2;
 }
+
+/**
+ * @brief Compare two edges
+ *
+ * This method compares two edges. It returns true if the weight of the first 
+ * edge is less than the second edge. Otherwise, it returns false.
+ *
+ * @param e The edge to compare to
+ * @return true If the weight of the first edge is less than the second edge
+ * @return false If the weight of the first edge is greater than or equal to the
+ * second edge
+ */
+bool Edge::operator<(const Edge &e) const
+{
+    return weight < e.weight;
+}

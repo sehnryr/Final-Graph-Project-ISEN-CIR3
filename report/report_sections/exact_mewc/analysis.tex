@@ -5,4 +5,18 @@ execution time of the exact algorithm with the number of vertices for different
 percentages of connectivity. Note that the upper bound appears as a straight
 line because of the logarithmic scale but is equal to $n^2\sqrt[3]{3}^n$. The
 lower bound is matching the 0\% connectivity with a constant factor of
-2.9 $\pm$ 0.09\%.
+2.9 $\pm$ 0.09\%. \bigskip
+
+Increasing the connectivity of the graph has a chance to increase the complexity
+of the structure of that graph, which in turn increases the time complexity of the
+algorithm. The upper bound is the worst case scenario, where the graph maximizes
+the number of maximal cliques. The lower bound is the best case scenario, where
+the graph is empty. \bigskip
+
+So, the exact algorithm is good if we want to find the exact solution for a few 
+vertices. However, if we were to solve this problem for, let's say, 500 vertices,
+the exact algorithm would take 8 months to finish and find the solution. And that is
+only for 75\% connectivity. If we were to account for the worst case scenario,
+the algorithm would take two hundred duovigintillion years ($2\cdot10^{71}$) 
+to finish. We can easily conclude that the exact algorithm is not a viable option
+for scalability.

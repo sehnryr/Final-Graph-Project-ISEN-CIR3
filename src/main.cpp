@@ -135,8 +135,15 @@ int main(int argc, char **argv)
     output << clique.getVertices().size() << " "
            << clique.getWeight() << std::endl;
 
-    // Write the vertices of the clique
+    // Sort the vertices of the clique
+    std::vector<VertexPtr> vertices;
+    vertices.reserve(clique.getVertices().size());
     for (auto vertex : clique.getVertices())
+        vertices.push_back(vertex);
+    std::sort(vertices.begin(), vertices.end());
+
+    // Write the vertices of the clique
+    for (auto vertex : vertices)
         output << vertex->getId() << " ";
     output << std::endl;
 

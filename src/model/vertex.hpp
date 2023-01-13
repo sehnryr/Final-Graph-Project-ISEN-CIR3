@@ -25,6 +25,7 @@ public:
     ~Vertex();
     unsigned int getId() const;
     bool operator==(const Vertex &v) const;
+    bool operator<(const Vertex &v) const;
 
 private:
     unsigned int id;

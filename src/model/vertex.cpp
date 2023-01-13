@@ -46,3 +46,15 @@ bool Vertex::operator==(const Vertex &v) const
 {
     return id == v.id;
 }
+
+/**
+ * @brief Compare two vertices
+ *
+ * @param v The vertex to compare to
+ * @return true If the id of the current vertex is lower than the id of the other vertex
+ * @return false If the id of the current vertex is greater than the id of the other vertex
+ */
+bool Vertex::operator<(const Vertex &v) const
+{
+    return id < v.id;
+}

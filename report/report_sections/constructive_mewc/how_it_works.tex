@@ -35,7 +35,7 @@
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            At the initial step, as said before, we will initialize $S$ and $P$ by searching for the vertex with highest sum of weights of its edges $v$ by iterating every vertex on the graph. In this example, we will eventually find 3 and 5 which have a maximum sum of 9. The algorithm will then take the vertex of highest degree between them represented in \textcolor{red}{red} and will add it to $S$. The neighboring vertex of $v$ represented in \textcolor{Cerulean}{blue} will be added to $P$.
+            At the initial step, as said before, we will initialize $S$, $P$ and $W$ by searching for the vertex with highest sum of weights of its edges $v$ by iterating every vertex on the graph. In this example, we will eventually find 3 and 5 which have a maximum sum of 9. The algorithm will then take the vertex of highest degree between them and will add it to $S$, represented in \textcolor{red}{red}. The neighboring vertex of $v$ will be added to $P$, represented in \textcolor{Cerulean}{blue}.
     
             \begin{center}
                 \begin{tabular}{|lll|}
@@ -55,36 +55,81 @@
             \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}[node distance=2cm]
-                    \node[circle, draw, Cerulean] (1) {1};
+                    \node[circle, draw, red] (1) {1};
                     \node[circle, draw, Cerulean] (2) at ([shift=(210:2)] 1) {2};
                     \node[circle, draw] (3) [left of=2] {3};
-                    \node[circle, draw, Cerulean] (4) [above of=3] {4};
+                    \node[circle, draw] (4) [above of=3] {4};
                     \node[circle, draw, red] (5) [above of=2] {5};
                     \node[circle, draw] (6) at ([shift=(150:2)] 4) {6};
     
                     \draw  (1) -- (2) node[midway, above, sloped] {1};
-                    \draw (1) -- (5) node[midway, above, sloped] {4};
+                    \draw[red] (1) -- (5) node[midway, above, sloped] {4};
                     \draw (2) -- (3) node[midway, above, sloped] {5};
                     \draw (2) -- (5) node[midway, above, sloped] {2};
                     \draw (3) -- (4) node[midway, above, sloped] {4};
                     \draw (4) -- (5) node[midway, above, sloped] {3};
                     \draw (4) -- (6) node[midway, above, sloped] {1};
                 \end{tikzpicture}
-                \caption{Graph illustration for the constructive algorithm at step 0}
+                \caption{Graph illustration for the constructive algorithm at step 1}
                 \label{fig:constructive-mewc-edge}
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            
+            Then the algorithm will iterate all the neighbors of $v$, and look for the one who shares the edge with the highest weight, which replace $v$ (here 1). If there are several edges with the same weight, the algorithm will take the one with the highest degree. After having found it, we add it to $S$ as well as the weight of the edges of all the vertices in S and $v$ to $W$ (here 4), we update $P$ by keeping only the common neighbors of the members of $S$ (here only 2).
     
             \begin{center}
-                \begin{tabular}{|ll|}
+                \begin{tabular}{|lll|}
                     \hline
-                    S = \{\} & P = \{1,2,4\} \\
+                    S = \{5,1\} & P = \{2\} & W = 4 \\
                     \hline
                 \end{tabular}
             \end{center}
         \end{minipage}
-    \end{minipage} \newline
+    \end{minipage} 
+
+    \vspace{1\baselineskip}
+
+    \begin{minipage}{\linewidth}
+        \textbf{Step 2:} \newline
+        \begin{minipage}{0.4\textwidth}
+            \begin{figure}[H]
+                \centering
+                \begin{tikzpicture}[node distance=2cm]
+                    \node[circle, draw, red] (1) {1};
+                    \node[circle, draw, red] (2) at ([shift=(210:2)] 1) {2};
+                    \node[circle, draw] (3) [left of=2] {3};
+                    \node[circle, draw] (4) [above of=3] {4};
+                    \node[circle, draw, red] (5) [above of=2] {5};
+                    \node[circle, draw] (6) at ([shift=(150:2)] 4) {6};
+    
+                    \draw[red]  (1) -- (2) node[midway, above, sloped] {1};
+                    \draw[red] (1) -- (5) node[midway, above, sloped] {4};
+                    \draw (2) -- (3) node[midway, above, sloped] {5};
+                    \draw[red] (2) -- (5) node[midway, above, sloped] {2};
+                    \draw (3) -- (4) node[midway, above, sloped] {4};
+                    \draw (4) -- (5) node[midway, above, sloped] {3};
+                    \draw (4) -- (6) node[midway, above, sloped] {1};
+                \end{tikzpicture}
+                \caption{Graph illustration for the constructive algorithm at step 2}
+                \label{fig:constructive-mewc-edge}
+            \end{figure}
+        \end{minipage}
+        \begin{minipage}{0.6\textwidth}
+            Then, the algorithm will repeat the process of step 1 until $P$ is empty. It will look for a new $v$ (here 2). After finding it, it will add it to $S$ as well as the weight of the edges of all the vertices in $S$ and it to $W$ (here 2 + 1). It will then update $P$ which here will be empty, the algorithm stops and we get the maximum clique in \textcolor{red}{red} and his weight (here (5,1,2) of weight 7).
+    
+            \begin{center}
+                \begin{tabular}{|lll|}
+                    \hline
+                    S = \{5,1,2\} & P = \{\} & W = 7 \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        \end{minipage}
+    \end{minipage}
+
+    \vspace{1\baselineskip}
+
+    The constructive algorithm is now finished and we have obtained the following maximum clique of weight 7 : $$(1,2,5)$$
+
 \newpage
 

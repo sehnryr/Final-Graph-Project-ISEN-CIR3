@@ -1,55 +1,55 @@
-\subsection{Experiments}
+% \subsection{Experiments}
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \begin{semilogyaxis}[
-                xlabel = Number of vertices,
-                ylabel = Execution time ($\mu$s),
-                legend pos = outer north east,
-                grid = major,
-                width = 0.7\textwidth,
-            ]
-            \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_100_avg.dat};
+% \begin{figure}[H]
+%     \centering
+%     \begin{tikzpicture}
+%         \begin{semilogyaxis}[
+%                 xlabel = Number of vertices,
+%                 ylabel = Execution time ($\mu$s),
+%                 legend pos = outer north east,
+%                 grid = major,
+%                 width = 0.7\textwidth,
+%             ]
+%             \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] {experiment_data/exact_100_avg.dat};
 
-            \addplot[Red, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_75_avg.dat};
+%             \addplot[Red, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] {experiment_data/exact_75_avg.dat};
 
-            \addplot[Green, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_50_avg.dat};
+%             \addplot[Green, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] {experiment_data/exact_50_avg.dat};
 
-            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_25_avg.dat};
+%             \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] {experiment_data/exact_25_avg.dat};
 
-            \addplot[Black, dashed, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_0_avg.dat};
+%             \addplot[Black, dashed, error bars/.cd, y dir=both, y explicit]
+%             table[x index=0, y index=1, y error index=2] {experiment_data/exact_0_avg.dat};
 
-            \addplot[Gray, domain=10:35] {x^2*3^(x/3)};
+%             \addplot[Gray, domain=10:35] {x^2*3^(x/3)};
 
-            \addplot[Black] gnuplot [raw gnuplot] {
-                    f(x) = a*x^2;
-                    a = 3;
-                    fit f(x) 'experiment_data/exact_0.dat' u 1:2 via a;
-                    plot [x=10:100] f(x);
-                    set print "experiment_data/exact_0.dat.gnuplot";
-                    print a;
-                };
+%             \addplot[Black] gnuplot [raw gnuplot] {
+%                     f(x) = a*x^2;
+%                     a = 3;
+%                     fit f(x) 'experiment_data/exact_0.dat' u 1:2 via a;
+%                     plot [x=10:100] f(x);
+%                     set print "experiment_data/exact_0.dat.gnuplot";
+%                     print a;
+%                 };
 
-            \addlegendentry{test}
+%             \addlegendentry{test}
 
-            \legend{100\%, 75\%, 50\%, 25\%, 0\%, upper bound, lower bound}
-        \end{semilogyaxis}
-    \end{tikzpicture}
-    \caption{Execution time of the exact algorithm for different percentages of connectivity.}
-    \label{fig:exact_time}
-\end{figure}
+%             \legend{100\%, 75\%, 50\%, 25\%, 0\%, upper bound, lower bound}
+%         \end{semilogyaxis}
+%     \end{tikzpicture}
+%     \caption{Execution time of the exact algorithm for different percentages of connectivity.}
+%     \label{fig:exact_time}
+% \end{figure}
 
-For this experiment, we generated five random graphs with 10 to 100 vertices to
-find an average execution time for each percentage of connectivity. The results
-are shown in figure \ref{fig:exact_time}. At each number of vertices, an average
-execution time is calculated, and the standard deviation is represented by the
-error bars. The number of graphs generated for each percentage of connectivity and
-number of vertices is limited to 5 to reduce the execution time of the experiment
-which already takes more than 4 minutes to compute only one result for the 100
-vertices case for the 75\% connectivity.
+% For this experiment, we generated five random graphs with 10 to 100 vertices to
+% find an average execution time for each percentage of connectivity. The results
+% are shown in figure \ref{fig:exact_time}. At each number of vertices, an average
+% execution time is calculated, and the standard deviation is represented by the
+% error bars. The number of graphs generated for each percentage of connectivity and
+% number of vertices is limited to 5 to reduce the execution time of the experiment
+% which already takes more than 4 minutes to compute only one result for the 100
+% vertices case for the 75\% connectivity.

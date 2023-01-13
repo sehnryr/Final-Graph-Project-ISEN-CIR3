@@ -109,19 +109,18 @@ std::optional<long unsigned int> getCliqueWeight(Graph graph, Clique clique)
     std::unordered_set<VertexPtr> vertices = clique.getVertices();
 
     // iterate over all possible pairs of vertices in the clique
-    for (auto v1 : vertices)
-        for (auto v2 : vertices)
+    for (auto it = vertices.begin(); it != vertices.end(); ++it)
+        for (auto jt = it; jt != vertices.end(); ++jt)
             // if the vertices are the same, continue
-            if (v1 == v2)
+            if (it == jt)
                 continue;
             // if the vertices are connected, add the weight of the edge
             // to the weight of the clique
-            else if (auto edge = graph.getEdge(v1, v2))
+            else if (auto edge = graph.getEdge(*it, *jt))
                 weight += edge.value()->getWeight();
             // if the vertices are not connected, the clique is not a clique
             else
                 return {};
 
-    // return the weight of the clique divided by 2 because each edge is counted twice
-    return weight >> 1;
+    return weight;
 }

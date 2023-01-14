@@ -8,29 +8,31 @@
  * @date 2022-12-30
  */
 
+#include <algorithm>
+
 #include "mewc.hpp"
 #include "../common.hpp"
 
 /**
- * @brief Returns the vertex with the highest degree
+ * @brief Returns the vertex with the best criteria
  *
- * @param graph The graph
  * @param vertices The vertices to consider
- * @return VertexPtr The vertex with the highest degree
+ * @param sortedVertices The vertices sorted by a criteria
+ * @return VertexPtr The vertex with the best criteria
  */
-VertexPtr getVertexHighestDegree(Graph graph, std::unordered_set<VertexPtr> vertices) // O(n)
+VertexPtr getBestVertex(
+    std::unordered_set<VertexPtr> vertices,
+    std::vector<VertexPtr> &sortedVertices) // O(n)
 {
     VertexPtr bestVertex;
-    long unsigned int bestDegree = 0;
-    auto adjMatrix = graph.getAdjacencyMatrix();
 
-    for (auto vertex : vertices)
+    for (std::vector<VertexPtr>::iterator it = sortedVertices.begin(); it != sortedVertices.end(); it++)
     {
-        auto neighbors = adjMatrix[vertex->getId()];
-        if (neighbors.size() > bestDegree)
+        if (vertices.find(*it) != vertices.end())
         {
-            bestDegree = neighbors.size();
-            bestVertex = vertex;
+            bestVertex = *it;
+            sortedVertices = std::vector<VertexPtr>(it, sortedVertices.end());
+            break;
         }
     }
 
@@ -38,18 +40,62 @@ VertexPtr getVertexHighestDegree(Graph graph, std::unordered_set<VertexPtr> vert
 }
 
 /**
- * @brief Returns the vertex with the highest commulative weight of its edges
+ * @brief Returns the vertices sorted by degree
  *
  * @param graph The graph
  * @param vertices The vertices to consider
- * @return VertexPtr The vertex with the highest commulative weight of its edges
+ * @return std::vector<VertexPtr> The vertices sorted by degree
  */
-VertexPtr getVertexHighestSumWeight(Graph graph, std::unordered_set<VertexPtr> vertices) // O(n^2)
+std::vector<VertexPtr> sortVerticesDegree(
+    Graph graph,
+    std::unordered_set<VertexPtr> vertices) // O(nlogn)
 {
-    VertexPtr bestVertex;
-    long unsigned int bestWeight = 0;
-    auto adjMatrix = graph.getAdjacencyMatrix();
+    std::vector<std::pair<VertexPtr, long unsigned int>> degrees;
+    std::vector<VertexPtr> sortedVertices;
 
+    // Allocate the vectors
+    degrees.reserve(vertices.size());
+    sortedVertices.reserve(vertices.size());
+
+    // Get the degrees
+    auto adjMatrix = graph.getAdjacencyMatrix();
+    for (auto vertex : vertices)
+    {
+        auto neighbors = adjMatrix[vertex->getId()];
+        degrees.push_back(std::make_pair(vertex, neighbors.size()));
+    }
+
+    // Sort the vertices by degree
+    std::sort(degrees.begin(), degrees.end(), [](const auto &a, const auto &b)
+              { return a.second > b.second; });
+
+    // Get the vertices
+    for (const auto &[vertex, degree] : degrees)
+        sortedVertices.push_back(vertex);
+
+    return sortedVertices;
+}
+
+/**
+ * @brief Returns the vertices sorted by the sum of their edges weights
+ *
+ * @param graph The graph
+ * @param vertices The vertices to consider
+ * @return std::vector<VertexPtr> The vertices sorted by the sum of their edges weights
+ */
+std::vector<VertexPtr> sortVerticesSumWeight(
+    Graph graph,
+    std::unordered_set<VertexPtr> vertices) // O(n^2)
+{
+    std::vector<std::pair<VertexPtr, long unsigned int>> weights;
+    std::vector<VertexPtr> sortedVertices;
+
+    // Allocate the vectors
+    weights.reserve(vertices.size());
+    sortedVertices.reserve(vertices.size());
+
+    // Get the weights
+    auto adjMatrix = graph.getAdjacencyMatrix();
     for (auto vertex : vertices)
     {
         long unsigned int weight = 0;
@@ -58,19 +104,23 @@ VertexPtr getVertexHighestSumWeight(Graph graph, std::unordered_set<VertexPtr> v
         {
             weight += edge->getWeight();
         }
-        if (weight > bestWeight)
-        {
-            bestWeight = weight;
-            bestVertex = vertex;
-        }
+        weights.push_back(std::make_pair(vertex, weight));
     }
 
-    return bestVertex;
+    // Sort the vertices by weight
+    std::sort(weights.begin(), weights.end(), [](const auto &a, const auto &b)
+              { return a.second > b.second; });
+
+    // Get the vertices
+    for (const auto &[vertex, weight] : weights)
+        sortedVertices.push_back(vertex);
+
+    return sortedVertices;
 }
 
 /**
  * @brief The recursive function of the constructive MEWC algorithm
- * 
+ *
  * @param g The graph
  * @param clique The clique
  * @param P The set of vertices to consider
@@ -78,12 +128,13 @@ VertexPtr getVertexHighestSumWeight(Graph graph, std::unordered_set<VertexPtr> v
 void constructiveMEWCRecursive(
     Graph g,
     Clique &clique,
-    std::unordered_set<VertexPtr> P)
+    std::unordered_set<VertexPtr> P,
+    std::vector<VertexPtr> &sortedVertices)
 {
     if (P.empty())
         return;
 
-    VertexPtr newVertex = getVertexHighestDegree(g, P);
+    VertexPtr newVertex = getBestVertex(P, sortedVertices);
     clique.addVertex(newVertex);
 
     std::unordered_set<VertexPtr> new_P;
@@ -94,7 +145,7 @@ void constructiveMEWCRecursive(
         if (P.count(*(g.getVertex(neighbor))) != 0)
             new_P.insert(*(g.getVertex(neighbor)));
 
-    constructiveMEWCRecursive(g, clique, new_P);
+    constructiveMEWCRecursive(g, clique, new_P, sortedVertices);
 }
 
 /**
@@ -104,14 +155,16 @@ void constructiveMEWCRecursive(
  * @param g The graph
  * @return Clique A guess of the maximum weight clique
  */
-Clique constructiveMEWC(Graph g)
+Clique constructiveMEWC(Graph g) // O(n^2)
 {
     Clique clique;
     std::unordered_set<VertexPtr> P = g.getVertices();
+    std::vector<VertexPtr> sortedVertices = sortVerticesDegree(g, P); // O(nlogn)
+    // std::vector<VertexPtr> sortedVertices = sortVerticesSumWeight(g, P); // O(n^2)
 
-    constructiveMEWCRecursive(g, clique, P);
+    constructiveMEWCRecursive(g, clique, P, sortedVertices); // O(n^2)
 
-    clique.setWeight(getCliqueWeight(g, clique).value());
+    clique.setWeight(getCliqueWeight(g, clique).value()); // O(n^2)
 
     return clique;
 }

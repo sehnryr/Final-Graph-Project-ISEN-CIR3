@@ -46,16 +46,8 @@
     \caption{Clique weight function}
     \label{clique-weight-pseudocode}
     \begin{algorithmic}[1]
-        \Procedure{getCliqueWeight}{$clique$} \Comment{We assume that the clique is complete}
-        \State $weight \gets 0$
-        \ForAll{$v_1 \in clique$}
-        \ForAll{$v_2 \in clique$} \Comment{Iterate over all the vertices in the clique and add the weight of each edge to the weight of the clique}
-        \If{$v_1 \neq v_2$}
-        \State $weight \gets weight + w_{v_1,v_2}$
-        \EndIf
-        \EndFor
-        \EndFor
-        \State \Return $\frac{weight}{2}$ \Comment{Divide by 2 because the weight of an edge is counted twice}
+        \Procedure{getCliqueWeight}{$C$} \Comment{We assume that the clique is complete}
+        \State $$\Return \sum_{\begin{subarray}{c}i,j \in C\\i<j\end{subarray}}w(i,j)$$
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}

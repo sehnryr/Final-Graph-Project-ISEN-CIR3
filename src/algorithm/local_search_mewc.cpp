@@ -15,6 +15,53 @@
 
 using namespace std;
 
+void combinationUtil(std::vector<VertexPtr> vertices, std::vector<std::vector<VertexPtr>>* sets, std::vector<VertexPtr> set, unsigned int size, unsigned int index);
+
+void printClique(Clique c){
+    auto v = c.getVertices();
+    cout << "---" << endl;
+    cout << "Clique size : " << c.getSize() << " / Clique weight : " << c.getWeight() << endl;
+    for(auto ve : v){
+        cout << ve->getId() << " ";
+    }
+    cout << "\n---" << endl;
+}
+  
+std::vector<std::vector<VertexPtr>> getSubsetsOfVertices(std::unordered_set<VertexPtr> vertices_un, unsigned int size){
+   
+    
+    std::vector<std::vector<VertexPtr>> sets; // contain all subsets
+    std::vector<VertexPtr> set; // contain a single subset
+    std::vector<VertexPtr> vertices; // contain all clique verticies
+
+    for(auto v : vertices_un){
+        vertices.push_back(v);
+    }
+  
+    // Print all combination using temporary array 'data[]'
+    combinationUtil(vertices, &sets, set, size, 0);
+
+    return sets;
+}
+
+void combinationUtil(std::vector<VertexPtr> vertices, std::vector<std::vector<VertexPtr>>* sets, std::vector<VertexPtr> set, unsigned int size, unsigned int index){
+    // Current combination is ready, print it
+    if (set.size() == size) {
+        sets->push_back(set);
+        return;
+    }
+  
+    if (index >= vertices.size())
+        return;
+    
+    // current is excluded, replace it with next
+    combinationUtil(vertices, sets, set, size, index + 1);
+
+    // current is included, put next at next location
+    set.push_back(vertices[index]);
+    combinationUtil(vertices, sets, set, size, index + 1);
+}
+
 std::vector<VertexPtr> sortVerticesByDegrees(Graph g){
     auto adjacency_matrix = g.getAdjacencyMatrix();
     std::vector<VertexPtr> sorted_vertices;
@@ -194,22 +241,31 @@ Clique findInitialSolution(Graph g, std::vector<VertexPtr> sorted_vertices){
     return clique;
 }
 
-Clique findNeighboor(Graph g, Clique init_clique, std::vector<std::vector<VertexPtr>>* tested_vertices_sets, std::vector<VertexPtr> sorted_vertices, unsigned int to_remove = 1){
+Clique findNeighboor(Graph g, Clique init_clique, std::vector<std::vector<VertexPtr>>* sets_to_try, std::vector<VertexPtr> sorted_vertices){
+    if(sets_to_try->size() == 0){
+        return init_clique;
+    }
     auto clique_vertices = init_clique.getVertices();
-    std::vector<VertexPtr> vertices_to_remove;
+    std::vector<VertexPtr> vertices_to_remove = (*sets_to_try)[0];
     unsigned int removed_weight = 0;
     
-    for(unsigned int i = 0; i < to_remove; i++){
+    /*for(unsigned int i = 0; i < to_remove; i++){
         unsigned int min_weight = clique_vertices.size() * 101; // edge weight is less than 100 so the weight of the edges of a vertex in the clique is less than 100 times the number of vertices in the clique
         VertexPtr min_weight_vertex = nullptr;
         for(auto clique_vertex : clique_vertices){
             if(std::find(vertices_to_remove.begin(), vertices_to_remove.end(), clique_vertex) != vertices_to_remove.end()){ // do not try 2 times the same improvement
                 continue;
             }
+            bool leave = false;
             for(auto tested_verticies_set : *tested_vertices_sets){
-                if(tested_verticies_set[i] == clique_vertex || tested_verticies_set.size() == to_remove){  // tester avec n'importe quel ordre plutôt que l'ordre déjà donné // mettre des sets de vecteurs à try plutôt ?
-                    continue;
+                //cout << "IIIII " << tested_verticies_set[i]->getId() << " / " << clique_vertex->getId() << " IIIII (" << tested_verticies_set.size() << " / " << to_remove << ")" << endl;
+                if(tested_verticies_set[i] == clique_vertex && tested_verticies_set.size() == to_remove){  // tester avec n'importe quel ordre plutôt que l'ordre déjà donné // mettre des sets de vecteurs à try plutôt ?
+                    leave = true;
+                    break;
                 }
+            }
+            if(leave){
+                continue;
             }
             unsigned int weight = 0;
             for(auto clique_vertex2 : clique_vertices){
@@ -225,10 +281,28 @@ Clique findNeighboor(Graph g, Clique init_clique, std::vector<std::vector<Vertex
         }
 
         if(min_weight_vertex == nullptr){ // If no improvement, return the original clique
+            cout << "EXIT #1" << endl;
             return init_clique;
         }
         vertices_to_remove.push_back(min_weight_vertex);
         removed_weight += min_weight;
+    }*/
+
+    /*cout << "---\nRemoved verticies : ";
+    for(auto v : vertices_to_remove){
+        cout << v->getId() << " ";
+    }
+    cout << "\n---" << endl;*/
+
+    for(auto rm_vertex : vertices_to_remove){
+        for(auto vertex : clique_vertices){
+            if(rm_vertex == vertex){
+                continue;
+            }
+            if(g.hasEdge(rm_vertex, vertex)){
+                removed_weight += g.getEdge(rm_vertex, vertex).value()->getWeight();
+            }
+        }
     }
 
     Clique new_clique;
@@ -242,14 +316,24 @@ Clique findNeighboor(Graph g, Clique init_clique, std::vector<std::vector<Vertex
     }
     new_clique.setWeight(init_clique.getWeight() - removed_weight);
 
+    /*cout << "improve attempt : ";*/
     unsigned int improvement = improveClique(g, &new_clique, sorted_vertices, banned_vertices, removed_weight, 0);
+    /*if(improvement <= removed_weight){
+        cout << "failed -> " << improvement << " / " << removed_weight << endl;
+    }
+    else{
+        cout << "successed -> " << improvement << " / " << removed_weight << endl;
+    }*/
 
     // if keep the removed vertex is better
     if(improvement <= removed_weight){
-        tested_vertices_sets->push_back(vertices_to_remove);
+        sets_to_try->erase(sets_to_try->begin());
+        //cout << "EXIT #2" << endl;
         return init_clique;
     }
 
+    //cout << "EXIT #3" << endl;
+    //printClique(new_clique);
     return new_clique;
 
     // Pseudo-code
@@ -265,29 +349,66 @@ Clique findNeighboor(Graph g, Clique init_clique, std::vector<std::vector<Vertex
 }
 
 Clique localSearchMEWC(Graph g){
+    /*std::unordered_set<VertexPtr> vec;
+    vec.insert(g.getVertex(1).value());
+    vec.insert(g.getVertex(2).value());
+    vec.insert(g.getVertex(3).value());
+    vec.insert(g.getVertex(4).value());
+    vec.insert(g.getVertex(5).value());
+    auto sets = getSubsetsOfVertices(vec, 4);
+    for(auto set : sets){
+        for(auto v : set){
+            cout << v->getId() << " ";
+        }
+        cout << endl;
+    }
+    
+    return Clique();*/
+
     std::unordered_map<VertexPtr, unsigned int> vertices_degrees;
     auto sorted_vertices = sortVerticesByDegrees(g);
     Clique max_clique = findInitialSolution(g, sorted_vertices);
     // unsigned int no_improvement_found = 0; // Count the number of try with no improvement found
     // unsigned int max_number_of_tries = g.getVertices().size() / 2; // After 5 no better solution found -> Say that the current solution is the best one
-    std::vector<std::vector<VertexPtr>> tested_vertices_sets;
-    unsigned int max_tries = max_clique.getSize() / 2;
-    unsigned int vertices_to_remove = 1;
+    //unsigned int max_tries = sorted_vertices.size() / 2;
+    unsigned int max_subset_size = 5;
+    unsigned int sets_to_try_size = 1;
+    std::vector<std::vector<VertexPtr>> sets_to_try = getSubsetsOfVertices(max_clique.getVertices(), sets_to_try_size);
 
-    while(vertices_to_remove < max_tries){
+    //int aze = 0;
+
+    cout << "Initial clique :" << endl;
+    printClique(max_clique);
+
+    while(sets_to_try_size < max_clique.getSize() && sets_to_try_size < max_subset_size){
         unsigned int c_weight = max_clique.getWeight();
-        unsigned int tested_vertices_size = tested_vertices_sets.size();
-        max_clique = findNeighboor(g, max_clique, &tested_vertices_sets, sorted_vertices, vertices_to_remove);
-        if(max_clique.getWeight() == c_weight){ // Means that we didn't improve
-            if(tested_vertices_sets.size() == tested_vertices_size){ // Means that we don't have any other vertex to test
-                break;
+        max_clique = findNeighboor(g, max_clique, &sets_to_try, sorted_vertices);
+        /*cout << "\n\n";
+        for(auto a : tested_vertices_sets){
+            cout << "---" << endl;
+            for(auto b : a){
+                cout << b->getId() << " ";
             }
-            vertices_to_remove++;
+            cout << endl;
         }
-        else{
-            tested_vertices_sets = std::vector<std::vector<VertexPtr>>();
-            vertices_to_remove = 1;
-            max_tries = max_clique.getSize() / 2;
+        if(aze == 1){
+            return Clique();
+        }
+        aze++;*/
+        if(max_clique.getWeight() == c_weight){
+            if(sets_to_try.size() == 0){
+                sets_to_try_size++;
+                if(sets_to_try_size >= max_clique.getSize() || sets_to_try_size >= max_subset_size){
+                    break;
+                }
+                sets_to_try = getSubsetsOfVertices(max_clique.getVertices(), sets_to_try_size);
+            }
+        }
+        else{ // Means that we improved
+            //cout << "improved" << endl;
+            sets_to_try_size = 1;
+            sets_to_try = getSubsetsOfVertices(max_clique.getVertices(), sets_to_try_size);
+            //max_tries = max_clique.getSize() / 2;
         }
     }
 
@@ -299,5 +420,6 @@ Clique localSearchMEWC(Graph g){
     //      if(better solution found)
     //          solution become the better one
 
+    printClique(max_clique);
     return max_clique;
 }

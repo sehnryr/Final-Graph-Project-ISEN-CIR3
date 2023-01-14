@@ -10,7 +10,7 @@
         \State $R \gets \emptyset$ \Comment{Set that will contain the built clique in the recursive calls}
         \State $P \gets V$ \Comment{Candidate vertices}
         \State $X \gets \emptyset$ \Comment{Excluded vertices}
-        \State $maximalCliques \gets \emptyset$ \Comment{The set of cliques to add the maximal cliques to}
+        \State $maximalCliques \gets \emptyset$ \Comment{The set that will contain the maximal cliques of the graph}
         \State \Call{BronKerbosch}{$R$,$P$,$X$,$maximalCliques$} \Comment{Call the BronKerbosch algorithm to get the maximal cliques of the graph}
         \ForAll{$clique \in maximalCliques$}
         \State $weight \gets$ \Call{getCliqueWeight}{$clique$} \Comment{Get the weight of the current clique}

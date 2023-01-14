@@ -19,19 +19,16 @@
  * @param gamma The highest weight edge of the graph
  * @return std::vector<VertexPtr> The vertices sorted by the sum of their edges weights
  */
-std::vector<VertexPtr> sortVerticesSumWeight(
+std::vector<VertexPtr> MakeRCL(
     Graph graph,
     std::unordered_set<VertexPtr> vertices,  // O(n^2)
-    int gamma
+    long unsigned int gamma
     ) 
 {
-    std::vector<std::pair<VertexPtr, long unsigned int>> weights;
-    std::vector<VertexPtr> sortedVertices;
+    std::vector<VertexPtr> Vertices;
     unsigned int alpha = 0.5;                                       //Critère pour la RCL   
 
-    // Allocate the vectors
-    weights.reserve(vertices.size());
-    sortedVertices.reserve(vertices.size());
+
 
     // Get the weights
     auto adjMatrix = graph.getAdjacencyMatrix();
@@ -44,49 +41,12 @@ std::vector<VertexPtr> sortVerticesSumWeight(
             weight += edge->getWeight();
         }
         if (weight < gamma/(1+alpha)){                                      // Critère pour la RCL
-            weights.push_back(std::make_pair(vertex, weight));
+            Vertices.push_back(vertex);                                         // ajouter une condition si vertex est exclut ne pas prendre
         }
         
     }
 
-    // Sort the vertices by weight
-    std::sort(weights.begin(), weights.end(), [](const auto &a, const auto &b)
-              { return a.second > b.second; });
-
-    // Get the vertices
-    for (const auto &[vertex, weight] : weights)
-        sortedVertices.push_back(vertex);
-
-    return sortedVertices;
-}
-
-
-/**
- * @brief MakeRCL
- */
-void MakeRCL(Graph graph,std::unordered_set<VertexPtr> &RCL){
-    unsigned int alpha = 0.5;                           // ?
-    long unsigned int gamma = 0;                             // The best weight of edges in the graph
-
-
-/*
-*  To know gamma, we online need to use it once so we need to change it
-*/
-    auto adjMatrix = graph.getAdjacencyMatrix();        //Adjency Matrix to know which edge in the graph has the best weight
-    std::unordered_set<VertexPtr> vertices = graph.getVertices();
-    for (auto vertexLine : vertices)
-    {
-        for (auto vertexCol : vertices){
-            auto neighbors = adjMatrix[vertexCol->getId()][vertexLine->getId()];
-            if (neighbors->getWeight() > gamma)
-            {
-                gamma = neighbors->getWeight();
-            }
-        }
-    }
-
-
-
+    return Vertices;
 }
 
 
@@ -120,11 +80,13 @@ void AdaptGreedyFunction(VertexPtr &s){
  */
 void ConstructGreedyRandomizedSolution(Graph g,Clique &Solution){
     //boucle à ajouter
+    long unsigned int gamma;                                    // ajouter une fonction de calcul de gamma
+    VertexPtr X;
     std::unordered_set<VertexPtr> RCL = {};                     //Restricted Candidate List 
-    MakeRCL(g,RCL);
+    MakeRCL(g,RCL,gamma);
     auto s = SelectElementAtRandom(RCL);
     Solution.addVertex(s);                  // Add Vertex to the solution we create
-    AdaptGreedyFunction(s);
+    AdaptGreedyFunction(s);                 // ajout des vertex a exclure 
 }
 
 

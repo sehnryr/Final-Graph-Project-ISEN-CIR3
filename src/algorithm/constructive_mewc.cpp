@@ -16,6 +16,11 @@
 /**
  * @brief Returns the vertex with the best criteria
  *
+ * The criteria is defined by the order of the vertices in the sortedVertices vector
+ *
+ * The sortedVertices vector is modified to remove the vertices that have already
+ * been considered
+ *
  * @param vertices The vertices to consider
  * @param sortedVertices The vertices sorted by a criteria
  * @return VertexPtr The vertex with the best criteria
@@ -26,11 +31,14 @@ VertexPtr getBestVertex(
 {
     VertexPtr bestVertex;
 
+    // Find the first vertex that is in the vertices set
     for (std::vector<VertexPtr>::iterator it = sortedVertices.begin(); it != sortedVertices.end(); it++)
     {
         if (vertices.find(*it) != vertices.end())
         {
             bestVertex = *it;
+
+            // Remove the vertices that have already been considered
             sortedVertices = std::vector<VertexPtr>(it, sortedVertices.end());
             break;
         }
@@ -131,10 +139,15 @@ void constructiveMEWCRecursive(
     std::unordered_set<VertexPtr> P,
     std::vector<VertexPtr> &sortedVertices)
 {
+    // Base case: Return if P is empty
     if (P.empty())
         return;
 
+    // Get the best vertex and add it to the clique
+    // LaTeX : v \gets \argmax_{v \in P} d(v) \Comment{Get the vertex with the highest degree}
+    // LaTeX : v \gets \argmax_{v \in P} \sum_{u \in \N(v)} w(u,v) \Comment{Get the vertex with the highest sum of weights}
     VertexPtr newVertex = getBestVertex(P, sortedVertices);
+    // LaTeX : R \gets R \cup \{v\}
     clique.addVertex(newVertex);
 
     std::unordered_set<VertexPtr> new_P;
@@ -144,8 +157,10 @@ void constructiveMEWCRecursive(
     for (const auto &[neighbor, _] : adjMatrix[newVertex->getId()])
         if (P.count(*(g.getVertex(neighbor))) != 0)
             new_P.insert(*(g.getVertex(neighbor)));
-
-    constructiveMEWCRecursive(g, clique, new_P, sortedVertices);
+ 
+    // Make the recursive call
+    // LaTeX : \Call{ConstructiveRecursiveMEWC}{$R$, $P \cap (\N(v) \cup {v})$}
+    constructiveMEWCRecursive(g, clique, new_P, sortedVertices); 
 }
 
 /**
@@ -157,14 +172,18 @@ void constructiveMEWCRecursive(
  */
 Clique constructiveMEWC(Graph g) // O(n^2)
 {
+    // LaTeX : $R \gets \emptyset$
     Clique clique;
+    // LaTeX : $P \gets V$
     std::unordered_set<VertexPtr> P = g.getVertices();
     std::vector<VertexPtr> sortedVertices = sortVerticesDegree(g, P); // O(nlogn)
     // std::vector<VertexPtr> sortedVertices = sortVerticesSumWeight(g, P); // O(n^2)
 
+    // LaTeX : \Call{ConstructiveRecursiveMEWC}{$R$, $P$}
     constructiveMEWCRecursive(g, clique, P, sortedVertices); // O(n^2)
 
     clique.setWeight(getCliqueWeight(g, clique).value()); // O(n^2)
 
+    // LaTeX : \Return R
     return clique;
 }

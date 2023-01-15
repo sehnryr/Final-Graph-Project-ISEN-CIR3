@@ -141,7 +141,7 @@ std::unordered_set<VertexPtr> findCliqueNeighbors(Graph g, Clique clique, std::v
     }
 }*/
 
-unsigned int improveClique(Graph g, Clique* clique, std::vector<VertexPtr> sorted_vertices, std::unordered_set<VertexPtr> banned_vertices = std::unordered_set<VertexPtr>(), unsigned int min_weight = 0, unsigned int actual_weight_improvement = 0){
+unsigned int improveClique(Graph g, Clique* clique, std::vector<VertexPtr> sorted_vertices, std::unordered_set<VertexPtr> removed_set = std::unordered_set<VertexPtr>(), std::unordered_set<VertexPtr> banned_vertices = std::unordered_set<VertexPtr>(), unsigned int min_weight = 0, unsigned int actual_weight_improvement = 0){
     if(clique->isEmpty()){
         return 0;
     }
@@ -159,7 +159,7 @@ unsigned int improveClique(Graph g, Clique* clique, std::vector<VertexPtr> sorte
     VertexPtr improvement_vertex = nullptr;
 
     for(auto vertex : vertices){
-        if(clique->hasVertex(vertex) || banned_vertices.find(vertex) != banned_vertices.end()){
+        if(clique->hasVertex(vertex) || banned_vertices.find(vertex) != banned_vertices.end() || removed_set.find(vertex) != removed_set.end()){
             continue;
         }
         if(g.hasEdge(v, vertex)){
@@ -183,7 +183,7 @@ unsigned int improveClique(Graph g, Clique* clique, std::vector<VertexPtr> sorte
                 }
                 clique2.addVertex(vertex);
                 clique2.addWeight(weight_improvement);
-                total_weight_improvement = weight_improvement + improveClique(g, &clique2, sorted_vertices, banned_vertices, min_weight, actual_weight_improvement + weight_improvement);
+                total_weight_improvement = weight_improvement + improveClique(g, &clique2, sorted_vertices, std::unordered_set<VertexPtr>(), banned_vertices, min_weight, actual_weight_improvement + weight_improvement);
                 if(total_weight_improvement + actual_weight_improvement <= min_weight){
                     weight_improvement = 0;
 
@@ -191,10 +191,12 @@ unsigned int improveClique(Graph g, Clique* clique, std::vector<VertexPtr> sorte
                     for(auto clique_vertex : cv){
                         clique2.addVertex(clique_vertex);
                     }
+                    clique2.setWeight(clique->getWeight());
 
                 } // If I'm not better than the old solution, I keep looking for a better solution
                 else{
                     improvement_vertex = vertex;
+                    // cout << total_weight_improvement << " + " << actual_weight_improvement << " > " << min_weight << " (" << weight_improvement << ") => " << vertex->getId() << endl;
                     break;
                 }
             }
@@ -211,7 +213,7 @@ unsigned int improveClique(Graph g, Clique* clique, std::vector<VertexPtr> sorte
     *clique = clique2; // If I have improve my clique, replace the original one by the improved one
 
     // cout << "    -> Improved by adding vertex : " << improvement_vertex->getId() << " / weight bonus : " << weight_improvement << endl;
-    
+    // cout << "APPROUVE" << endl;
     return total_weight_improvement;
 }
 
@@ -247,7 +249,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::vector<std::vector<Vertex
     }
     auto clique_vertices = init_clique.getVertices();
     std::vector<VertexPtr> vertices_to_remove = (*sets_to_try)[0];
-    unsigned int removed_weight = 0;
+    float removed_weight = 0;
     
     /*for(unsigned int i = 0; i < to_remove; i++){
         unsigned int min_weight = clique_vertices.size() * 101; // edge weight is less than 100 so the weight of the edges of a vertex in the clique is less than 100 times the number of vertices in the clique
@@ -300,24 +302,46 @@ Clique findNeighboor(Graph g, Clique init_clique, std::vector<std::vector<Vertex
                 continue;
             }
             if(g.hasEdge(rm_vertex, vertex)){
-                removed_weight += g.getEdge(rm_vertex, vertex).value()->getWeight();
+                //cout << "Edge between : " << rm_vertex->getId() << " / " << vertex->getId() << endl;
+                if(std::count(vertices_to_remove.begin(), vertices_to_remove.end(), vertex)){ // These edges will be count 2 times
+                    //cout << "DEMI - Edge between : " << rm_vertex->getId() << " / " << vertex->getId() << " -> " << removed_weight;
+                    removed_weight += ((float)(g.getEdge(rm_vertex, vertex).value()->getWeight()) / 2);
+                    //cout << " / " << removed_weight << endl;
+                }
+                else{
+                    //cout << "Edge between : " << rm_vertex->getId() << " / " << vertex->getId() << " -> " << removed_weight;
+                    removed_weight += g.getEdge(rm_vertex, vertex).value()->getWeight();
+                    //cout << " / " << removed_weight << endl;
+                }
             }
         }
     }
 
+    //cout << "REMOVED WEIGHT : " << removed_weight << endl;
+
     Clique new_clique;
-    std::unordered_set<VertexPtr> banned_vertices;
+    std::unordered_set<VertexPtr> removed_set;
     for(auto clique_vertex : clique_vertices){
         if(std::find(vertices_to_remove.begin(), vertices_to_remove.end(), clique_vertex) != vertices_to_remove.end()){ // do not put the removed vertices
-            banned_vertices.insert(clique_vertex);
+            removed_set.insert(clique_vertex);
             continue;
         }
         new_clique.addVertex(clique_vertex);
     }
     new_clique.setWeight(init_clique.getWeight() - removed_weight);
 
+    if(init_clique.getWeight() <= removed_weight){
+        cout << init_clique.getWeight() << " / " << removed_weight << endl;
+    }
+
+    Clique azeza = new_clique;
+    /*cout << "=====" << endl;
+    printClique(new_clique);
+    cout << "=====" << endl;*/
+
     /*cout << "improve attempt : ";*/
-    unsigned int improvement = improveClique(g, &new_clique, sorted_vertices, banned_vertices, removed_weight, 0);
+    unsigned int improvement = improveClique(g, &new_clique, sorted_vertices, removed_set, std::unordered_set<VertexPtr>(), removed_weight, 0);
+
     /*if(improvement <= removed_weight){
         cout << "failed -> " << improvement << " / " << removed_weight << endl;
     }
@@ -330,6 +354,12 @@ Clique findNeighboor(Graph g, Clique init_clique, std::vector<std::vector<Vertex
         sets_to_try->erase(sets_to_try->begin());
         //cout << "EXIT #2" << endl;
         return init_clique;
+    }
+
+    if(new_clique.getWeight() <= init_clique.getWeight()){
+        cout << "\nHOW IS THIS SHEET FUCKING POSSIBLE?" << endl;
+        cout << new_clique.getWeight() << " / " << init_clique.getWeight() << " ||| " << improvement << " / " << removed_weight << "\n" << endl;
+        printClique(azeza);
     }
 
     //cout << "EXIT #3" << endl;
@@ -371,42 +401,34 @@ Clique localSearchMEWC(Graph g){
     // unsigned int no_improvement_found = 0; // Count the number of try with no improvement found
     // unsigned int max_number_of_tries = g.getVertices().size() / 2; // After 5 no better solution found -> Say that the current solution is the best one
     //unsigned int max_tries = sorted_vertices.size() / 2;
-    unsigned int max_subset_size = 5;
-    unsigned int sets_to_try_size = 1;
+    //unsigned int max_subset_size = 5;
+    unsigned int sets_to_try_size = max_clique.getVertices().size() / 2;
     std::vector<std::vector<VertexPtr>> sets_to_try = getSubsetsOfVertices(max_clique.getVertices(), sets_to_try_size);
-
-    //int aze = 0;
 
     cout << "Initial clique :" << endl;
     printClique(max_clique);
 
-    while(sets_to_try_size < max_clique.getSize() && sets_to_try_size < max_subset_size){
+    while(1 /*sets_to_try_size < max_clique.getSize() && sets_to_try_size < max_subset_size*/){
         unsigned int c_weight = max_clique.getWeight();
         max_clique = findNeighboor(g, max_clique, &sets_to_try, sorted_vertices);
-        /*cout << "\n\n";
-        for(auto a : tested_vertices_sets){
-            cout << "---" << endl;
-            for(auto b : a){
-                cout << b->getId() << " ";
-            }
-            cout << endl;
-        }
-        if(aze == 1){
-            return Clique();
-        }
-        aze++;*/
+        //return Clique();
         if(max_clique.getWeight() == c_weight){
             if(sets_to_try.size() == 0){
-                sets_to_try_size++;
+                break;
+                /*sets_to_try_size++;
                 if(sets_to_try_size >= max_clique.getSize() || sets_to_try_size >= max_subset_size){
                     break;
                 }
-                sets_to_try = getSubsetsOfVertices(max_clique.getVertices(), sets_to_try_size);
+                sets_to_try = getSubsetsOfVertices(max_clique.getVertices(), sets_to_try_size);*/
             }
         }
         else{ // Means that we improved
-            //cout << "improved" << endl;
-            sets_to_try_size = 1;
+            cout << "Improved" << endl;
+            printClique(max_clique);
+            sets_to_try_size = max_clique.getVertices().size() / 2;
+            /*if(sets_to_try_size > 1){
+                sets_to_try_size++;
+            }*/
             sets_to_try = getSubsetsOfVertices(max_clique.getVertices(), sets_to_try_size);
             //max_tries = max_clique.getSize() / 2;
         }

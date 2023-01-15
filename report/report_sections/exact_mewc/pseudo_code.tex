@@ -47,7 +47,14 @@
     \label{clique-weight-pseudocode}
     \begin{algorithmic}[1]
         \Procedure{getCliqueWeight}{$C$} \Comment{We assume that the clique is complete}
-        \State $$\Return \sum_{\begin{subarray}{c}i,j \in C\\i<j\end{subarray}}w(i,j)$$
+        \State $weight \gets 0$
+        \State $n \gets |C|$
+        \ForAll{$i \in \{1,2,\ldots,n\}$} \Comment{For each vertex in the clique}
+        \ForAll{$j \in \{i+1,i+2,\ldots,n\}$} \Comment{For each other vertex in the clique}
+        \State $weight \gets weight + w_{ij}$ \Comment{Add the weight of the edge between the two vertices}
+        \EndFor
+        \EndFor
+        \State \Return $weight$
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}

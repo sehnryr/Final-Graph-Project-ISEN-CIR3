@@ -114,19 +114,19 @@
     
 // }
 
-// Clique graspMEWC(Graph g)
-// {
-//     UNUSED(g);
-//     Clique BestSolution;
-//     Clique Solution;
-//     // TODO : implement the grasp algorithm
+Clique graspMEWC(Graph g)
+{
+    UNUSED(g);
+    Clique BestSolution;
+    // Clique Solution;
+    // TODO : implement the grasp algorithm
 
-//     //While BestSolution change
-//     while (BestSolution.getWeight() == Solution.getWeight()){
-//         ConstructGreedyRandomizedSolution(g,Solution);
-//         LocalSearch(Solution);
-//         UpdateBestSolution(Solution,BestSolution);
-//     }
+    // //While BestSolution change
+    // while (BestSolution.getWeight() == Solution.getWeight()){
+    //     ConstructGreedyRandomizedSolution(g,Solution);
+    //     LocalSearch(Solution);
+    //     UpdateBestSolution(Solution,BestSolution);
+    // }
     
-//     return BestSolution;
-// }
+    return BestSolution;
+}

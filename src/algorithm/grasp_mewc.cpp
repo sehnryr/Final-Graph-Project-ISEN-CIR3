@@ -12,6 +12,8 @@
 #include "mewc.hpp"
 #include "../common.hpp"
 
+#define ALPHA 0.5 // restricted candidate list parameter
+
 /**
  * @brief Returns the sum of the adjacent edges of a vertex
  *
@@ -64,13 +66,12 @@ std::vector<VertexPtr> MakeRCL(
     Graph graph,
     std::unordered_set<VertexPtr> vertices)
 {
-    double alpha = 0.5; // restricted candidate list parameter
     long unsigned int gamma = getGamma(graph, vertices);
     std::vector<VertexPtr> RCL;
     for (auto vertex : vertices)
     {
         long unsigned int weight = getSumAdjacentEdges(graph, vertex);
-        if (weight < gamma / (1 + alpha))
+        if (weight < gamma / (1 + ALPHA))
             RCL.push_back(vertex);
     }
     return RCL;

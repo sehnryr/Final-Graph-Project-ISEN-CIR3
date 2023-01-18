@@ -13,9 +13,8 @@
  *
  * @param id The id of the vertex
  */
-Vertex::Vertex(unsigned int id)
+Vertex::Vertex(unsigned int id) : id(id)
 {
-    this->id = id;
 }
 
 /**

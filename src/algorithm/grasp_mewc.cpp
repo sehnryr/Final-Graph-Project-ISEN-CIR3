@@ -135,6 +135,20 @@ Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
 }
 
 /**
+ * @brief Adapted local search algorithm for the GRASP MEWC algorithm
+ * 
+ * @param Graph graph
+ * @param Clique Solution
+ * @return Clique The solution after the local search if it is better
+ */
+Clique LocalSearch(Graph graph, Clique Solution)
+{
+    // TODO
+    UNUSED(graph);
+    return Solution;
+}
+
+/**
  * @brief Update the best solution if the current solution is better
  *
  * @param Clique &Solution
@@ -152,16 +166,16 @@ void UpdateSolution(Clique &Solution, Clique &BestSolution) // O(1)
  * @param Graph g
  * @return Clique The best solution the GRASP can find
  */
-Clique graspMEWC(Graph g) // O(n^4)
+Clique graspMEWC(Graph g)
 {
     Clique BestSolution;
     Clique Solution;
 
     for (unsigned short int i = 0; i < RETRIES; i++)
     {
-        Solution = ConstructGreedyRandomizedSolution(g);
-        // LocalSearch(Solution);
-        UpdateSolution(Solution, BestSolution);
+        Solution = ConstructGreedyRandomizedSolution(g); // O(n^3)
+        Solution = LocalSearch(g, Solution);
+        UpdateSolution(Solution, BestSolution); // O(1)
     }
 
     return BestSolution;

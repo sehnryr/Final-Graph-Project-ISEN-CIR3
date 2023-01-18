@@ -29,25 +29,30 @@ class Graph
 public:
     Graph();
     ~Graph();
+
+    // Set methods
     void addVertex(VertexPtr v);
     void addEdge(EdgePtr);
-    std::unordered_set<VertexPtr> getVertices() const;
-    std::unordered_set<EdgePtr> getEdges() const;
+
+    // Get methods
+    inline std::unordered_set<VertexPtr> getVertices() const { return vertices; };
+    inline std::unordered_set<EdgePtr> getEdges() const { return edges; };
+    std::optional<VertexPtr> getVertex(unsigned int id) const;
+    std::optional<EdgePtr> getEdge(VertexPtr v1, VertexPtr v2) const;
+    inline std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
+    getAdjacencyMatrix() const { return adjacencyMatrix; };
+
+    // Boolean methods
     bool hasVertex(VertexPtr) const;
     bool hasEdge(EdgePtr) const;
     bool hasEdge(VertexPtr v1, VertexPtr v2) const;
-    std::optional<VertexPtr> getVertex(unsigned int id) const;
-    std::optional<EdgePtr> getEdge(VertexPtr v1,
-                                   VertexPtr v2) const;
-    std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
-    getAdjacencyMatrix() const;
 
     // Remove methods
-    std::optional<VertexPtr> removeVertex(unsigned int id);
-    std::optional<VertexPtr> removeVertex(VertexPtr v);
-    std::optional<EdgePtr> removeEdge(unsigned int id1, unsigned int id2);
-    std::optional<EdgePtr> removeEdge(VertexPtr v1, VertexPtr v2);
-    std::optional<EdgePtr> removeEdge(EdgePtr e);
+    const std::optional<VertexPtr> removeVertex(unsigned int id);
+    const std::optional<VertexPtr> removeVertex(VertexPtr v);
+    const std::optional<EdgePtr> removeEdge(unsigned int id1, unsigned int id2);
+    const std::optional<EdgePtr> removeEdge(VertexPtr v1, VertexPtr v2);
+    const std::optional<EdgePtr> removeEdge(EdgePtr e);
 
 private:
     std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>

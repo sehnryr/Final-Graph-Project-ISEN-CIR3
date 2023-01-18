@@ -25,6 +25,8 @@ Graph::~Graph()
 {
 }
 
+/* SET METHODS */
+
 /**
  * @brief Add a vertex to the graph
  *
@@ -64,43 +66,7 @@ void Graph::addEdge(EdgePtr e) // Time complexity: O(1)
     adjacencyMatrix[e->getV2()->getId()][e->getV1()->getId()] = e;
 }
 
-/**
- * @brief Check if a vertex is in the graph
- *
- * @param v The vertex to check
- * @return true If the vertex is in the graph, false otherwise
- */
-bool Graph::hasVertex(VertexPtr v) const // Time complexity: O(1)
-{
-    if (getVertex(v->getId()))
-        return true;
-    return false;
-}
-
-/**
- * @brief Check if an edge is in the graph
- *
- * @param e The edge to check
- * @return true If the edge is in the graph, false otherwise
- */
-bool Graph::hasEdge(EdgePtr e) const // Time complexity: O(1)
-{
-    return hasEdge(e->getV1(), e->getV2());
-}
-
-/**
- * @brief Check if an edge is in the graph
- *
- * @param v1 The first vertex of the edge
- * @param v2 The second vertex of the edge
- * @return true If the edge is in the graph, false otherwise
- */
-bool Graph::hasEdge(VertexPtr v1, VertexPtr v2) const // Time complexity: O(1)
-{
-    if (getEdge(v1, v2))
-        return true;
-    return false;
-}
+/* GET METHODS */
 
 /**
  * @brief Get a vertex from the graph
@@ -123,6 +89,28 @@ std::optional<VertexPtr> Graph::getVertex(unsigned int id) const // Time complex
 /**
  * @brief Get an edge from the graph
  *
+ * @param id1 The id of the first vertex of the edge
+ * @param id2 The id of the second vertex of the edge
+ * @return std::optional<EdgePtr> The edge if it exists,
+ */
+std::optional<EdgePtr> Graph::getEdge(
+    unsigned int id1,
+    unsigned int id2) const // Time complexity: O(1)
+{
+    try
+    {
+        return adjacencyMatrix.at(id1).at(id2);
+    }
+    catch (const std::out_of_range &e)
+    {
+        UNUSED(e);
+        return {};
+    }
+}
+
+/**
+ * @brief Get an edge from the graph
+ *
  * This method returns an edge from the graph if it exists. If it does, it returns
  * the edge as an optional. If it does not, it returns an empty optional.
  *
@@ -135,16 +123,73 @@ std::optional<EdgePtr> Graph::getEdge(
     VertexPtr v1,
     VertexPtr v2) const // Time complexity: O(1)
 {
-    try
-    {
-        return adjacencyMatrix.at(v1->getId()).at(v2->getId());
-    }
-    catch (const std::out_of_range &e)
-    {
-        UNUSED(e);
-        return {};
-    }
+    return getEdge(v1->getId(), v2->getId());
 }
+
+/* BOOLEAN METHODS */
+
+/**
+ * @brief Check if a vertex is in the graph
+ *
+ * @param id The id of the vertex to check
+ * @return true If the vertex is in the graph, false otherwise
+ */
+bool Graph::hasVertex(unsigned int id) const // Time complexity: O(1)
+{
+    if (getVertex(id))
+        return true;
+    return false;
+}
+
+/**
+ * @brief Check if a vertex is in the graph
+ *
+ * @param v The vertex to check
+ * @return true If the vertex is in the graph, false otherwise
+ */
+bool Graph::hasVertex(VertexPtr v) const // Time complexity: O(1)
+{
+    return hasVertex(v->getId());
+}
+
+/**
+ * @brief Check if an edge is in the graph
+ *
+ * @param id1 The id of the first vertex of the edge
+ * @param id2 The id of the second vertex of the edge
+ * @return true If the edge is in the graph, false otherwise
+ */
+bool Graph::hasEdge(unsigned int id1, unsigned int id2) const // Time complexity: O(1)
+{
+    if (getEdge(id1, id2))
+        return true;
+    return false;
+}
+
+/**
+ * @brief Check if an edge is in the graph
+ *
+ * @param v1 The first vertex of the edge
+ * @param v2 The second vertex of the edge
+ * @return true If the edge is in the graph, false otherwise
+ */
+bool Graph::hasEdge(VertexPtr v1, VertexPtr v2) const // Time complexity: O(1)
+{
+    return hasEdge(v1->getId(), v2->getId());
+}
+
+/**
+ * @brief Check if an edge is in the graph
+ *
+ * @param e The edge to check
+ * @return true If the edge is in the graph, false otherwise
+ */
+bool Graph::hasEdge(EdgePtr e) const // Time complexity: O(1)
+{
+    return hasEdge(e->getV1(), e->getV2());
+}
+
+/* REMOVE METHODS */
 
 /**
  * @brief Remove a vertex from the graph and all its incident edges
@@ -154,11 +199,14 @@ std::optional<EdgePtr> Graph::getEdge(
  */
 const std::optional<VertexPtr> Graph::removeVertex(unsigned int id)
 {
-    // Delete the vertex from the set of vertices
-    VertexPtr v = std::make_shared<Vertex>(id);
-    if (!hasVertex(v))
+    // If the vertex does not exist, do nothing
+    if (!hasVertex(id))
         return {};
 
+    // Get the vertex
+    VertexPtr v = getVertex(id).value();
+
+    // Delete the vertex from the set of vertices
     vertices.erase(v);
 
     // Delete the vertex from the adjacency matrix and the set of edges
@@ -192,12 +240,15 @@ const std::optional<VertexPtr> Graph::removeVertex(VertexPtr v)
  */
 const std::optional<EdgePtr> Graph::removeEdge(unsigned int id1, unsigned int id2)
 {
-    // Check if the vertices exist
-    if (adjacencyMatrix.find(id1) == adjacencyMatrix.end() ||
-        adjacencyMatrix.find(id2) == adjacencyMatrix.end())
+    // Check if the edge exists
+    if (!hasEdge(id1, id2))
         return {};
 
-    return removeEdge(getVertex(id1).value(), getVertex(id2).value());
+    EdgePtr edge = getEdge(id1, id2).value();
+    adjacencyMatrix[id1].erase(id2);
+    adjacencyMatrix[id2].erase(id1);
+
+    return edge;
 }
 
 /**
@@ -209,15 +260,7 @@ const std::optional<EdgePtr> Graph::removeEdge(unsigned int id1, unsigned int id
  */
 const std::optional<EdgePtr> Graph::removeEdge(VertexPtr v1, VertexPtr v2)
 {
-    // Check if the edge exists
-    if (!hasEdge(v1, v2))
-        return {};
-
-    EdgePtr edge = adjacencyMatrix[v1->getId()][v2->getId()];
-    adjacencyMatrix[v1->getId()].erase(v2->getId());
-    adjacencyMatrix[v2->getId()].erase(v1->getId());
-
-    return edge;
+    return removeEdge(v1->getId(), v2->getId());
 }
 
 /**

@@ -24,37 +24,3 @@ Vertex::Vertex(unsigned int id)
 Vertex::~Vertex()
 {
 }
-
-/**
- * @brief Get the id of the vertex
- *
- * @return unsigned int The id of the vertex
- */
-unsigned int Vertex::getId() const // Time complexity: O(1)
-{
-    return id;
-}
-
-/**
- * @brief Compare two vertices
- *
- * @param v The vertex to compare to
- * @return true If the vertices have the same id
- * @return false If the vertices have different ids
- */
-bool Vertex::operator==(const Vertex &v) const
-{
-    return id == v.id;
-}
-
-/**
- * @brief Compare two vertices
- *
- * @param v The vertex to compare to
- * @return true If the id of the current vertex is lower than the id of the other vertex
- * @return false If the id of the current vertex is greater than the id of the other vertex
- */
-bool Vertex::operator<(const Vertex &v) const
-{
-    return id < v.id;
-}

@@ -141,7 +141,7 @@ Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
  * @param Clique Solution
  * @return Clique The solution after the local search if it is better
  */
-Clique LocalSearch(Graph graph, Clique Solution)
+Clique LocalSearchGrasp(Graph graph, Clique Solution)
 {
     // TODO
     UNUSED(graph);
@@ -174,7 +174,7 @@ Clique graspMEWC(Graph g)
     for (unsigned short int i = 0; i < RETRIES; i++)
     {
         Solution = ConstructGreedyRandomizedSolution(g); // O(n^3)
-        Solution = LocalSearch(g, Solution);
+        Solution = LocalSearchGrasp(g, Solution);
         UpdateSolution(Solution, BestSolution); // O(1)
     }
 

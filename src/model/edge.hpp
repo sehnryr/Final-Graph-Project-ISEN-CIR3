@@ -25,17 +25,35 @@
 class Edge
 {
 public:
-    Edge(VertexPtr v1,
-         VertexPtr v2,
-         unsigned int weight);
+    Edge(VertexPtr v1, VertexPtr v2, unsigned int weight);
     ~Edge();
-    VertexPtr getV1() const;
-    VertexPtr getV2() const;
-    std::optional<VertexPtr> hasVertex(VertexPtr v) const;
-    std::optional<VertexPtr> isIncident(EdgePtr e) const;
-    unsigned int getWeight() const;
-    bool operator==(const Edge &e) const;
-    bool operator<(const Edge &e) const;
+
+    inline VertexPtr getV1() const { return v1; }
+    inline VertexPtr getV2() const { return v2; }
+    inline unsigned int getWeight() const { return weight; }
+    inline bool operator==(const Edge &e) const { return v1 == e.v1 && v2 == e.v2; }
+    inline bool operator<(const Edge &e) const { return weight < e.weight; }
+
+    inline std::optional<VertexPtr> hasVertex(unsigned int id) const
+    {
+        if (v1->getId() == id)
+            return v1;
+        if (v2->getId() == id)
+            return v2;
+        return {};
+    }
+    inline std::optional<VertexPtr> hasVertex(VertexPtr v) const { return hasVertex(v->getId()); }
+
+    inline std::optional<VertexPtr> isIncident(unsigned int id1, unsigned int id2) const
+    {
+        if (auto v = hasVertex(id1))
+            return *v;
+        if (auto v = hasVertex(id2))
+            return *v;
+        return {};
+    }
+    inline std::optional<VertexPtr> isIncident(VertexPtr v1, VertexPtr v2) const { return isIncident(v1->getId(), v2->getId()); }
+    inline std::optional<VertexPtr> isIncident(EdgePtr e) const { return isIncident(e->getV1(), e->getV2()); }
 
 private:
     VertexPtr v1;

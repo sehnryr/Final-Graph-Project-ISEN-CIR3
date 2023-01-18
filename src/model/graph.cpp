@@ -65,26 +65,6 @@ void Graph::addEdge(EdgePtr e) // Time complexity: O(1)
 }
 
 /**
- * @brief Get the vertices of the graph
- *
- * @return std::unordered_set<VertexPtr> The vertices of the graph
- */
-std::unordered_set<VertexPtr> Graph::getVertices() const // Time complexity: O(1)
-{
-    return vertices;
-}
-
-/**
- * @brief Get the edges of the graph
- *
- * @return std::unordered_set<EdgePtr> The edges of the graph
- */
-std::unordered_set<EdgePtr> Graph::getEdges() const // Time complexity: O(1)
-{
-    return edges;
-}
-
-/**
  * @brief Check if a vertex is in the graph
  *
  * @param v The vertex to check
@@ -167,24 +147,12 @@ std::optional<EdgePtr> Graph::getEdge(
 }
 
 /**
- * @brief Get the adjacency matrix of the graph
- *
- * @return std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
- * The adjacency matrix
- */
-std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
-Graph::getAdjacencyMatrix() const // Time complexity: O(1)
-{
-    return adjacencyMatrix;
-}
-
-/**
  * @brief Remove a vertex from the graph and all its incident edges
  *
  * @param id The id of the vertex to remove
  * @return std::optional<VertexPtr> The vertex if it was removed, an empty optional otherwise
  */
-std::optional<VertexPtr> Graph::removeVertex(unsigned int id)
+const std::optional<VertexPtr> Graph::removeVertex(unsigned int id)
 {
     // Delete the vertex from the set of vertices
     VertexPtr v = std::make_shared<Vertex>(id);
@@ -210,19 +178,19 @@ std::optional<VertexPtr> Graph::removeVertex(unsigned int id)
  * @param v The vertex to remove
  * @return std::optional<VertexPtr> The vertex if it was removed, an empty optional otherwise
  */
-std::optional<VertexPtr> Graph::removeVertex(VertexPtr v)
+const std::optional<VertexPtr> Graph::removeVertex(VertexPtr v)
 {
     return removeVertex(v->getId());
 }
 
 /**
  * @brief Remove an edge from the graph
- * 
+ *
  * @param id1 The id of the first vertex of the edge
  * @param id2 The id of the second vertex of the edge
  * @return std::optional<EdgePtr> The edge if it was removed, an empty optional otherwise
  */
-std::optional<EdgePtr> Graph::removeEdge(unsigned int id1, unsigned int id2)
+const std::optional<EdgePtr> Graph::removeEdge(unsigned int id1, unsigned int id2)
 {
     // Check if the vertices exist
     if (adjacencyMatrix.find(id1) == adjacencyMatrix.end() ||
@@ -234,12 +202,12 @@ std::optional<EdgePtr> Graph::removeEdge(unsigned int id1, unsigned int id2)
 
 /**
  * @brief Remove an edge from the graph
- * 
+ *
  * @param v1 The first vertex of the edge
  * @param v2 The second vertex of the edge
  * @return std::optional<EdgePtr> The edge if it was removed, an empty optional otherwise
  */
-std::optional<EdgePtr> Graph::removeEdge(VertexPtr v1, VertexPtr v2)
+const std::optional<EdgePtr> Graph::removeEdge(VertexPtr v1, VertexPtr v2)
 {
     // Check if the edge exists
     if (!hasEdge(v1, v2))
@@ -254,11 +222,11 @@ std::optional<EdgePtr> Graph::removeEdge(VertexPtr v1, VertexPtr v2)
 
 /**
  * @brief Remove an edge from the graph
- * 
+ *
  * @param e The edge to remove
  * @return std::optional<EdgePtr> The edge if it was removed, an empty optional otherwise
  */
-std::optional<EdgePtr> Graph::removeEdge(EdgePtr e)
+const std::optional<EdgePtr> Graph::removeEdge(EdgePtr e)
 {
     return removeEdge(e->getV1(), e->getV2());
 }

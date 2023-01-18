@@ -33,7 +33,7 @@
                     \draw (4) -- (6) node[midway, above, sloped] {1};
                 \end{tikzpicture}
                 \caption{Graph illustration for the constructive algorithm at step 0}
-                \label{fig:constructive-mewc-edge}
+                \label{fig:constructive-mewc-maxedge-step0}
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
@@ -56,33 +56,32 @@
             \begin{figure}[H]
                 \centering
                 \begin{tikzpicture}[node distance=2cm]
-                    \node[circle, draw] (1) {1};
-                    \node[circle, draw] (2) at ([shift=(210:2)] 1) {2};
+                    \node[circle, draw, Cerulean] (1) {1};
+                    \node[circle, draw, Cerulean] (2) at ([shift=(210:2)] 1) {2};
                     \node[circle, draw] (3) [left of=2] {3};
-                    \node[circle, draw] (4) [above of=3] {4};
+                    \node[circle, draw, Cerulean] (4) [above of=3] {4};
                     \node[circle, draw, red] (5) [above of=2] {5};
                     \node[circle, draw] (6) at ([shift=(150:2)] 4) {6};
     
                     \draw  (1) -- (2) node[midway, above, sloped] {1};
                     \draw (1) -- (5) node[midway, above, sloped] {4};
-                    \draw (2) -- (3) node[midway, above, sloped] {5};
+                    \draw (2) -- (3) node[midway, above, sloped] {4};
                     \draw (2) -- (5) node[midway, above, sloped] {2};
                     \draw (3) -- (4) node[midway, above, sloped] {4};
                     \draw (4) -- (5) node[midway, above, sloped] {3};
                     \draw (4) -- (6) node[midway, above, sloped] {1};
                 \end{tikzpicture}
                 \caption{Graph illustration for the constructive algorithm at step 1}
-                \label{fig:constructive-mewc-edge}
+                \label{fig:constructive-mewc-maxedge-step1}
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            In step 1, the algorithm will take the first vertex of Z (here 5) if it is common to P. He will then add it to S. 
-            Then the algorithm will iterate all the neighbors of $v$, and look for the one who shares the edge with the highest weight, which replace $v$ (here 1). If there are several edges with the same weight, the algorithm will take the one with the highest degree. After having found it, we add it to $S$ as well as the weight of the edges of all the vertices in S and $v$ to $W$ (here 4), we update $P$ by keeping only the common neighbors of the members of $S$ (here only 2).
+            In step 1, the algorithm will take the first vertex of $Z$ if it is common to $P$ (here 5). He will then add it to $S$, represented in \textcolor{red}{red} . $P$, represented in \textcolor{Cerulean}{blue}, will be updated by taking only the vertices that are neighbors to all the members of $S$ (here, $S$ is composed only of vertex 5, so we take only the neighbors of 5).
     
             \begin{center}
                 \begin{tabular}{|lll|}
                     \hline
-                    S = \{5,1\} & P = \{2\} & W = 4 \\
+                    S = \{5\} & P = \{4,2,1\} & Z = \{3,4,2,1,6\} \\
                     \hline
                 \end{tabular}
             \end{center}
@@ -98,25 +97,27 @@
                 \centering
                 \begin{tikzpicture}[node distance=2cm]
                     \node[circle, draw, red] (1) {1};
-                    \node[circle, draw, red] (2) at ([shift=(210:2)] 1) {2};
+                    \node[circle, draw] (2) at ([shift=(210:2)] 1) {2};
                     \node[circle, draw] (3) [left of=2] {3};
                     \node[circle, draw] (4) [above of=3] {4};
                     \node[circle, draw, red] (5) [above of=2] {5};
                     \node[circle, draw] (6) at ([shift=(150:2)] 4) {6};
     
-                    \draw[red]  (1) -- (2) node[midway, above, sloped] {1};
+                    \draw  (1) -- (2) node[midway, above, sloped] {1};
                     \draw[red] (1) -- (5) node[midway, above, sloped] {4};
-                    \draw (2) -- (3) node[midway, above, sloped] {5};
-                    \draw[red] (2) -- (5) node[midway, above, sloped] {2};
+                    \draw (2) -- (3) node[midway, above, sloped] {4};
+                    \draw (2) -- (5) node[midway, above, sloped] {2};
                     \draw (3) -- (4) node[midway, above, sloped] {4};
                     \draw (4) -- (5) node[midway, above, sloped] {3};
                     \draw (4) -- (6) node[midway, above, sloped] {1};
                 \end{tikzpicture}
                 \caption{Graph illustration for the constructive algorithm at step 2}
-                \label{fig:constructive-mewc-edge}
+                \label{fig:constructive-mewc-edge-step2}
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
+            In step 2, the algorithm will repeat the process of step 1 until $P$ is empty. It will take the first vertex of $Z$ if it is common to $P$ (here 2)
+
             Then, the algorithm will repeat the process of step 1 until $P$ is empty. It will look for a new $v$ (here 2). After finding it, it will add it to $S$ as well as the weight of the edges of all the vertices in $S$ and it to $W$ (here 2 + 1). It will then update $P$ which here will be empty, the algorithm stops and we get the maximum clique in \textcolor{red}{red} and his weight (here (5,1,2) of weight 7).
     
             \begin{center}

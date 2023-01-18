@@ -23,9 +23,9 @@ class Vertex
 public:
     Vertex(unsigned int id);
     ~Vertex();
-    unsigned int getId() const;
-    bool operator==(const Vertex &v) const;
-    bool operator<(const Vertex &v) const;
+    inline unsigned int getId() const { return id; };
+    inline bool operator==(const Vertex &v) const { return id == v.id; };
+    inline bool operator<(const Vertex &v) const { return id < v.id; };
 
 private:
     unsigned int id;

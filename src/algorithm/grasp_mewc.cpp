@@ -13,6 +13,7 @@
 #include "../common.hpp"
 
 #define ALPHA 0.5 // restricted candidate list parameter
+#define RETRIES 10 // number of retries for the grasp algorithm
 
 /**
  * @brief Returns the sum of the adjacent edges of a vertex
@@ -139,7 +140,7 @@ Clique graspMEWC(Graph g)
     Clique BestSolution;
     Clique Solution;
 
-    while (true)
+    for (unsigned short int i = 0; i < RETRIES; i++)
     {
         Solution = ConstructGreedyRandomizedSolution(g);
         // LocalSearch(Solution);

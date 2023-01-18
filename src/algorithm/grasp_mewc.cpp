@@ -127,7 +127,7 @@ Clique ConstructGreedyRandomizedSolution(Graph graph)
  * @param Clique &Solution
  * @param Clique &BestSolution
  */
-void UpdateBestSolution(Clique &Solution, Clique &BestSolution)
+void UpdateSolution(Clique &Solution, Clique &BestSolution)
 {
     if (Solution.getWeight() > BestSolution.getWeight())
         BestSolution = Solution;
@@ -142,7 +142,7 @@ Clique graspMEWC(Graph g)
     {
         Solution = ConstructGreedyRandomizedSolution(g);
         // LocalSearch(Solution);
-        UpdateBestSolution(Solution, BestSolution);
+        UpdateSolution(Solution, BestSolution);
     }
 
     return BestSolution;

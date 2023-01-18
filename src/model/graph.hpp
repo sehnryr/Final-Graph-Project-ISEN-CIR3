@@ -42,6 +42,13 @@ public:
     std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
     getAdjacencyMatrix() const;
 
+    // Remove methods
+    std::optional<VertexPtr> removeVertex(unsigned int id);
+    std::optional<VertexPtr> removeVertex(VertexPtr v);
+    std::optional<EdgePtr> removeEdge(unsigned int id1, unsigned int id2);
+    std::optional<EdgePtr> removeEdge(VertexPtr v1, VertexPtr v2);
+    std::optional<EdgePtr> removeEdge(EdgePtr e);
+
 private:
     std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
         adjacencyMatrix;

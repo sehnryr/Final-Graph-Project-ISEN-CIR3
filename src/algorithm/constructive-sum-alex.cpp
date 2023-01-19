@@ -10,7 +10,7 @@
 #include "../common.hpp"
 
 // fonction qui retourne le vertex possédant le plus de voisin
-VertexPtr getFirstVertex(Graph graph)
+VertexPtr getFirstVertexSumAlex(Graph graph)
 {
     VertexPtr bestVertex;
     auto adjMatrix = graph.getAdjacencyMatrix();
@@ -86,7 +86,7 @@ VertexPtr getFirstVertex(Graph graph)
 }
 
 // Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique pour la première itération (en gros tout les voisins du vertex choisi)
-void getPotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P)
+void getPotentielCandidateSumAlex(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P)
 {
     // Par example sur notre instance, on va avoir P = {2,3,4}
 
@@ -103,7 +103,7 @@ void getPotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<Ve
 }
 
 // Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique (en gros tout les voisins du vertex choisi)
-void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P)
+void updatePotentielCandidateSumAlex(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P)
 {
     // Par exemple, si notre vertex c'est 2, et qu'il a comme voisin (1,4), on doit obtenir P = {1,2,4} et donc supprimer 3
 
@@ -140,7 +140,7 @@ void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set
 
 
 // Modifie R en y ajoutant le voisin avec l'edge au plus haut poids entre les deux, Modifie TotalWeight pour ajouter le poids de l'edge entre le vertex et le voisin avec l'edge au plus haut poids. En cas d'égalité, prend l'edge au plus haut poids
-void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &S)
+void updateCliqueSumAlex(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &S)
 {
     long unsigned int weight = 0; // variable temporaire correspond au poids de l'edge entre notre vertex et ses voisins
     long unsigned int bestWeight = 0; // variable correspondant au poids maximales obtenu lors de la lecture des voisins
@@ -201,19 +201,19 @@ void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> 
     S.addWeight(cliqueWeight);
 }
 
-void constructiveMEWCRecursive(Graph G, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &S)
+void constructiveMEWCRecursiveSumAlex(Graph G, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &S)
 {
     if(P.size() == 0)
     {
         return;
     }
 
-    updateClique(G, vertex, P, S);
-    updatePotentielCandidate(G, vertex, P);
-    constructiveMEWCRecursive(G, vertex, P, S);
+    updateCliqueSumAlex(G, vertex, P, S);
+    updatePotentielCandidateSumAlex(G, vertex, P);
+    constructiveMEWCRecursiveSumAlex(G, vertex, P, S);
 }
 
-Clique constructiveMEWC(Graph g)
+Clique constructiveMEWCSumAlex(Graph g)
 {
     // UNUSED(g);
     // TODO : implement the constructive algorithm
@@ -221,11 +221,11 @@ Clique constructiveMEWC(Graph g)
     Clique S; //  clique qui forme la solution
     std::unordered_set<VertexPtr> P; // Liste de sommets candidats
 
-    auto firstVertex = getFirstVertex(g); // vertex avec le plus grand nombre de sommets
+    auto firstVertex = getFirstVertexSumAlex(g); // vertex avec le plus grand nombre de sommets
     VertexPtr lastvertex = firstVertex;
 
     S.addVertex(firstVertex); // On ajoute le vertex à notre clique
-    getPotentielCandidate(g, firstVertex, P); // On recupère les neighbors de FirstVertex et on les mets dans P
+    getPotentielCandidateSumAlex(g, firstVertex, P); // On recupère les neighbors de FirstVertex et on les mets dans P
     // imaginons l'instance
     // 4 4
     // 1 3 3
@@ -234,7 +234,7 @@ Clique constructiveMEWC(Graph g)
     // 2 4 5
     // Ici, on va avoir P = {2,3,4}
 
-    constructiveMEWCRecursive(g, lastvertex, P, S);
+    constructiveMEWCRecursiveSumAlex(g, lastvertex, P, S);
 
     return S;
 }

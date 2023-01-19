@@ -17,13 +17,21 @@
 enum Algorithm
 {
     Exact,
-    Constructive,
+    ConstructiveDegreeYoun,
+    ConstructiveSumYoun,
+    ConstructiveDegreeAlex,
+    ConstructiveSumAlex,
     LocalSearch,
     Grasp
 };
 
 Clique exactMEWC(Graph g);
-Clique constructiveMEWC(Graph g);
+
+Clique constructiveMEWCDegreeYoun(Graph g);
+Clique constructiveMEWCSumYoun(Graph g);
+Clique constructiveMEWCDegreeAlex(Graph g);
+Clique constructiveMEWCSumAlex(Graph g);
+
 Clique localSearchMEWC(Graph g);
 Clique graspMEWC(Graph g);
 Clique runMEWC(Graph graph, Algorithm algorithm);

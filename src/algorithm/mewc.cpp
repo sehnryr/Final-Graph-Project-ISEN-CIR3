@@ -28,8 +28,14 @@ Clique runMEWC(Graph graph, Algorithm algorithm)
     {
     case Algorithm::Exact:
         return exactMEWC(graph);
-    case Algorithm::Constructive:
-        return constructiveMEWC(graph);
+    case Algorithm::ConstructiveDegreeYoun:
+        return constructiveMEWCDegreeYoun(graph);
+    case Algorithm::ConstructiveSumYoun:
+        return constructiveMEWCSumYoun(graph);
+    case Algorithm::ConstructiveDegreeAlex:
+        return constructiveMEWCDegreeAlex(graph);
+    case Algorithm:: ConstructiveSumAlex:
+        return constructiveMEWCSumAlex(graph);
     case Algorithm::LocalSearch:
         return localSearchMEWC(graph);
     case Algorithm::Grasp:
@@ -53,8 +59,14 @@ Algorithm getAlgorithm(std::string algorithm)
 {
     if (algorithm == "exact")
         return Algorithm::Exact;
-    else if (algorithm == "constructive")
-        return Algorithm::Constructive;
+    else if (algorithm == "constructive_degree_youn")
+        return Algorithm::ConstructiveDegreeYoun;
+    else if (algorithm == "constructive_sum_alex")
+        return Algorithm::ConstructiveSumAlex;
+    else if (algorithm == "constructive_sum_youn")
+        return Algorithm::ConstructiveSumYoun;
+    else if (algorithm == "constructive_degree_alex")
+        return Algorithm::ConstructiveDegreeAlex;
     else if (algorithm == "local-search")
         return Algorithm::LocalSearch;
     else if (algorithm == "grasp")
@@ -78,8 +90,14 @@ std::string getAlgorithmName(Algorithm algorithm)
     {
     case Algorithm::Exact:
         return "exact";
-    case Algorithm::Constructive:
-        return "constructive";
+    case Algorithm::ConstructiveDegreeYoun:
+        return "constructive_degree_youn";
+    case Algorithm::ConstructiveSumYoun:
+        return "constructive_sum_youn";
+    case Algorithm::ConstructiveDegreeAlex:
+        return "constructive_degree_alex";
+    case Algorithm:: ConstructiveSumAlex:
+        return "constructive_sum_alex";
     case Algorithm::LocalSearch:
         return "local-search";
     case Algorithm::Grasp:

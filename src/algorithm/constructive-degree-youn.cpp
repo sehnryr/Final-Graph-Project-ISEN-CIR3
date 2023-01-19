@@ -25,7 +25,7 @@
  * @param sortedVertices The vertices sorted by a criteria
  * @return VertexPtr The vertex with the best criteria
  */
-VertexPtr getBestVertex(
+VertexPtr getBestVertexDegreeYoun(
     std::unordered_set<VertexPtr> vertices,
     std::vector<VertexPtr> &sortedVertices) // O(n)
 {
@@ -54,7 +54,7 @@ VertexPtr getBestVertex(
  * @param vertices The vertices to consider
  * @return std::vector<VertexPtr> The vertices sorted by degree
  */
-std::vector<VertexPtr> sortVerticesDegree(
+std::vector<VertexPtr> sortVerticesDegreeDegreeYoun(
     Graph graph,
     std::unordered_set<VertexPtr> vertices) // O(nlogn)
 {
@@ -91,7 +91,7 @@ std::vector<VertexPtr> sortVerticesDegree(
  * @param vertices The vertices to consider
  * @return std::vector<VertexPtr> The vertices sorted by the sum of their edges weights
  */
-std::vector<VertexPtr> sortVerticesSumWeight(
+std::vector<VertexPtr> sortVerticesSumWeightDegreeYoun(
     Graph graph,
     std::unordered_set<VertexPtr> vertices) // O(n^2)
 {
@@ -133,7 +133,7 @@ std::vector<VertexPtr> sortVerticesSumWeight(
  * @param clique The clique
  * @param P The set of vertices to consider
  */
-void constructiveMEWCRecursive(
+void constructiveMEWCRecursiveDegreeYoun(
     Graph g,
     Clique &clique,
     std::unordered_set<VertexPtr> P,
@@ -146,7 +146,7 @@ void constructiveMEWCRecursive(
     // Get the best vertex and add it to the clique
     // LaTeX : v \gets \argmax_{v \in P} d(v) \Comment{Get the vertex with the highest degree}
     // LaTeX : v \gets \argmax_{v \in P} \sum_{u \in \N(v)} w(u,v) \Comment{Get the vertex with the highest sum of weights}
-    VertexPtr newVertex = getBestVertex(P, sortedVertices);
+    VertexPtr newVertex = getBestVertexDegreeYoun(P, sortedVertices);
     // LaTeX : R \gets R \cup \{v\}
     clique.addVertex(newVertex);
 
@@ -160,7 +160,7 @@ void constructiveMEWCRecursive(
  
     // Make the recursive call
     // LaTeX : \Call{ConstructiveRecursiveMEWC}{$R$, $P \cap (\N(v) \cup {v})$}
-    constructiveMEWCRecursive(g, clique, new_P, sortedVertices); 
+    constructiveMEWCRecursiveDegreeYoun(g, clique, new_P, sortedVertices); 
 }
 
 /**
@@ -170,17 +170,17 @@ void constructiveMEWCRecursive(
  * @param g The graph
  * @return Clique A guess of the maximum weight clique
  */
-Clique constructiveMEWC(Graph g) // O(n^2)
+Clique constructiveMEWCDegreeYoun(Graph g) // O(n^2)
 {
     // LaTeX : $R \gets \emptyset$
     Clique clique;
     // LaTeX : $P \gets V$
     std::unordered_set<VertexPtr> P = g.getVertices();
-    std::vector<VertexPtr> sortedVertices = sortVerticesDegree(g, P); // O(nlogn)
+    std::vector<VertexPtr> sortedVertices = sortVerticesDegreeDegreeYoun(g, P); // O(nlogn)
     // std::vector<VertexPtr> sortedVertices = sortVerticesSumWeight(g, P); // O(n^2)
 
     // LaTeX : \Call{ConstructiveRecursiveMEWC}{$R$, $P$}
-    constructiveMEWCRecursive(g, clique, P, sortedVertices); // O(n^2)
+    constructiveMEWCRecursiveDegreeYoun(g, clique, P, sortedVertices); // O(n^2)
 
     clique.setWeight(getCliqueWeight(g, clique).value()); // O(n^2)
 

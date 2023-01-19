@@ -34,17 +34,14 @@ for CONNECTIVITY in 25 50 75 ; do
             $GRAPH_GEN $VERTEX_COUNT $CONNECTIVITY --output-dir=$TEMP_DIR
 
             # Run the algorithm
-            for TYPE in constructive-degree-youn constructive-sum-alex.cpp constructive-sum-youn.cpp constructive-degree-alex.cpp; do
+            for TYPE in constructive_degree_youn constructive_sum_alex constructive_sum_youn constructive_degree_alex; do
 
-            declare -i total
-            total=0
             $EXEC "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}.in" --type=${TYPE} --output-dir=$TEMP_DIR
 
             val=$(( $(cut -f2 -d" " $TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}_${TYPE}.out | head -n1) ))
-            total=$total+$val
 
-            echo -n "${VERTEX_COUNT}_${CONNECTIVITY} try = $i" >> $TEMP_DIR/resultat_${TYPE}
-            echo $(($total)) >> $TEMP_DIR/resultat_${TYPE}
+            # echo -n "${VERTEX_COUNT}_${CONNECTIVITY} try = $i resultat =" >> $TEMP_DIR/resultat_${TYPE}
+            echo $(($val)) >> $TEMP_DIR/resultat_${TYPE}
             done
         done
 

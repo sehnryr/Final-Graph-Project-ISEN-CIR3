@@ -66,7 +66,7 @@ unsigned int improveClique(
             // See if the vertex is adjacent to all vertices of the clique
             for (auto clique_vertex : clique_vertices)
             {
-                if (vertex->getId() == clique_vertex->getId())
+                if (vertex->id() == clique_vertex->id())
                     continue;
 
                 // If we don't have an edge between the vertex and one of the clique
@@ -82,7 +82,7 @@ unsigned int improveClique(
                     if (clique_vertex == vertex)
                         continue;
 
-                    weight_improvement += g.getEdge(clique_vertex, vertex).value()->getWeight();
+                    weight_improvement += g.getEdge(clique_vertex, vertex).value()->weight();
                 }
                 clique2.addVertex(vertex);
 
@@ -175,17 +175,17 @@ Clique findInitialSolution(Graph g)
     // For all vertices as candidates
     for (auto vertex : vertices)
     {
-        if (vertex->getId() == max_vertex)
+        if (vertex->id() == max_vertex)
             continue;
 
         // If I have an edge between the max vertex and the candidate
-        if (g.hasEdge(vertex->getId(), max_vertex))
+        if (g.hasEdge(vertex->id(), max_vertex))
         {
             // If the degree of the candidate is higher than the max degree, replace it
-            if (vertices_degrees[vertex->getId()] > max_degree2)
+            if (vertices_degrees[vertex->id()] > max_degree2)
             {
-                max_degree2 = vertices_degrees[vertex->getId()];
-                max_vertex2 = vertex->getId();
+                max_degree2 = vertices_degrees[vertex->id()];
+                max_vertex2 = vertex->id();
             }
         }
     }
@@ -238,7 +238,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
                 continue;
 
             // Get the weight between the vertex and all its neighbours in the clique
-            weight += g.getEdge(clique_vertex, clique_vertex2).value()->getWeight();
+            weight += g.getEdge(clique_vertex, clique_vertex2).value()->weight();
         }
 
         // If the weight added by this vertex is less than the current minimum, modify it

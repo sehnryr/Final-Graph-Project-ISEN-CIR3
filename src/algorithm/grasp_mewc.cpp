@@ -28,9 +28,9 @@ long unsigned int getSumAdjacentEdges(
 {
     long unsigned int sum = 0;
     auto adjMatrix = graph.adjacencyMatrix();
-    auto neighbors = adjMatrix[vertex->getId()];
+    auto neighbors = adjMatrix[vertex->id()];
     for (const auto &[neighbor, edge] : neighbors)
-        sum += edge->getWeight();
+        sum += edge->weight();
     return sum;
 }
 
@@ -106,12 +106,12 @@ void AdaptGreedyFunction(
     std::unordered_set<VertexPtr> &P) // O(n)
 {
     auto adjMatrix = graph.adjacencyMatrix();
-    auto adjList = adjMatrix[vertex->getId()];
+    auto adjList = adjMatrix[vertex->id()];
     auto P_copy = P;
 
     P.erase(vertex); // Remove Vertex from the set of vertices to consider
     for (const auto &v : P_copy)
-        if (adjList.find(v->getId()) == adjList.end())
+        if (adjList.find(v->id()) == adjList.end())
             P.erase(v); // Remove Vertex's neighbors from the set of vertices to consider
 }
 

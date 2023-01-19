@@ -69,7 +69,7 @@ std::vector<VertexPtr> sortVerticesDegree(
     auto adjMatrix = graph.adjacencyMatrix();
     for (auto vertex : vertices)
     {
-        auto neighbors = adjMatrix[vertex->getId()];
+        auto neighbors = adjMatrix[vertex->id()];
         degrees.push_back(std::make_pair(vertex, neighbors.size()));
     }
 
@@ -107,10 +107,10 @@ std::vector<VertexPtr> sortVerticesSumWeight(
     for (auto vertex : vertices)
     {
         long unsigned int weight = 0;
-        auto neighbors = adjMatrix[vertex->getId()];
+        auto neighbors = adjMatrix[vertex->id()];
         for (const auto &[neighbor, edge] : neighbors)
         {
-            weight += edge->getWeight();
+            weight += edge->weight();
         }
         weights.push_back(std::make_pair(vertex, weight));
     }
@@ -154,7 +154,7 @@ void constructiveMEWCRecursive(
 
     // Make the intersection of P and the neighbors of newVertex
     auto adjMatrix = g.adjacencyMatrix();
-    for (const auto &[neighbor, _] : adjMatrix[newVertex->getId()])
+    for (const auto &[neighbor, _] : adjMatrix[newVertex->id()])
         if (P.count(*(g.getVertex(neighbor))) != 0)
             new_P.insert(*(g.getVertex(neighbor)));
 

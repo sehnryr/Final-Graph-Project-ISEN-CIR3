@@ -25,40 +25,49 @@
 class Edge
 {
 public:
-    Edge(VertexPtr v1, VertexPtr v2, unsigned int weight);
+    Edge(VertexPtr first, VertexPtr second, unsigned int weight);
     ~Edge();
 
-    inline VertexPtr getV1() const { return v1; }
-    inline VertexPtr getV2() const { return v2; }
-    inline unsigned int getWeight() const { return weight; }
-    inline bool operator==(const Edge &e) const { return v1 == e.v1 && v2 == e.v2; }
-    inline bool operator<(const Edge &e) const { return weight < e.weight; }
-
-    inline std::optional<VertexPtr> hasVertex(unsigned int id) const
+    // Get methods
+    inline VertexPtr first() const { return _first; }
+    inline VertexPtr second() const { return _second; }
+    inline unsigned int weight() const { return _weight; }
+    inline std::optional<VertexPtr> getVertex(unsigned int id) const
     {
-        if (v1->getId() == id)
-            return v1;
-        if (v2->getId() == id)
-            return v2;
+        if (_first->id() == id)
+            return _first;
+        if (_second->id() == id)
+            return _second;
         return {};
     }
-    inline std::optional<VertexPtr> hasVertex(VertexPtr v) const { return hasVertex(v->getId()); }
-
-    inline std::optional<VertexPtr> isIncident(unsigned int id1, unsigned int id2) const
+    inline std::optional<VertexPtr> otherVertex(unsigned int id) const
     {
-        if (auto v = hasVertex(id1))
-            return *v;
-        if (auto v = hasVertex(id2))
-            return *v;
+        if (auto v = getVertex(id))
+            return *v == _first ? _second : _first;
         return {};
     }
-    inline std::optional<VertexPtr> isIncident(VertexPtr v1, VertexPtr v2) const { return isIncident(v1->getId(), v2->getId()); }
-    inline std::optional<VertexPtr> isIncident(EdgePtr e) const { return isIncident(e->getV1(), e->getV2()); }
+    inline std::optional<VertexPtr> otherVertex(VertexPtr v) const { return otherVertex(v->id()); }
+
+    // Boolean methods
+    inline bool operator==(const Edge &e) const { return _first == e._first && _second == e._second && _weight == e._weight; }
+    inline bool operator<(const Edge &e) const { return _weight < e._weight; }
+
+    inline bool hasVertex(unsigned int id) const { return getVertex(id).has_value(); }
+    inline bool hasVertex(VertexPtr v) const { return hasVertex(v->id()); }
+
+    inline bool isIncident(unsigned int id1, unsigned int id2) const
+    {
+        if (auto _second = otherVertex(id1))
+            return _second.value()->id() == id2;
+        return false;
+    }
+    inline bool isIncident(VertexPtr first, VertexPtr second) const { return isIncident(first->id(), second->id()); }
+    inline bool isIncident(EdgePtr e) const { return isIncident(e->first(), e->second()); }
 
 private:
-    VertexPtr v1;
-    VertexPtr v2;
-    unsigned int weight;
+    VertexPtr _first;
+    VertexPtr _second;
+    unsigned int _weight;
 };
 
 // Hash and equal functions for the Edge class and EdgePtr class
@@ -75,8 +84,9 @@ namespace std
     {
         std::size_t operator()(const Edge &e) const
         {
-            return hash<unsigned int>()(e.getV1()->getId()) ^
-                   hash<unsigned int>()(e.getV2()->getId());
+            return hash<unsigned int>()(e.first()->id()) ^
+                   hash<unsigned int>()(e.second()->id()) ^
+                   hash<unsigned int>()(e.weight());
         }
     };
 

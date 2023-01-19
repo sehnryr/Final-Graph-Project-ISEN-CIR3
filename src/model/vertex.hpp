@@ -23,12 +23,16 @@ class Vertex
 public:
     Vertex(unsigned int id);
     ~Vertex();
-    inline unsigned int getId() const { return id; };
-    inline bool operator==(const Vertex &v) const { return id == v.id; };
-    inline bool operator<(const Vertex &v) const { return id < v.id; };
+
+    // Get methods
+    inline unsigned int id() const { return _id; };
+
+    // Boolean methods
+    inline bool operator==(const Vertex &v) const { return _id == v._id; };
+    inline bool operator<(const Vertex &v) const { return _id < v._id; };
 
 private:
-    unsigned int id;
+    unsigned int _id;
 };
 
 // Hash and equal functions for the Vertex class and VertexPtr class
@@ -45,7 +49,7 @@ namespace std
     {
         std::size_t operator()(const Vertex &v) const
         {
-            return hash<unsigned int>()(v.getId());
+            return hash<unsigned int>()(v.id());
         }
     };
 

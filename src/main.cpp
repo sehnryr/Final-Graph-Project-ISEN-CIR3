@@ -144,7 +144,7 @@ int main(int argc, char **argv)
 
     // Write the vertices of the clique
     for (auto vertex : vertices)
-        output << vertex->getId() << " ";
+        output << vertex->id() << " ";
     output << std::endl;
 
     // Close the output file

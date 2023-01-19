@@ -62,8 +62,8 @@ void Graph::addEdge(EdgePtr e) // Time complexity: O(1)
     _edges.insert(e);
     // Considering simple undirected graphs (no parallel edges and no self-loops)
     // we need to add the edge to the adjacency matrix in both directions
-    _adjacencyMatrix[e->getV1()->getId()][e->getV2()->getId()] = e;
-    _adjacencyMatrix[e->getV2()->getId()][e->getV1()->getId()] = e;
+    _adjacencyMatrix[e->first()->id()][e->second()->id()] = e;
+    _adjacencyMatrix[e->second()->id()][e->first()->id()] = e;
 }
 
 /* GET METHODS */
@@ -123,7 +123,7 @@ std::optional<EdgePtr> Graph::getEdge(
     VertexPtr v1,
     VertexPtr v2) const // Time complexity: O(1)
 {
-    return getEdge(v1->getId(), v2->getId());
+    return getEdge(v1->id(), v2->id());
 }
 
 /* BOOLEAN METHODS */
@@ -149,7 +149,7 @@ bool Graph::hasVertex(unsigned int id) const // Time complexity: O(1)
  */
 bool Graph::hasVertex(VertexPtr v) const // Time complexity: O(1)
 {
-    return hasVertex(v->getId());
+    return hasVertex(v->id());
 }
 
 /**
@@ -175,7 +175,7 @@ bool Graph::hasEdge(unsigned int id1, unsigned int id2) const // Time complexity
  */
 bool Graph::hasEdge(VertexPtr v1, VertexPtr v2) const // Time complexity: O(1)
 {
-    return hasEdge(v1->getId(), v2->getId());
+    return hasEdge(v1->id(), v2->id());
 }
 
 /**
@@ -186,7 +186,7 @@ bool Graph::hasEdge(VertexPtr v1, VertexPtr v2) const // Time complexity: O(1)
  */
 bool Graph::hasEdge(EdgePtr e) const // Time complexity: O(1)
 {
-    return hasEdge(e->getV1(), e->getV2());
+    return hasEdge(e->first(), e->second());
 }
 
 /* REMOVE METHODS */
@@ -228,7 +228,7 @@ const std::optional<VertexPtr> Graph::removeVertex(unsigned int id)
  */
 const std::optional<VertexPtr> Graph::removeVertex(VertexPtr v)
 {
-    return removeVertex(v->getId());
+    return removeVertex(v->id());
 }
 
 /**
@@ -260,7 +260,7 @@ const std::optional<EdgePtr> Graph::removeEdge(unsigned int id1, unsigned int id
  */
 const std::optional<EdgePtr> Graph::removeEdge(VertexPtr v1, VertexPtr v2)
 {
-    return removeEdge(v1->getId(), v2->getId());
+    return removeEdge(v1->id(), v2->id());
 }
 
 /**
@@ -271,5 +271,5 @@ const std::optional<EdgePtr> Graph::removeEdge(VertexPtr v1, VertexPtr v2)
  */
 const std::optional<EdgePtr> Graph::removeEdge(EdgePtr e)
 {
-    return removeEdge(e->getV1(), e->getV2());
+    return removeEdge(e->first(), e->second());
 }

@@ -66,7 +66,7 @@ long unsigned int Clique::weight()
                 // if the vertices are connected, add the weight of the edge
                 // to the weight of the clique
                 else if (auto edge = _graph.getEdge(*it, *jt))
-                    _weight += edge.value()->getWeight();
+                    _weight += edge.value()->weight();
                 // if the vertices are not connected, the clique is not a clique
                 else
                     return 0;

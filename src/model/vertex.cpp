@@ -13,7 +13,7 @@
  *
  * @param id The id of the vertex
  */
-Vertex::Vertex(unsigned int id) : id(id)
+Vertex::Vertex(unsigned int id) : _id(id)
 {
 }
 

@@ -11,12 +11,12 @@
 /**
  * @brief Construct a new Edge:: Edge object
  *
- * @param v1 The first vertex
- * @param v2 The second vertex
+ * @param first The first vertex
+ * @param second The second vertex
  * @param weight The weight of the edge
  */
-Edge::Edge(VertexPtr v1, VertexPtr v2, unsigned int weight)
-    : v1(v1), v2(v2), weight(weight)
+Edge::Edge(VertexPtr first, VertexPtr second, unsigned int weight)
+    : _first(first), _second(second), _weight(weight)
 {
 }
 

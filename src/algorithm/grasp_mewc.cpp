@@ -181,7 +181,7 @@ Clique LocalSearchGrasp(Graph graph, Clique Solution)
 {
     auto vertices = Solution.getVertices();
     std::vector<std::vector<VertexPtr>> kTuples;
-    getKTuples(vertices, kTuples, vertices.begin(), 2); // There is k^(n-1) k-tuples of n vertices
+    getKTuples(vertices, kTuples, vertices.begin()); // There is k^(n-1) k-tuples of n vertices
 
     for (auto tuple : kTuples) // O(k^n)
     {

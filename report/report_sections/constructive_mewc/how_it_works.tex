@@ -97,7 +97,7 @@
                 \centering
                 \begin{tikzpicture}[node distance=2cm]
                     \node[circle, draw, red] (1) {1};
-                    \node[circle, draw] (2) at ([shift=(210:2)] 1) {2};
+                    \node[circle, draw, Cerulean] (2) at ([shift=(210:2)] 1) {2};
                     \node[circle, draw] (3) [left of=2] {3};
                     \node[circle, draw] (4) [above of=3] {4};
                     \node[circle, draw, red] (5) [above of=2] {5};
@@ -116,14 +116,12 @@
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            In step 2, the algorithm will repeat the process of step 1 until $P$ is empty. It will take the first vertex of $Z$ if it is common to $P$ (here 2)
-
-            Then, the algorithm will repeat the process of step 1 until $P$ is empty. It will look for a new $v$ (here 2). After finding it, it will add it to $S$ as well as the weight of the edges of all the vertices in $S$ and it to $W$ (here 2 + 1). It will then update $P$ which here will be empty, the algorithm stops and we get the maximum clique in \textcolor{red}{red} and his weight (here (5,1,2) of weight 7).
+            In step 2, the algorithm will repeat the process of step 1 by making a recursive call until $P$ is empty. We can note in the process that our algorithm iterates again on some elements of Z, deleting them and refactoring the list does not improve the complexity, but implementing it as we did improves it in general(by not checking every neighbors each times). 
     
             \begin{center}
                 \begin{tabular}{|lll|}
                     \hline
-                    S = \{5,1,2\} & P = \{\} & W = 7 \\
+                    S = \{5,1\} & P = \{2\} & Z = {3,4,2,6} \\
                     \hline
                 \end{tabular}
             \end{center}
@@ -132,7 +130,47 @@
 
     \vspace{1\baselineskip}
 
-    The constructive algorithm is now finished and we have obtained the following maximum clique of weight 7 : $$(1,2,5)$$
+    \begin{minipage}{\linewidth}
+        \textbf{Step 2:} \newline
+        \begin{minipage}{0.4\textwidth}
+            \begin{figure}[H]
+                \centering
+                \begin{tikzpicture}[node distance=2cm]
+                    \node[circle, draw, red] (1) {1};
+                    \node[circle, draw, red] (2) at ([shift=(210:2)] 1) {2};
+                    \node[circle, draw] (3) [left of=2] {3};
+                    \node[circle, draw] (4) [above of=3] {4};
+                    \node[circle, draw, red] (5) [above of=2] {5};
+                    \node[circle, draw] (6) at ([shift=(150:2)] 4) {6};
+    
+                    \draw[red]  (1) -- (2) node[midway, above, sloped] {1};
+                    \draw[red] (1) -- (5) node[midway, above, sloped] {4};
+                    \draw (2) -- (3) node[midway, above, sloped] {4};
+                    \draw[red] (2) -- (5) node[midway, above, sloped] {2};
+                    \draw (3) -- (4) node[midway, above, sloped] {4};
+                    \draw (4) -- (5) node[midway, above, sloped] {3};
+                    \draw (4) -- (6) node[midway, above, sloped] {1};
+                \end{tikzpicture}
+                \caption{Graph illustration for the constructive algorithm at step 3}
+                \label{fig:constructive-mewc-edge-step3}
+            \end{figure}
+        \end{minipage}
+        \begin{minipage}{0.6\textwidth}
+            In step 3, the algorithm repeat the step 1 by making a recursive call. It will finally find 2 which is the last vertex of $P$. The algorithm stop and we get the maximmum clique in \textcolor{red}{red} $(1,2,5)$.
+    
+            \begin{center}
+                \begin{tabular}{|lll|}
+                    \hline
+                    S = \{5,1\} & P = \{2\} & Z = {3,4,2,6} \\
+                    \hline
+                \end{tabular}
+            \end{center}
+        \end{minipage}
+    \end{minipage}
+
+    \vspace{1\baselineskip}
+
+    Now we calculate the weight of this clique. The constructive algorithm is now finished and we have obtained the following maximum clique of weight 7 : $$(1,2,5)$$
 
 \newpage
 

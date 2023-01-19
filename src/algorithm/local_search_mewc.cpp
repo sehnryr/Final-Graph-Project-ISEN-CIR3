@@ -37,17 +37,13 @@ unsigned int improveClique(
     unsigned int actual_weight_improvement = 0)
 {
     if (clique->isEmpty())
-    {
         return 0;
-    }
 
     // Copy the initial clique
     Clique clique2;
     auto cv = clique->getVertices();
     for (auto clique_vertex : cv)
-    {
         clique2.addVertex(clique_vertex);
-    }
     clique2.setWeight(clique->getWeight());
 
     auto vertices = g.getVertices();
@@ -62,9 +58,7 @@ unsigned int improveClique(
     {
         // If the vertex is in the clique or banned, continue
         if (clique->hasVertex(vertex) || banned_vertices.find(vertex) != banned_vertices.end())
-        {
             continue;
-        }
 
         // If we have an edge between the vertex and the random vertex of the clique
         if (g.hasEdge(v, vertex))
@@ -76,15 +70,11 @@ unsigned int improveClique(
             for (auto clique_vertex : clique_vertices)
             {
                 if (vertex->getId() == clique_vertex->getId())
-                {
                     continue;
-                }
 
                 // If we don't have an edge between the vertex and one of the clique
                 if (!g.hasEdge(clique_vertex, vertex))
-                {
                     valid = false;
-                }
             }
             // If valid = true, all vertices in the clique are adjacent of the vertex
             if (valid)
@@ -93,9 +83,8 @@ unsigned int improveClique(
                 for (auto clique_vertex : clique_vertices)
                 {
                     if (clique_vertex == vertex)
-                    {
                         continue;
-                    }
+
                     weight_improvement += g.getEdge(clique_vertex, vertex).value()->getWeight();
                 }
                 clique2.addVertex(vertex);
@@ -117,9 +106,8 @@ unsigned int improveClique(
                     // remove added vertices in clique2
                     clique2 = Clique();
                     for (auto clique_vertex : cv)
-                    {
                         clique2.addVertex(clique_vertex);
-                    }
+
                     clique2.setWeight(clique->getWeight());
                 }
                 else
@@ -139,9 +127,7 @@ unsigned int improveClique(
 
     // If we didn't improve the clique, stop recursivity
     if (improvement_vertex == nullptr)
-    {
         return 0;
-    }
 
     // If the clique has been improved, replace the original one by the improved one
     *clique = clique2;
@@ -165,9 +151,7 @@ unsigned int improveClique(
 Clique findInitialSolution(Graph g)
 {
     if (g.getVertices().size() < 2)
-    {
         return Clique();
-    }
 
     auto adjacency_matrix = g.getAdjacencyMatrix();
     unsigned int max_degree = 0;                                     // the maximum vertex degree in the graph
@@ -177,17 +161,8 @@ Clique findInitialSolution(Graph g)
     // For all vertices
     for (unsigned int i = 1; i <= adjacency_matrix.size(); i++)
     {
-        unsigned int degree = 0; // the degree of the vertex i
-
-        // Go through the adjacency matrix another time to find its neighbours
-        for (unsigned int j = 1; j <= adjacency_matrix[i].size(); j++)
-        {
-            // i and j are adjacent
-            if (adjacency_matrix[i][j] != nullptr)
-            {
-                degree++;
-            }
-        }
+        // the degree of the vertex i
+        auto degree = adjacency_matrix[i].size();
         vertices_degrees[i] = degree;
 
         // If the degree of this vertex is better than the actual max degree
@@ -207,12 +182,10 @@ Clique findInitialSolution(Graph g)
     for (auto vertex : vertices)
     {
         if (vertex->getId() == max_vertex)
-        {
             continue;
-        }
 
         // If I have an edge between the max vertex and the candidate
-        if (g.hasEdge(vertex, g.getVertex(max_vertex).value()))
+        if (g.hasEdge(vertex->getId(), max_vertex))
         {
             // If the degree of the candidate is higher than the max degree, replace it
             if (vertices_degrees[vertex->getId()] > max_degree2)
@@ -227,7 +200,7 @@ Clique findInitialSolution(Graph g)
     Clique clique;
     clique.addVertex(g.getVertex(max_vertex).value());
     clique.addVertex(g.getVertex(max_vertex2).value());
-    clique.setWeight(g.getEdge(g.getVertex(max_vertex).value(), g.getVertex(max_vertex2).value()).value()->getWeight());
+    clique.setWeight(g.getEdge(max_vertex, max_vertex2).value()->getWeight());
 
     // Get a full clique based on these two vertices
     improveClique(g, &clique, std::unordered_set<VertexPtr>(), 0, 0);
@@ -261,18 +234,15 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
     {
         // If the vertex has already been tested, do not try it another time
         if (tested_vertices->find(clique_vertex) != tested_vertices->end())
-        {
             continue;
-        }
+
         unsigned int weight = 0; // weight added by this vertex in the clique
 
         // For all vertices in the clique
         for (auto clique_vertex2 : clique_vertices)
         {
             if (clique_vertex == clique_vertex2)
-            {
                 continue;
-            }
 
             // Get the weight between the vertex and all its neighbours in the clique
             weight += g.getEdge(clique_vertex, clique_vertex2).value()->getWeight();
@@ -288,9 +258,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
 
     // If no improvements have been made, this means that all possibilities have been tested, so we return the original clique
     if (min_weight_vertex == nullptr)
-    {
         return init_clique;
-    }
 
     // If I have a vertex to remove, create a new clique which is a
     // copy of the original with the tested vertex removed
@@ -298,9 +266,8 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
     for (auto clique_vertex : clique_vertices)
     {
         if (clique_vertex == min_weight_vertex)
-        {
             continue;
-        }
+
         new_clique.addVertex(clique_vertex);
     }
     new_clique.setWeight(init_clique.getWeight() - min_weight);
@@ -349,18 +316,12 @@ Clique localSearchMEWC(Graph g)
 
         // If the weight of the clique is still the same, that means that it has not been improved
         if (max_clique.getWeight() == c_weight)
-        {
             // If the size of the set of tested vertices is still the same, that means that we do not have any other vertex to try
             if (tested_vertices.size() == tested_vertices_size)
-            {
                 break;
-            }
-        }
-        else
-        {
-            // If a better solution have been found, we must try again every vertices that have already been removed
-            tested_vertices = std::unordered_set<VertexPtr>();
-        }
+            else
+                // If a better solution have been found, we must try again every vertices that have already been removed
+                tested_vertices = std::unordered_set<VertexPtr>();
     }
 
     return max_clique;

@@ -35,14 +35,23 @@ public:
     void addEdge(EdgePtr);
 
     // Get methods
-    inline std::unordered_set<VertexPtr> getVertices() const { return vertices; };
-    inline std::unordered_set<EdgePtr> getEdges() const { return edges; };
-    inline std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
-    getAdjacencyMatrix() const { return adjacencyMatrix; };
-
     std::optional<VertexPtr> getVertex(unsigned int id) const;
     std::optional<EdgePtr> getEdge(unsigned int id1, unsigned int id2) const;
     std::optional<EdgePtr> getEdge(VertexPtr v1, VertexPtr v2) const;
+
+    inline std::unordered_set<VertexPtr> getVertices() const { return _vertices; };
+    inline std::unordered_set<EdgePtr> getEdges() const { return _edges; };
+    inline std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
+    getAdjacencyMatrix() const { return _adjacencyMatrix; };
+
+    inline std::unordered_set<VertexPtr> vertices() const { return _vertices; };
+    inline std::unordered_set<EdgePtr> edges() const { return _edges; };
+    inline std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
+    adjacencyMatrix() const { return _adjacencyMatrix; };
+
+    inline long unsigned int getSize() const { return _vertices.size(); }
+
+    inline long unsigned int size() const { return _vertices.size(); }
 
     // Boolean methods
     bool hasVertex(unsigned int id) const;
@@ -50,6 +59,10 @@ public:
     bool hasEdge(unsigned int id1, unsigned int id2) const;
     bool hasEdge(VertexPtr v1, VertexPtr v2) const;
     bool hasEdge(EdgePtr e) const;
+
+    inline bool isEmpty() const { return _vertices.empty(); }
+
+    inline bool empty() const { return _vertices.empty(); }
 
     // Remove methods
     const std::optional<VertexPtr> removeVertex(unsigned int id);
@@ -60,9 +73,9 @@ public:
 
 private:
     std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
-        adjacencyMatrix;
-    std::unordered_set<VertexPtr> vertices;
-    std::unordered_set<EdgePtr> edges;
+        _adjacencyMatrix;
+    std::unordered_set<VertexPtr> _vertices;
+    std::unordered_set<EdgePtr> _edges;
 };
 
 #endif // GRAPH_HPP

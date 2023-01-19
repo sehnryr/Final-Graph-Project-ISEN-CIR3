@@ -41,7 +41,7 @@ void Graph::addVertex(VertexPtr v) // Time complexity: O(1)
     if (hasVertex(v))
         return;
 
-    vertices.insert(v);
+    _vertices.insert(v);
 }
 
 /**
@@ -59,11 +59,11 @@ void Graph::addEdge(EdgePtr e) // Time complexity: O(1)
     if (hasEdge(e))
         return;
 
-    edges.insert(e);
+    _edges.insert(e);
     // Considering simple undirected graphs (no parallel edges and no self-loops)
     // we need to add the edge to the adjacency matrix in both directions
-    adjacencyMatrix[e->getV1()->getId()][e->getV2()->getId()] = e;
-    adjacencyMatrix[e->getV2()->getId()][e->getV1()->getId()] = e;
+    _adjacencyMatrix[e->getV1()->getId()][e->getV2()->getId()] = e;
+    _adjacencyMatrix[e->getV2()->getId()][e->getV1()->getId()] = e;
 }
 
 /* GET METHODS */
@@ -81,8 +81,8 @@ void Graph::addEdge(EdgePtr e) // Time complexity: O(1)
 std::optional<VertexPtr> Graph::getVertex(unsigned int id) const // Time complexity: O(1)
 {
     VertexPtr v = std::make_shared<Vertex>(id);
-    if (vertices.find(v) != vertices.end())
-        return *vertices.find(v);
+    if (_vertices.find(v) != _vertices.end())
+        return *_vertices.find(v);
     return {};
 }
 
@@ -99,7 +99,7 @@ std::optional<EdgePtr> Graph::getEdge(
 {
     try
     {
-        return adjacencyMatrix.at(id1).at(id2);
+        return _adjacencyMatrix.at(id1).at(id2);
     }
     catch (const std::out_of_range &e)
     {
@@ -207,15 +207,15 @@ const std::optional<VertexPtr> Graph::removeVertex(unsigned int id)
     VertexPtr v = getVertex(id).value();
 
     // Delete the vertex from the set of vertices
-    vertices.erase(v);
+    _vertices.erase(v);
 
     // Delete the vertex from the adjacency matrix and the set of edges
-    for (const auto &[neighbor, edge] : adjacencyMatrix[id])
+    for (const auto &[neighbor, edge] : _adjacencyMatrix[id])
     {
-        adjacencyMatrix[neighbor].erase(id);
-        edges.erase(edge);
+        _adjacencyMatrix[neighbor].erase(id);
+        _edges.erase(edge);
     }
-    adjacencyMatrix.erase(id);
+    _adjacencyMatrix.erase(id);
 
     return v;
 }
@@ -245,8 +245,8 @@ const std::optional<EdgePtr> Graph::removeEdge(unsigned int id1, unsigned int id
         return {};
 
     EdgePtr edge = getEdge(id1, id2).value();
-    adjacencyMatrix[id1].erase(id2);
-    adjacencyMatrix[id2].erase(id1);
+    _adjacencyMatrix[id1].erase(id2);
+    _adjacencyMatrix[id2].erase(id1);
 
     return edge;
 }

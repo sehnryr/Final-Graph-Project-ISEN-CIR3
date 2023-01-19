@@ -72,7 +72,7 @@ std::vector<VertexPtr> MakeRCL(
     for (auto vertex : vertices)
     {
         long unsigned int weight = getSumAdjacentEdges(graph, vertex);
-        if (weight < gamma / (1 + ALPHA))
+        if (weight > gamma / (1 + ALPHA))
             RCL.push_back(vertex);
     }
     return RCL;
@@ -105,9 +105,16 @@ void AdaptGreedyFunction(
     VertexPtr vertex,
     std::unordered_set<VertexPtr> &P) // O(n)
 {
+    auto adjMatrix = graph.getAdjacencyMatrix();
+    auto adjList = adjMatrix[vertex->getId()];
+    std::unordered_set<VertexPtr> P_copy;
+
     P.erase(vertex); // Remove Vertex from the set of vertices to consider
-    for (auto [neighbor, edge] : graph.getAdjacencyMatrix()[vertex->getId()])
-        P.erase(*(graph.getVertex(neighbor))); // Remove neighbors from the set of vertices to consider
+    for (const auto &v : P_copy)
+        if (adjList.find(v->getId()) == adjList.end())
+            P_copy.insert(v);
+
+    P = P_copy;
 }
 
 /**
@@ -136,7 +143,7 @@ Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
 
 /**
  * @brief Adapted local search algorithm for the GRASP MEWC algorithm
- * 
+ *
  * @param Graph graph
  * @param Clique Solution
  * @return Clique The solution after the local search if it is better

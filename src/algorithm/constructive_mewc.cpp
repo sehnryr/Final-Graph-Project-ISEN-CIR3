@@ -9,9 +9,9 @@
  */
 
 #include <algorithm>
+#include <vector>
 
 #include "mewc.hpp"
-#include "../common.hpp"
 
 /**
  * @brief Returns the vertex with the best criteria

@@ -10,7 +10,6 @@
 #include <random>
 
 #include "mewc.hpp"
-#include "../common.hpp"
 
 #define ALPHA 0.5    // restricted candidate list parameter
 #define RETRIES 10   // number of retries for the grasp algorithm

@@ -106,7 +106,7 @@ std::optional<long unsigned int> getCliqueWeight(Graph graph, Clique clique)
     // variable to store the weight of the clique
     long unsigned int weight = 0;
     // get a set of all vertices in the clique
-    std::unordered_set<VertexPtr> vertices = clique.getVertices();
+    std::unordered_set<VertexPtr> vertices = clique.vertices();
 
     // iterate over all possible pairs of vertices in the clique
     for (auto it = vertices.begin(); it != vertices.end(); ++it)

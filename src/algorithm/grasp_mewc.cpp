@@ -27,7 +27,7 @@ long unsigned int getSumAdjacentEdges(
     VertexPtr vertex) // O(n)
 {
     long unsigned int sum = 0;
-    auto adjMatrix = graph.getAdjacencyMatrix();
+    auto adjMatrix = graph.adjacencyMatrix();
     auto neighbors = adjMatrix[vertex->getId()];
     for (const auto &[neighbor, edge] : neighbors)
         sum += edge->getWeight();
@@ -46,7 +46,7 @@ long unsigned int getGamma(
     std::unordered_set<VertexPtr> vertices) // O(n^2)
 {
     long unsigned int gamma = 0;
-    auto adjMatrix = graph.getAdjacencyMatrix();
+    auto adjMatrix = graph.adjacencyMatrix();
     for (auto vertex : vertices)
     {
         long unsigned int weight = getSumAdjacentEdges(graph, vertex);
@@ -105,7 +105,7 @@ void AdaptGreedyFunction(
     VertexPtr vertex,
     std::unordered_set<VertexPtr> &P) // O(n)
 {
-    auto adjMatrix = graph.getAdjacencyMatrix();
+    auto adjMatrix = graph.adjacencyMatrix();
     auto adjList = adjMatrix[vertex->getId()];
     auto P_copy = P;
 
@@ -124,7 +124,7 @@ void AdaptGreedyFunction(
 Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
 {
     Clique Solution;
-    std::unordered_set<VertexPtr> P = graph.getVertices();
+    std::unordered_set<VertexPtr> P = graph.vertices();
 
     while (!P.empty())
     {
@@ -178,7 +178,7 @@ void getKTuples(
  */
 Clique LocalSearchGrasp(Graph graph, Clique Solution)
 {
-    auto vertices = Solution.getVertices();
+    auto vertices = Solution.vertices();
     std::vector<std::vector<VertexPtr>> kTuples;
     getKTuples(vertices, kTuples, vertices.begin()); // There is k^(n-1) k-tuples of n vertices
 
@@ -190,7 +190,7 @@ Clique LocalSearchGrasp(Graph graph, Clique Solution)
 
         Clique subSolution = localSearchMEWC(subgraph);
 
-        if (subSolution.getWeight() > Solution.getWeight())
+        if (subSolution.weight() > Solution.weight())
             Solution = subSolution;
     }
 
@@ -205,7 +205,7 @@ Clique LocalSearchGrasp(Graph graph, Clique Solution)
  */
 void UpdateSolution(Clique &Solution, Clique &BestSolution) // O(1)
 {
-    if (Solution.getWeight() > BestSolution.getWeight())
+    if (Solution.weight() > BestSolution.weight())
         BestSolution = Solution;
 }
 

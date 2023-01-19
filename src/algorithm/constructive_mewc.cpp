@@ -66,7 +66,7 @@ std::vector<VertexPtr> sortVerticesDegree(
     sortedVertices.reserve(vertices.size());
 
     // Get the degrees
-    auto adjMatrix = graph.getAdjacencyMatrix();
+    auto adjMatrix = graph.adjacencyMatrix();
     for (auto vertex : vertices)
     {
         auto neighbors = adjMatrix[vertex->getId()];
@@ -103,7 +103,7 @@ std::vector<VertexPtr> sortVerticesSumWeight(
     sortedVertices.reserve(vertices.size());
 
     // Get the weights
-    auto adjMatrix = graph.getAdjacencyMatrix();
+    auto adjMatrix = graph.adjacencyMatrix();
     for (auto vertex : vertices)
     {
         long unsigned int weight = 0;
@@ -153,7 +153,7 @@ void constructiveMEWCRecursive(
     std::unordered_set<VertexPtr> new_P;
 
     // Make the intersection of P and the neighbors of newVertex
-    auto adjMatrix = g.getAdjacencyMatrix();
+    auto adjMatrix = g.adjacencyMatrix();
     for (const auto &[neighbor, _] : adjMatrix[newVertex->getId()])
         if (P.count(*(g.getVertex(neighbor))) != 0)
             new_P.insert(*(g.getVertex(neighbor)));
@@ -175,7 +175,7 @@ Clique constructiveMEWC(Graph g) // O(n^2)
     // LaTeX : $R \gets \emptyset$
     Clique clique;
     // LaTeX : $P \gets V$
-    std::unordered_set<VertexPtr> P = g.getVertices();
+    std::unordered_set<VertexPtr> P = g.vertices();
     std::vector<VertexPtr> sortedVertices = sortVerticesDegree(g, P); // O(nlogn)
     // std::vector<VertexPtr> sortedVertices = sortVerticesSumWeight(g, P); // O(n^2)
 

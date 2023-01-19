@@ -102,7 +102,7 @@ Clique exactMEWC(Graph g)
 
     // get all the maximal cliques in the graph
     Clique R;
-    std::unordered_set<VertexPtr> P = g.getVertices();
+    std::unordered_set<VertexPtr> P = g.vertices();
     std::unordered_set<VertexPtr> X;
     std::vector<Clique> cliques;       // vector to store the maximal cliques
     BronKerbosch(g, R, P, X, cliques); // O(3^(n/3))
@@ -118,7 +118,7 @@ Clique exactMEWC(Graph g)
         clique.setWeight(weight.value());
         // if the clique is a clique and has a higher weight than the current
         // maximum weight clique, set the maximum weight clique to the current clique
-        if (weight && weight.value() > max_clique.getWeight())
+        if (weight && weight.value() > max_clique.weight())
             max_clique = clique;
     }
 

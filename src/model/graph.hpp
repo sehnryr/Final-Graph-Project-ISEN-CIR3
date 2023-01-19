@@ -39,17 +39,10 @@ public:
     std::optional<EdgePtr> getEdge(unsigned int id1, unsigned int id2) const;
     std::optional<EdgePtr> getEdge(VertexPtr v1, VertexPtr v2) const;
 
-    inline std::unordered_set<VertexPtr> getVertices() const { return _vertices; };
-    inline std::unordered_set<EdgePtr> getEdges() const { return _edges; };
-    inline std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
-    getAdjacencyMatrix() const { return _adjacencyMatrix; };
-
     inline std::unordered_set<VertexPtr> vertices() const { return _vertices; };
     inline std::unordered_set<EdgePtr> edges() const { return _edges; };
     inline std::unordered_map<unsigned int, std::unordered_map<unsigned int, EdgePtr>>
     adjacencyMatrix() const { return _adjacencyMatrix; };
-
-    inline long unsigned int getSize() const { return _vertices.size(); }
 
     inline long unsigned int size() const { return _vertices.size(); }
 
@@ -59,8 +52,6 @@ public:
     bool hasEdge(unsigned int id1, unsigned int id2) const;
     bool hasEdge(VertexPtr v1, VertexPtr v2) const;
     bool hasEdge(EdgePtr e) const;
-
-    inline bool isEmpty() const { return _vertices.empty(); }
 
     inline bool empty() const { return _vertices.empty(); }
 

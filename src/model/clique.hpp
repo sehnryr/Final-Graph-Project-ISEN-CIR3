@@ -38,12 +38,8 @@ public:
 
     // Get methods
     std::optional<VertexPtr> getVertex(unsigned int id) const;
-    inline std::unordered_set<VertexPtr> getVertices() const { return _vertices; }
 
     inline std::unordered_set<VertexPtr> vertices() const { return _vertices; }
-
-    inline long unsigned int getWeight() const { return _weight; }
-    inline long unsigned int getSize() const { return _vertices.size(); }
 
     inline long unsigned int weight() const { return _weight; }
     inline long unsigned int size() const { return _vertices.size(); }
@@ -51,7 +47,6 @@ public:
     // Boolean methods
     bool hasVertex(unsigned int id) const;
     bool hasVertex(VertexPtr v) const;
-    inline bool isEmpty() const { return _vertices.empty(); }
 
     inline bool empty() const { return _vertices.empty(); }
 

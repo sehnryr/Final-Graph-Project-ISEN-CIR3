@@ -34,18 +34,18 @@ unsigned int improveClique(
     unsigned int min_weight = 0,
     unsigned int actual_weight_improvement = 0)
 {
-    if (clique->isEmpty())
+    if (clique->empty())
         return 0;
 
     // Copy the initial clique
     Clique clique2;
-    auto cv = clique->getVertices();
+    auto cv = clique->vertices();
     for (auto clique_vertex : cv)
         clique2.addVertex(clique_vertex);
-    clique2.setWeight(clique->getWeight());
+    clique2.setWeight(clique->weight());
 
-    auto vertices = g.getVertices();
-    auto v = *(clique->getVertices().begin()); // a random vertex in the clique
+    auto vertices = g.vertices();
+    auto v = *(clique->vertices().begin());    // a random vertex in the clique
     unsigned int weight_improvement = 0;       // the weight improvement that can be done to this clique by adding a vertex in this iteration
     unsigned int total_weight_improvement = 0; // the weight_improvement by adding a vertex in this iteration + the other that comes after
     VertexPtr improvement_vertex = nullptr;    // the vertex that improves the weight of the clique
@@ -61,7 +61,7 @@ unsigned int improveClique(
         // If we have an edge between the vertex and the random vertex of the clique
         if (g.hasEdge(v, vertex))
         {
-            auto clique_vertices = clique->getVertices();
+            auto clique_vertices = clique->vertices();
             bool valid = true;
 
             // See if the vertex is adjacent to all vertices of the clique
@@ -106,7 +106,7 @@ unsigned int improveClique(
                     for (auto clique_vertex : cv)
                         clique2.addVertex(clique_vertex);
 
-                    clique2.setWeight(clique->getWeight());
+                    clique2.setWeight(clique->weight());
                 }
                 else
                 {
@@ -148,10 +148,10 @@ unsigned int improveClique(
  */
 Clique findInitialSolution(Graph g)
 {
-    if (g.getVertices().size() < 2)
+    if (g.vertices().size() < 2)
         return Clique();
 
-    auto adjacency_matrix = g.getAdjacencyMatrix();
+    auto adjacency_matrix = g.adjacencyMatrix();
     unsigned int max_degree = 0;                                     // the maximum vertex degree in the graph
     unsigned int max_vertex = 0;                                     // the vertex of maximum degree in the graph
     std::unordered_map<unsigned int, unsigned int> vertices_degrees; // the degrees of all vertices
@@ -172,7 +172,7 @@ Clique findInitialSolution(Graph g)
         }
     }
 
-    auto vertices = g.getVertices();
+    auto vertices = g.vertices();
     unsigned int max_degree2 = 0; // the second maximum vertex degree in the graph
     unsigned int max_vertex2 = 0; // the second vertex of maximum degree in the graph
 
@@ -222,7 +222,7 @@ Clique findInitialSolution(Graph g)
  */
 Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> *tested_vertices)
 {
-    auto clique_vertices = init_clique.getVertices();
+    auto clique_vertices = init_clique.vertices();
     // minimum weight added by a vertex in the clique
     unsigned int min_weight = clique_vertices.size() * 101; // edge weight is less than 100 so the weight of the edges of a vertex in the clique is less than 101 times the number of vertices in the clique
     VertexPtr min_weight_vertex = nullptr;                  // vertex that adds the minimum weight in the clique
@@ -268,7 +268,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
 
         new_clique.addVertex(clique_vertex);
     }
-    new_clique.setWeight(init_clique.getWeight() - min_weight);
+    new_clique.setWeight(init_clique.weight() - min_weight);
 
     // Put the tested vertex as banned
     std::unordered_set<VertexPtr> banned_vertices;
@@ -306,14 +306,14 @@ Clique localSearchMEWC(Graph g)
     // As long as the break conditions have not been reached
     while (1)
     {
-        unsigned int c_weight = max_clique.getWeight();             // The weight of the clique before modifying it
+        unsigned int c_weight = max_clique.weight();                // The weight of the clique before modifying it
         unsigned int tested_vertices_size = tested_vertices.size(); // The size of the set of tested vertices
 
         // Try improving the clique weight by removing a vertex
         max_clique = findNeighboor(g, max_clique, &tested_vertices);
 
         // If the weight of the clique is still the same, that means that it has not been improved
-        if (max_clique.getWeight() == c_weight)
+        if (max_clique.weight() == c_weight)
         {
             // If the size of the set of tested vertices is still the same, that means that we do not have any other vertex to try
             if (tested_vertices.size() == tested_vertices_size)

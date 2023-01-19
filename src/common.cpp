@@ -178,7 +178,7 @@ Graph read_file(std::string path)
     input_file.close();
 
     // Check if the number of edges is correct
-    if (graph.getEdges().size() != num_edges)
+    if (graph.edges().size() != num_edges)
     {
         std::cout << "Input file has an invalid number of edges" << std::endl;
         exit(1);

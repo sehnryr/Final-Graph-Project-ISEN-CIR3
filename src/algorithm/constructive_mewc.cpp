@@ -1,189 +1,240 @@
 /**
  * @file constructive_mewc.cpp
  * @brief This file contains the implementation of the constructive MEWC algorithm
- * @authors
- * - Alexandre AUGUSTE <alexandre.auguste@isen-ouest.yncrea.fr>
- * - Martin LOBEL <martin.lobel@isen-ouest.yncrea.fr>
- * - Youn Mélois <youn@melois.dev>
+ * @authors 
+ * - Alexandre AUGUSTE <alexandre.auguste@isen-ouest.yncrea.fr> / Martin LOBEL <martin.lobel@isen-ouest.yncrea.fr>
  * @date 2022-12-30
  */
-
-#include <algorithm>
 
 #include "mewc.hpp"
 #include "../common.hpp"
 
-/**
- * @brief Returns the vertex with the best criteria
- *
- * The criteria is defined by the order of the vertices in the sortedVertices vector
- *
- * The sortedVertices vector is modified to remove the vertices that have already
- * been considered
- *
- * @param vertices The vertices to consider
- * @param sortedVertices The vertices sorted by a criteria
- * @return VertexPtr The vertex with the best criteria
- */
-VertexPtr getBestVertex(
-    std::unordered_set<VertexPtr> vertices,
-    std::vector<VertexPtr> &sortedVertices) // O(n)
+// fonction qui retourne le vertex possédant le plus de voisin
+VertexPtr getFirstVertex(Graph graph)
 {
     VertexPtr bestVertex;
+    auto adjMatrix = graph.getAdjacencyMatrix();
+    auto vertices = graph.getVertices();
 
-    // Find the first vertex that is in the vertices set
-    for (std::vector<VertexPtr>::iterator it = sortedVertices.begin(); it != sortedVertices.end(); it++)
+    auto weight = 0;
+    auto totalWeight = 0;
+    auto bestWeight = 0;
+
+    long unsigned int maxNumNeighbors = 0;
+
+    // for (auto vertex : vertices) // je verifie le nombre de voisins et l'ajoute dans MaxNumberOfNeighors et BestVertex si c'est le plus grand encore jamais atteint
+    // {
+    //     auto neighbors = adjMatrix[vertex->getId()];
+    //     if(neighbors.size() > maxNumNeighbors)
+    //     {
+    //         totalWeight = 0;
+    //         maxNumNeighbors = neighbors.size();
+    //         bestVertex = vertex;
+    //         for (const auto& [neighbor, sharededge] : neighbors) 
+    //         {
+    //             weight = sharededge->getWeight();
+    //             totalWeight += weight;
+    //             weight = 0;
+    //         }
+    //         bestWeight = totalWeight;
+    //     }
+    //     else if(neighbors.size() == maxNumNeighbors)
+    //     {
+    //         totalWeight = 0;
+    //         for (const auto& [neighbor, sharededge] : neighbors) 
+    //         {
+    //             weight = sharededge->getWeight();
+    //             totalWeight += weight;
+    //             weight = 0;
+    //         }
+    //         if(totalWeight > bestWeight)
+    //         {
+    //             bestWeight = totalWeight;
+    //             bestVertex = vertex;
+    //         }
+    //     }
+    // }
+
+    for (auto vertex : vertices) // je verifie le poids des segments de tous les vertex et l'ajoute à bestVertex si c'est le plus grand jamais atteint, en cas d'égalité => ajoute au sommet du plus haut degré
     {
-        if (vertices.find(*it) != vertices.end())
+        totalWeight = 0;
+        auto neighbors = adjMatrix[vertex->getId()];
+        for (const auto& [neighbor, sharededge] : neighbors) 
         {
-            bestVertex = *it;
-
-            // Remove the vertices that have already been considered
-            sortedVertices = std::vector<VertexPtr>(it, sortedVertices.end());
-            break;
+            weight = sharededge->getWeight();
+            totalWeight += weight;
+            weight = 0;
         }
+
+        if(totalWeight > bestWeight)
+        {
+            bestWeight = totalWeight;
+            bestVertex = vertex;
+            maxNumNeighbors = neighbors.size();
+        }
+        else if(totalWeight == bestWeight)
+        {
+            if(neighbors.size() > maxNumNeighbors)
+            {
+                bestVertex = vertex;
+                maxNumNeighbors = neighbors.size();
+            }
+        }   
     }
 
     return bestVertex;
 }
 
-/**
- * @brief Returns the vertices sorted by degree
- *
- * @param graph The graph
- * @param vertices The vertices to consider
- * @return std::vector<VertexPtr> The vertices sorted by degree
- */
-std::vector<VertexPtr> sortVerticesDegree(
-    Graph graph,
-    std::unordered_set<VertexPtr> vertices) // O(nlogn)
+// Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique pour la première itération (en gros tout les voisins du vertex choisi)
+void getPotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P)
 {
-    std::vector<std::pair<VertexPtr, long unsigned int>> degrees;
-    std::vector<VertexPtr> sortedVertices;
+    // Par example sur notre instance, on va avoir P = {2,3,4}
 
-    // Allocate the vectors
-    degrees.reserve(vertices.size());
-    sortedVertices.reserve(vertices.size());
+    auto adjMatrix = graph.getAdjacencyMatrix(); // transforme le graph en matrice adjacente
+    auto neighbors = adjMatrix[vertex->getId()]; // recupere les neighbors
 
-    // Get the degrees
-    auto adjMatrix = graph.getAdjacencyMatrix();
-    for (auto vertex : vertices)
+    for (const auto& [neighbor, sharededge] : neighbors) // J'ajoute les voisins dans P
+    // O(n)
     {
-        auto neighbors = adjMatrix[vertex->getId()];
-        degrees.push_back(std::make_pair(vertex, neighbors.size()));
-    }
-
-    // Sort the vertices by degree
-    std::sort(degrees.begin(), degrees.end(), [](const auto &a, const auto &b)
-              { return a.second > b.second; });
-
-    // Get the vertices
-    for (const auto &[vertex, degree] : degrees)
-        sortedVertices.push_back(vertex);
-
-    return sortedVertices;
+        VertexPtr vertexNeighbor = std::make_shared<Vertex>(neighbor);
+        P.insert(vertexNeighbor);   
+    }  
+     
 }
 
-/**
- * @brief Returns the vertices sorted by the sum of their edges weights
- *
- * @param graph The graph
- * @param vertices The vertices to consider
- * @return std::vector<VertexPtr> The vertices sorted by the sum of their edges weights
- */
-std::vector<VertexPtr> sortVerticesSumWeight(
-    Graph graph,
-    std::unordered_set<VertexPtr> vertices) // O(n^2)
+// Modifie P de sorte à ce qu'il possède la liste des sommets candidats à notre clique (en gros tout les voisins du vertex choisi)
+void updatePotentielCandidate(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P)
 {
-    std::vector<std::pair<VertexPtr, long unsigned int>> weights;
-    std::vector<VertexPtr> sortedVertices;
+    // Par exemple, si notre vertex c'est 2, et qu'il a comme voisin (1,4), on doit obtenir P = {1,2,4} et donc supprimer 3
 
-    // Allocate the vectors
-    weights.reserve(vertices.size());
-    sortedVertices.reserve(vertices.size());
-
-    // Get the weights
     auto adjMatrix = graph.getAdjacencyMatrix();
-    for (auto vertex : vertices)
+    auto neighbors = adjMatrix[vertex->getId()];
+    std::unordered_set<VertexPtr> voisin; // unordered set des voisins vide
+
+    for (const auto& [neighbor, sharededge] : neighbors) // on remplit le unordered set
+    // O(n)
     {
-        long unsigned int weight = 0;
-        auto neighbors = adjMatrix[vertex->getId()];
-        for (const auto &[neighbor, edge] : neighbors)
+        VertexPtr vertexNeighbor = std::make_shared<Vertex>(neighbor);
+        voisin.insert(vertexNeighbor);   
+    }
+
+    for (auto i = P.begin(); i != P.end(); ) // O(n)
+    {
+        if (voisin.count(*i) == 0) // S'il n'y a pas l'element de P dans les voisins du dernier vertex choisi
+        // O(1)
         {
-            weight += edge->getWeight();
+            // L'élément n'est pas dans neighbors, on le supprime de P
+            i = P.erase(i); // O(1)
+        } else if(vertex == *i) // Si l'élement est déjà dans R
+        {
+            // L'élement est déjà dans R, on le supprime de P
+            i = P.erase(i); // O(1)
         }
-        weights.push_back(std::make_pair(vertex, weight));
+        else
+        {
+            i++;
+        }        
+    }   
+        
+}
+
+
+// Modifie R en y ajoutant le voisin avec l'edge au plus haut poids entre les deux, Modifie TotalWeight pour ajouter le poids de l'edge entre le vertex et le voisin avec l'edge au plus haut poids. En cas d'égalité, prend l'edge au plus haut poids
+void updateClique(Graph graph, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &S)
+{
+    long unsigned int weight = 0; // variable temporaire correspond au poids de l'edge entre notre vertex et ses voisins
+    long unsigned int bestWeight = 0; // variable correspondant au poids maximales obtenu lors de la lecture des voisins
+    VertexPtr bestVertex; // meilleur voisin en gros
+    long unsigned int cliqueWeight = 0;
+    long unsigned int maxNumNeighbors = 0;
+    auto adjMatrix = graph.getAdjacencyMatrix();
+
+    // je cherche le voisin avec le plus de poids
+    auto i = P.begin();
+    while(i != P.end()) // O(n)
+    {
+        if (vertex == *i) // Si le vertex choisi dans P est le mm que le vertex
+        {
+            i++;
+            continue;
+        }
+        else // Ici je vais recupere l'edge entre le dernier vertex de mon unordered set et les vertex présent dans P, jusqu'a verifier qui possède le meilleur poids
+        {
+            auto edge = graph.getEdge(vertex, *i);
+            weight = edge.value()->getWeight();
+            auto neighbors = adjMatrix[(*i)->getId()]; // (*(*i)).getId();
+            if(weight > bestWeight)
+            {
+                bestWeight = weight;
+                bestVertex = *i;
+                weight = 0;
+                maxNumNeighbors = neighbors.size();
+                i++;
+            }
+            else if(weight == bestWeight)
+            {
+                if(neighbors.size() > maxNumNeighbors)
+                {
+                    maxNumNeighbors = neighbors.size();
+                    bestVertex = *i;
+                }
+                i++;
+            }
+            else
+            {
+                weight = 0;
+                i++;
+            }
+        }
     }
 
-    // Sort the vertices by weight
-    std::sort(weights.begin(), weights.end(), [](const auto &a, const auto &b)
-              { return a.second > b.second; });
+    // je recupere le poids des edges entre les membres de ma clique et le membre que j'vais ajouté (le voisin au plus haut poids du dernier vertex de R)
+    auto vertices = S.getVertices();
+    for(auto v1 : vertices) // mm méthode que Youn en gros
+    {
+        auto edge = graph.getEdge(v1, bestVertex); // recupere le poids de l'edge entre de tout les membres de R et BestVertex
+        cliqueWeight += edge.value()->getWeight(); // ajoute ce poids à une variable qui va etre ajouté aux poids total de la clique
+    }
 
-    // Get the vertices
-    for (const auto &[vertex, weight] : weights)
-        sortedVertices.push_back(vertex);
-
-    return sortedVertices;
+    S.addVertex(bestVertex);
+    vertex = bestVertex;
+    S.addWeight(cliqueWeight);
 }
 
-/**
- * @brief The recursive function of the constructive MEWC algorithm
- *
- * @param g The graph
- * @param clique The clique
- * @param P The set of vertices to consider
- */
-void constructiveMEWCRecursive(
-    Graph g,
-    Clique &clique,
-    std::unordered_set<VertexPtr> P,
-    std::vector<VertexPtr> &sortedVertices)
+void constructiveMEWCRecursive(Graph G, VertexPtr &vertex, std::unordered_set<VertexPtr> &P, Clique &S)
 {
-    // Base case: Return if P is empty
-    if (P.empty())
+    if(P.size() == 0)
+    {
         return;
+    }
 
-    // Get the best vertex and add it to the clique
-    // LaTeX : v \gets \argmax_{v \in P} d(v) \Comment{Get the vertex with the highest degree}
-    // LaTeX : v \gets \argmax_{v \in P} \sum_{u \in \N(v)} w(u,v) \Comment{Get the vertex with the highest sum of weights}
-    VertexPtr newVertex = getBestVertex(P, sortedVertices);
-    // LaTeX : R \gets R \cup \{v\}
-    clique.addVertex(newVertex);
-
-    std::unordered_set<VertexPtr> new_P;
-
-    // Make the intersection of P and the neighbors of newVertex
-    auto adjMatrix = g.getAdjacencyMatrix();
-    for (const auto &[neighbor, _] : adjMatrix[newVertex->getId()])
-        if (P.count(*(g.getVertex(neighbor))) != 0)
-            new_P.insert(*(g.getVertex(neighbor)));
- 
-    // Make the recursive call
-    // LaTeX : \Call{ConstructiveRecursiveMEWC}{$R$, $P \cap (\N(v) \cup {v})$}
-    constructiveMEWCRecursive(g, clique, new_P, sortedVertices); 
+    updateClique(G, vertex, P, S);
+    updatePotentielCandidate(G, vertex, P);
+    constructiveMEWCRecursive(G, vertex, P, S);
 }
 
-/**
- * @brief Finds the maximum weight clique in a graph using a constructive
- * heuristic algorithm
- *
- * @param g The graph
- * @return Clique A guess of the maximum weight clique
- */
-Clique constructiveMEWC(Graph g) // O(n^2)
+Clique constructiveMEWC(Graph g)
 {
-    // LaTeX : $R \gets \emptyset$
-    Clique clique;
-    // LaTeX : $P \gets V$
-    std::unordered_set<VertexPtr> P = g.getVertices();
-    std::vector<VertexPtr> sortedVertices = sortVerticesDegree(g, P); // O(nlogn)
-    // std::vector<VertexPtr> sortedVertices = sortVerticesSumWeight(g, P); // O(n^2)
+    // UNUSED(g);
+    // TODO : implement the constructive algorithm
 
-    // LaTeX : \Call{ConstructiveRecursiveMEWC}{$R$, $P$}
-    constructiveMEWCRecursive(g, clique, P, sortedVertices); // O(n^2)
+    Clique S; //  clique qui forme la solution
+    std::unordered_set<VertexPtr> P; // Liste de sommets candidats
 
-    clique.setWeight(getCliqueWeight(g, clique).value()); // O(n^2)
+    auto firstVertex = getFirstVertex(g); // vertex avec le plus grand nombre de sommets
+    VertexPtr lastvertex = firstVertex;
 
-    // LaTeX : \Return R
-    return clique;
+    S.addVertex(firstVertex); // On ajoute le vertex à notre clique
+    getPotentielCandidate(g, firstVertex, P); // On recupère les neighbors de FirstVertex et on les mets dans P
+    // imaginons l'instance
+    // 4 4
+    // 1 3 3
+    // 1 2 6
+    // 1 4 4
+    // 2 4 5
+    // Ici, on va avoir P = {2,3,4}
+
+    constructiveMEWCRecursive(g, lastvertex, P, S);
+
+    return S;
 }

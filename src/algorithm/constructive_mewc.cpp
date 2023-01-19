@@ -157,10 +157,10 @@ void constructiveMEWCRecursive(
     for (const auto &[neighbor, _] : adjMatrix[newVertex->getId()])
         if (P.count(*(g.getVertex(neighbor))) != 0)
             new_P.insert(*(g.getVertex(neighbor)));
- 
+
     // Make the recursive call
     // LaTeX : \Call{ConstructiveRecursiveMEWC}{$R$, $P \cap (\N(v) \cup {v})$}
-    constructiveMEWCRecursive(g, clique, new_P, sortedVertices); 
+    constructiveMEWCRecursive(g, clique, new_P, sortedVertices);
 }
 
 /**

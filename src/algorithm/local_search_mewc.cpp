@@ -29,54 +29,71 @@ using namespace std;
  * @param actual_weight_improvement The actual improvement in weight that has been made since this function was first called
  * @return The weight improvement if the clique has been improved, 0 otherwise
  */
-unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr> banned_vertices = std::unordered_set<VertexPtr>(), unsigned int min_weight = 0, unsigned int actual_weight_improvement = 0){
-    if(clique->isEmpty()){
+unsigned int improveClique(
+    Graph g,
+    Clique *clique,
+    std::unordered_set<VertexPtr> banned_vertices = std::unordered_set<VertexPtr>(),
+    unsigned int min_weight = 0,
+    unsigned int actual_weight_improvement = 0)
+{
+    if (clique->isEmpty())
+    {
         return 0;
     }
 
     // Copy the initial clique
     Clique clique2;
     auto cv = clique->getVertices();
-    for(auto clique_vertex : cv){
+    for (auto clique_vertex : cv)
+    {
         clique2.addVertex(clique_vertex);
     }
     clique2.setWeight(clique->getWeight());
 
     auto vertices = g.getVertices();
     auto v = *(clique->getVertices().begin()); // a random vertex in the clique
-    unsigned int weight_improvement = 0; // the weight improvement that can be done to this clique by adding a vertex in this iteration
+    unsigned int weight_improvement = 0;       // the weight improvement that can be done to this clique by adding a vertex in this iteration
     unsigned int total_weight_improvement = 0; // the weight_improvement by adding a vertex in this iteration + the other that comes after
-    VertexPtr improvement_vertex = nullptr; // the vertex that improves the weight of the clique
+    VertexPtr improvement_vertex = nullptr;    // the vertex that improves the weight of the clique
 
     // Try to find a vertex which is not in the clique but
     // which has all the vertices of the clique as neighbours
-    for(auto vertex : vertices){
+    for (auto vertex : vertices)
+    {
         // If the vertex is in the clique or banned, continue
-        if(clique->hasVertex(vertex) || banned_vertices.find(vertex) != banned_vertices.end()){
+        if (clique->hasVertex(vertex) || banned_vertices.find(vertex) != banned_vertices.end())
+        {
             continue;
         }
 
         // If we have an edge between the vertex and the random vertex of the clique
-        if(g.hasEdge(v, vertex)){
+        if (g.hasEdge(v, vertex))
+        {
             auto clique_vertices = clique->getVertices();
             bool valid = true;
 
             // See if the vertex is adjacent to all vertices of the clique
-            for(auto clique_vertex : clique_vertices){
-                if(vertex->getId() == clique_vertex->getId()){
+            for (auto clique_vertex : clique_vertices)
+            {
+                if (vertex->getId() == clique_vertex->getId())
+                {
                     continue;
                 }
 
                 // If we don't have an edge between the vertex and one of the clique
-                if(!g.hasEdge(clique_vertex, vertex)){
+                if (!g.hasEdge(clique_vertex, vertex))
+                {
                     valid = false;
                 }
             }
             // If valid = true, all vertices in the clique are adjacent of the vertex
-            if(valid){
+            if (valid)
+            {
                 // Calculated the weight improvement when adding this vertex to the clique
-                for(auto clique_vertex : clique_vertices){
-                    if(clique_vertex == vertex){
+                for (auto clique_vertex : clique_vertices)
+                {
+                    if (clique_vertex == vertex)
+                    {
                         continue;
                     }
                     weight_improvement += g.getEdge(clique_vertex, vertex).value()->getWeight();
@@ -85,48 +102,58 @@ unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr
                 clique2.addWeight(weight_improvement);
 
                 // See if we can improve more the clique
-                total_weight_improvement = weight_improvement + improveClique(g, &clique2, banned_vertices, min_weight, actual_weight_improvement + weight_improvement);
-                
+                total_weight_improvement = weight_improvement + improveClique(
+                                                                    g,
+                                                                    &clique2,
+                                                                    banned_vertices,
+                                                                    min_weight,
+                                                                    actual_weight_improvement + weight_improvement);
+
                 // If we are not better than the old solution, keep looking for a better solution
-                if(total_weight_improvement + actual_weight_improvement <= min_weight){
+                if (total_weight_improvement + actual_weight_improvement <= min_weight)
+                {
                     weight_improvement = 0;
 
                     // remove added vertices in clique2
                     clique2 = Clique();
-                    for(auto clique_vertex : cv){
+                    for (auto clique_vertex : cv)
+                    {
                         clique2.addVertex(clique_vertex);
                     }
                     clique2.setWeight(clique->getWeight());
                 }
-                else{
+                else
+                {
                     // We found a vertex that improves the clique by adding a better weight, we keep it
                     improvement_vertex = vertex;
                     break;
                 }
             }
         }
-        else{
+        else
+        {
             // If we have no edges between some vertices and the clique, we can ban them
             banned_vertices.insert(vertex);
         }
     }
-    
+
     // If we didn't improve the clique, stop recursivity
-    if(improvement_vertex == nullptr){
+    if (improvement_vertex == nullptr)
+    {
         return 0;
     }
 
     // If the clique has been improved, replace the original one by the improved one
     *clique = clique2;
-    
+
     return total_weight_improvement;
 }
 
 /**
  * @brief Find a first solution to start with.
  *
- * This function finds a first maximal clique. The vertices of this clique are chosen by 
- * first taking the one with the highest degree, its best degree neighbour and then the 
+ * This function finds a first maximal clique. The vertices of this clique are chosen by
+ * first taking the one with the highest degree, its best degree neighbour and then the
  * maximum clique is found by calling 'improveClique()'.
  *
  * The time complexity of this function is O(3^(n/3)), where n is the number of
@@ -135,52 +162,61 @@ unsigned int improveClique(Graph g, Clique* clique, std::unordered_set<VertexPtr
  * @param g The graph to find the maximal clique in
  * @return The maximal clique found
  */
-Clique findInitialSolution(Graph g){
-    if(g.getVertices().size() < 2){
+Clique findInitialSolution(Graph g)
+{
+    if (g.getVertices().size() < 2)
+    {
         return Clique();
     }
 
     auto adjacency_matrix = g.getAdjacencyMatrix();
-    unsigned int max_degree = 0; // the maximum vertex degree in the graph
-    unsigned int max_vertex = 0; // the vertex of maximum degree in the graph
+    unsigned int max_degree = 0;                                     // the maximum vertex degree in the graph
+    unsigned int max_vertex = 0;                                     // the vertex of maximum degree in the graph
     std::unordered_map<unsigned int, unsigned int> vertices_degrees; // the degrees of all vertices
 
     // For all vertices
-    for(unsigned int i = 1; i <= adjacency_matrix.size(); i++){
+    for (unsigned int i = 1; i <= adjacency_matrix.size(); i++)
+    {
         unsigned int degree = 0; // the degree of the vertex i
 
         // Go through the adjacency matrix another time to find its neighbours
-        for(unsigned int j = 1; j <= adjacency_matrix[i].size(); j++){
+        for (unsigned int j = 1; j <= adjacency_matrix[i].size(); j++)
+        {
             // i and j are adjacent
-            if(adjacency_matrix[i][j] != nullptr){
-                degree ++;
+            if (adjacency_matrix[i][j] != nullptr)
+            {
+                degree++;
             }
         }
         vertices_degrees[i] = degree;
 
         // If the degree of this vertex is better than the actual max degree
         // modify the max degree and the max vertex
-        if(degree > max_degree){
+        if (degree > max_degree)
+        {
             max_degree = degree;
             max_vertex = i;
         }
     }
-
 
     auto vertices = g.getVertices();
     unsigned int max_degree2 = 0; // the second maximum vertex degree in the graph
     unsigned int max_vertex2 = 0; // the second vertex of maximum degree in the graph
 
     // For all vertices as candidates
-    for(auto vertex : vertices){
-        if(vertex->getId() == max_vertex){
+    for (auto vertex : vertices)
+    {
+        if (vertex->getId() == max_vertex)
+        {
             continue;
         }
 
         // If I have an edge between the max vertex and the candidate
-        if(g.hasEdge(vertex, g.getVertex(max_vertex).value())){
+        if (g.hasEdge(vertex, g.getVertex(max_vertex).value()))
+        {
             // If the degree of the candidate is higher than the max degree, replace it
-            if(vertices_degrees[vertex->getId()] > max_degree2){
+            if (vertices_degrees[vertex->getId()] > max_degree2)
+            {
                 max_degree2 = vertices_degrees[vertex->getId()];
                 max_vertex2 = vertex->getId();
             }
@@ -202,7 +238,7 @@ Clique findInitialSolution(Graph g){
 /**
  * @brief Try to find a better clique weight by removing a vertex.
  *
- * This function removes the minimum weight vertex from the clique and tries to find 
+ * This function removes the minimum weight vertex from the clique and tries to find
  * a maximal clique based on this new set of vertices.
  *
  * The time complexity of this function is O(3^(n/3)), where n is the number of
@@ -213,23 +249,28 @@ Clique findInitialSolution(Graph g){
  * @param tested_vertices The set of vertices that will not be tested
  * @return The max clique found by removing the vertex if it is better, the original one otherwise
  */
-Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>* tested_vertices){
+Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> *tested_vertices)
+{
     auto clique_vertices = init_clique.getVertices();
     // minimum weight added by a vertex in the clique
     unsigned int min_weight = clique_vertices.size() * 101; // edge weight is less than 100 so the weight of the edges of a vertex in the clique is less than 101 times the number of vertices in the clique
-    VertexPtr min_weight_vertex = nullptr; // vertex that adds the minimum weight in the clique
+    VertexPtr min_weight_vertex = nullptr;                  // vertex that adds the minimum weight in the clique
 
     // For all vertices in the clique
-    for(auto clique_vertex : clique_vertices){
+    for (auto clique_vertex : clique_vertices)
+    {
         // If the vertex has already been tested, do not try it another time
-        if(tested_vertices->find(clique_vertex) != tested_vertices->end()){
+        if (tested_vertices->find(clique_vertex) != tested_vertices->end())
+        {
             continue;
         }
         unsigned int weight = 0; // weight added by this vertex in the clique
 
         // For all vertices in the clique
-        for(auto clique_vertex2 : clique_vertices){
-            if(clique_vertex == clique_vertex2){
+        for (auto clique_vertex2 : clique_vertices)
+        {
+            if (clique_vertex == clique_vertex2)
+            {
                 continue;
             }
 
@@ -238,22 +279,26 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>*
         }
 
         // If the weight added by this vertex is less than the current minimum, modify it
-        if(weight < min_weight){
+        if (weight < min_weight)
+        {
             min_weight = weight;
             min_weight_vertex = clique_vertex;
         }
     }
 
     // If no improvements have been made, this means that all possibilities have been tested, so we return the original clique
-    if(min_weight_vertex == nullptr){
+    if (min_weight_vertex == nullptr)
+    {
         return init_clique;
     }
 
     // If I have a vertex to remove, create a new clique which is a
     // copy of the original with the tested vertex removed
     Clique new_clique;
-    for(auto clique_vertex : clique_vertices){
-        if(clique_vertex == min_weight_vertex){
+    for (auto clique_vertex : clique_vertices)
+    {
+        if (clique_vertex == min_weight_vertex)
+        {
             continue;
         }
         new_clique.addVertex(clique_vertex);
@@ -264,9 +309,10 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>*
     std::unordered_set<VertexPtr> banned_vertices;
     banned_vertices.insert(min_weight_vertex);
     unsigned int improvement = improveClique(g, &new_clique, banned_vertices, min_weight, 0);
-    
+
     // If no better solution have been found, return the original clique and put the tested vertex in tested_verticies
-    if(improvement <= min_weight){
+    if (improvement <= min_weight)
+    {
         tested_vertices->insert(min_weight_vertex);
         return init_clique;
     }
@@ -278,7 +324,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>*
 /**
  * @brief Finds the maximum weight clique in a graph using a local search algorithm.
  *
- * This function seeks to find a maximum clique by taking an initial solution, 
+ * This function seeks to find a maximum clique by taking an initial solution,
  * then looking at the neighbours of that solution and keeping only those that improve it.
  *
  * The time complexity of this function is O(3^(n/3) * n^2), where n is the number
@@ -289,25 +335,29 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr>*
  */
 Clique localSearchMEWC(Graph g)
 {
-    Clique max_clique = findInitialSolution(g); // The initial solution that may be improved
+    Clique max_clique = findInitialSolution(g);    // The initial solution that may be improved
     std::unordered_set<VertexPtr> tested_vertices; // The vertices that have been tested
 
     // As long as the break conditions have not been reached
-    while(1){
-        unsigned int c_weight = max_clique.getWeight(); // The weight of the clique before modifying it
+    while (1)
+    {
+        unsigned int c_weight = max_clique.getWeight();             // The weight of the clique before modifying it
         unsigned int tested_vertices_size = tested_vertices.size(); // The size of the set of tested vertices
 
         // Try improving the clique weight by removing a vertex
         max_clique = findNeighboor(g, max_clique, &tested_vertices);
 
         // If the weight of the clique is still the same, that means that it has not been improved
-        if(max_clique.getWeight() == c_weight){ 
+        if (max_clique.getWeight() == c_weight)
+        {
             // If the size of the set of tested vertices is still the same, that means that we do not have any other vertex to try
-            if(tested_vertices.size() == tested_vertices_size){
+            if (tested_vertices.size() == tested_vertices_size)
+            {
                 break;
             }
         }
-        else{
+        else
+        {
             // If a better solution have been found, we must try again every vertices that have already been removed
             tested_vertices = std::unordered_set<VertexPtr>();
         }

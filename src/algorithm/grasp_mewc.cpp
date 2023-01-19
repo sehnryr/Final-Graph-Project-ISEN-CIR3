@@ -148,8 +148,16 @@ Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
  */
 Clique LocalSearchGrasp(Graph graph, Clique Solution)
 {
-    // TODO
-    UNUSED(graph);
+    Graph subgraph = graph;
+    auto vertices = Solution.getVertices();
+
+    for (auto vertex : vertices)
+        subgraph.removeVertex(vertex);
+
+    Clique LocalSearchSolution = localSearchMEWC(subgraph);
+
+    if (LocalSearchSolution.getWeight() > Solution.getWeight())
+        return LocalSearchSolution;
     return Solution;
 }
 

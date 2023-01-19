@@ -107,14 +107,12 @@ void AdaptGreedyFunction(
 {
     auto adjMatrix = graph.getAdjacencyMatrix();
     auto adjList = adjMatrix[vertex->getId()];
-    std::unordered_set<VertexPtr> P_copy;
+    auto P_copy = P;
 
     P.erase(vertex); // Remove Vertex from the set of vertices to consider
     for (const auto &v : P_copy)
         if (adjList.find(v->getId()) == adjList.end())
-            P_copy.insert(v);
-
-    P = P_copy;
+            P.erase(v); // Remove Vertex's neighbors from the set of vertices to consider
 }
 
 /**

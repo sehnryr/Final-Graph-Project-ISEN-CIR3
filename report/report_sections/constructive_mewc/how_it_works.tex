@@ -32,8 +32,8 @@
                     \draw (4) -- (5) node[midway, above, sloped] {3};
                     \draw (4) -- (6) node[midway, above, sloped] {1};
                 \end{tikzpicture}
-                \caption{Graph illustration for the constructive algorithm at step 0}
-                \label{fig:constructive-mewc-edge}
+                \caption{Graph illustration for the constructive algorithm at step 1}
+                \label{fig:constructive-mewc-maxedge-step1}
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
@@ -47,11 +47,11 @@
             \end{center}
         \end{minipage}
     \end{minipage} 
-    
+
     \vspace{1\baselineskip}
 
     \begin{minipage}{\linewidth}
-        \textbf{Step 1:} \newline
+        \textbf{Step 2:} \newline
         \begin{minipage}{0.4\textwidth}
             \begin{figure}[H]
                 \centering
@@ -71,8 +71,8 @@
                     \draw (4) -- (5) node[midway, above, sloped] {3};
                     \draw (4) -- (6) node[midway, above, sloped] {1};
                 \end{tikzpicture}
-                \caption{Graph illustration for the constructive algorithm at step 1}
-                \label{fig:constructive-mewc-edge}
+                \caption{Graph illustration for the constructive algorithm at step 2}
+                \label{fig:constructive-mewc-edge-step2}
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
@@ -82,12 +82,12 @@
             \begin{center}
                 \begin{tabular}{|lll|}
                     \hline
-                    S = \{5,1\} & P = \{2\} & W = 4 \\
+                    S = \{5,1\} & P = \{2\} & Z = {3,4,2,6} \\
                     \hline
                 \end{tabular}
             \end{center}
         \end{minipage}
-    \end{minipage} 
+    \end{minipage}
 
     \vspace{1\baselineskip}
 
@@ -106,23 +106,23 @@
     
                     \draw[red]  (1) -- (2) node[midway, above, sloped] {1};
                     \draw[red] (1) -- (5) node[midway, above, sloped] {4};
-                    \draw (2) -- (3) node[midway, above, sloped] {5};
+                    \draw (2) -- (3) node[midway, above, sloped] {4};
                     \draw[red] (2) -- (5) node[midway, above, sloped] {2};
                     \draw (3) -- (4) node[midway, above, sloped] {4};
                     \draw (4) -- (5) node[midway, above, sloped] {3};
                     \draw (4) -- (6) node[midway, above, sloped] {1};
                 \end{tikzpicture}
-                \caption{Graph illustration for the constructive algorithm at step 2}
-                \label{fig:constructive-mewc-edge}
+                \caption{Graph illustration for the constructive algorithm at step 3}
+                \label{fig:constructive-mewc-edge-step3}
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            Then, the algorithm will repeat the process of step 1 until $P$ is empty. It will look for a new $v$ (here 2). After finding it, it will add it to $S$ as well as the weight of the edges of all the vertices in $S$ and it to $W$ (here 2 + 1). It will then update $P$ which here will be empty, the algorithm stops and we get the maximum clique in \textcolor{red}{red} and his weight (here (5,1,2) of weight 7).
+            In step 3, the algorithm repeat the step 1 by making a recursive call. It will finally find 2 which is the last vertex of $P$. The algorithm stop and we get the maximmum clique in \textcolor{red}{red} $(1,2,5)$.
     
             \begin{center}
                 \begin{tabular}{|lll|}
                     \hline
-                    S = \{5,1,2\} & P = \{\} & W = 7 \\
+                    S = \{5,1\} & P = \{2\} & Z = {3,4,2,6} \\
                     \hline
                 \end{tabular}
             \end{center}
@@ -131,7 +131,7 @@
 
     \vspace{1\baselineskip}
 
-    The constructive algorithm is now finished and we have obtained the following maximum clique of weight 7 : $$(1,2,5)$$
+    Now we calculate the weight of this clique. The constructive algorithm is now finished and we have obtained the following maximum clique of weight 7 : $$(1,2,5)$$
 
 \newpage
 

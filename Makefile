@@ -1,6 +1,6 @@
 # variables
 CXX = g++
-CXX_FLAGS = -Wall -Wextra -Werror -std=c++17 -O3 -lstdc++fs
+CXX_FLAGS = -Wall -Wextra -Werror -std=c++17 -O3
 
 SRC_DIR = src
 BUILD_DIR = build
@@ -14,7 +14,7 @@ DEPS = $(OBJ_FILES:.o=.d)
 
 # default target
 $(TARGET): $(OBJ_FILES)
-	$(CXX) $(CXX_FLAGS) -o $@ $^
+	$(CXX) $(CXX_FLAGS) -o $@ $^ -lstdc++fs
 
 # include dependencies
 -include $(DEPS)
@@ -34,4 +34,4 @@ generate:
 	$(CXX) $(CXX_FLAGS) \
 	-o $(BUILD_DIR)/generate \
 	$(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)) \
-	graph-gen/generate.cpp
+	graph-gen/generate.cpp -lstdc++fs

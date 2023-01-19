@@ -318,10 +318,10 @@ Clique localSearchMEWC(Graph g)
             // If the size of the set of tested vertices is still the same, that means that we do not have any other vertex to try
             if (tested_vertices.size() == tested_vertices_size)
                 break;
-            else
-                // If a better solution have been found, we must try again every vertices that have already been removed
-                tested_vertices = std::unordered_set<VertexPtr>();
         }
+        else
+            // If a better solution have been found, we must try again every vertices that have already been removed
+            tested_vertices = std::unordered_set<VertexPtr>();
     }
 
     return max_clique;

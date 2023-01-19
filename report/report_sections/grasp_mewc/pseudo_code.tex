@@ -28,7 +28,7 @@
             \State $P \gets graphe.vertices()$
             \While{$P \neq \emptyset$}
                 \State $RCL \gets $\Call{MakeRCL}{$graph$,$P$}
-                \State $s \gets $\Call{SelectElementAtRandom}{$RCL$}
+                \State $s \gets $\Call{SelectElementAtRandom}{$RCL$} \Comment{Choose randomly a vertex in the RCL}
                 \State $Solution \gets Solution \cup s$
                 \State \Call{AdaptGreedyFunction}{$graph,s,P$}
             \EndWhile
@@ -84,19 +84,6 @@
                 \State $sum \gets sum \cup edge\text{->getWeight()}$
             \EndFor
             \State \Return{$sum$}
-        \EndProcedure
-    \end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}[H]
-    \caption{SelectElementAtRandom function}
-    \label{SelectElementAtRandom-pseudocode}
-    \begin{algorithmic}[1]
-        \Procedure{SelectElementAtRandom}{$RCL$}
-            \State $rd$
-            \State $gen(rd())$
-            \State $dis(0, RCL.size() - 1)$
-            \State \Return{$RCL[dis(gen)]$}
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}

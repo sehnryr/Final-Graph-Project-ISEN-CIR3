@@ -12,8 +12,9 @@
 #include "mewc.hpp"
 #include "../common.hpp"
 
-#define ALPHA 0.5  // restricted candidate list parameter
-#define RETRIES 10 // number of retries for the grasp algorithm
+#define ALPHA 0.5    // restricted candidate list parameter
+#define RETRIES 10   // number of retries for the grasp algorithm
+#define TUPLE_SIZE 2 // size of the tuple to consider
 
 /**
  * @brief Returns the sum of the adjacent edges of a vertex
@@ -140,6 +141,36 @@ Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
 }
 
 /**
+ * @brief Get all the k-tuples of a set of vertices
+ *
+ * @param std::unordered_set<VertexPtr> vertices
+ * @param std::vector<std::vector<VertexPtr>> &kTuples
+ * @param std::unordered_set<VertexPtr>::iterator iter
+ * @param int k
+ * @param std::vector<VertexPtr> tuple
+ */
+void getKTuples(
+    std::unordered_set<VertexPtr> vertices,
+    std::vector<std::vector<VertexPtr>> &kTuples,
+    std::unordered_set<VertexPtr>::iterator iter,
+    unsigned int k = TUPLE_SIZE,
+    std::vector<VertexPtr> tuple = {}) // O(k^n)
+{
+    if (k == 0 || k > vertices.size())
+        return;
+
+    for (auto it = iter; it != vertices.end(); ++it)
+    {
+        tuple.push_back(*it);
+        if (k == 1)
+            kTuples.push_back(tuple);
+        else
+            getKTuples(vertices, kTuples, std::next(it), k - 1, tuple);
+        tuple.pop_back();
+    }
+}
+
+/**
  * @brief Adapted local search algorithm for the GRASP MEWC algorithm
  *
  * @param Graph graph
@@ -148,16 +179,22 @@ Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
  */
 Clique LocalSearchGrasp(Graph graph, Clique Solution)
 {
-    Graph subgraph = graph;
     auto vertices = Solution.getVertices();
+    std::vector<std::vector<VertexPtr>> kTuples;
+    getKTuples(vertices, kTuples, vertices.begin(), 2); // There is k^(n-1) k-tuples of n vertices
 
-    for (auto vertex : vertices)
-        subgraph.removeVertex(vertex);
+    for (auto tuple : kTuples) // O(k^n)
+    {
+        Graph subgraph = graph;
+        for (auto vertex : tuple)
+            subgraph.removeVertex(vertex);
 
-    Clique LocalSearchSolution = localSearchMEWC(subgraph);
+        Clique subSolution = localSearchMEWC(subgraph);
 
-    if (LocalSearchSolution.getWeight() > Solution.getWeight())
-        return LocalSearchSolution;
+        if (subSolution.getWeight() > Solution.getWeight())
+            Solution = subSolution;
+    }
+
     return Solution;
 }
 

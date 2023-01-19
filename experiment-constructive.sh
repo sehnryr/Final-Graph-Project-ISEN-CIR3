@@ -8,7 +8,7 @@ TYPE="constructive"
 GRAPH_GEN=./build/generate
 TEMP_DIR=./temp
 
-RESULTS_DIR=$TEMP_DIR
+RESULTS_DIR=./report/experiment_data
 
 NUM_TRIALS=5
 

@@ -17,6 +17,8 @@
 #ifndef GRAPH_HPP
 #define GRAPH_HPP
 
+#define GraphPtr std::shared_ptr<Graph>
+
 /**
  * @brief The Graph class
  *

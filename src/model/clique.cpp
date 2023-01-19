@@ -13,6 +13,15 @@
  * @brief Construct a new Clique:: Clique object
  */
 Clique::Clique(Graph g)
+    : _weight(0), _modified(false)
+{
+    _graph = std::make_shared<Graph>(g);
+}
+
+/**
+ * @brief Construct a new Clique:: Clique object
+ */
+Clique::Clique(GraphPtr g)
     : _graph(g), _weight(0), _modified(false)
 {
 }
@@ -63,7 +72,7 @@ long unsigned int Clique::weight()
                     continue;
                 // if the vertices are connected, add the weight of the edge
                 // to the weight of the clique
-                else if (auto edge = _graph.getEdge(*it, *jt))
+                else if (auto edge = _graph->getEdge(*it, *jt))
                     _weight += edge.value()->weight();
                 // if the vertices are not connected, the clique is not a clique
                 else

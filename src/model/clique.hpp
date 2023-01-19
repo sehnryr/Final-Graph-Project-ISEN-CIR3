@@ -29,6 +29,7 @@ class Clique : public Graph
 {
 public:
     Clique(Graph g);
+    Clique(GraphPtr g);
     ~Clique();
 
     // Set methods
@@ -38,7 +39,7 @@ public:
     long unsigned int weight();
 
 private:
-    Graph _graph;
+    GraphPtr _graph;
     long unsigned int _weight;
     bool _modified;
 };

@@ -6,8 +6,6 @@
  * @date 2022-12-26
  */
 
-#include <iostream>
-
 #include "clique.hpp"
 #include "../common.hpp"
 

@@ -2,6 +2,12 @@
 
 # This script is used to run the experiment for the exact algorithm.
 
+# If the script is not run from the project root directory, exit
+if [ ! -f "Final_project.pdf" ]; then
+    echo "Please run this script from the project root directory."
+    exit 1
+fi
+
 EXEC=./build/main
 TYPE="constructive"
 

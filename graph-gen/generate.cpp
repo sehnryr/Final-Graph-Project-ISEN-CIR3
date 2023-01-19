@@ -11,8 +11,24 @@
 #include <string>
 #include <vector>
 #include <map>
+#include <optional>
 
-#include "../src/common.hpp"
+/**
+ * @brief Find an option in the arguments
+ *
+ * This method finds an option in the arguments and returns its index.
+ *
+ * @param args The arguments
+ * @param option The option
+ * @return std::optional<long unsigned int> The index of the option or an empty optional
+ */
+std::optional<long unsigned int> find_option(std::vector<std::string> args, std::string option)
+{
+    for (auto it = args.begin(); it != args.end(); ++it)
+        if (it->substr(0, option.size()) == option)
+            return it - args.begin();
+    return {};
+}
 
 void print_usage(char **argv);
 

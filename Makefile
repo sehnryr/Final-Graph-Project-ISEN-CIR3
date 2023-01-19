@@ -34,4 +34,4 @@ generate:
 	$(CXX) $(CXX_FLAGS) \
 	-o $(BUILD_DIR)/generate \
 	$(filter-out $(SRC_DIR)/main.cpp, $(SRC_FILES)) \
-	graph-gen/generate.cpp
+	graph-gen/generate.cpp -lstdc++fs

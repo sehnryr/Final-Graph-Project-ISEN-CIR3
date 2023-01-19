@@ -3,7 +3,7 @@
 # This script is used to run the experiment for the exact algorithm.
 
 EXEC=./build/main
-TYPE="constructive"
+# TYPE="constructive"
 
 GRAPH_GEN=./build/generate
 TEMP_DIR=./temp
@@ -27,21 +27,28 @@ for CONNECTIVITY in 25 50 75 ; do
 
     # Run the experiment with 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 vertices
     for VERTEX_COUNT in 100 200 300 400 500 600 700 800 900 1000; do
-        declare -i total
-        total=0
         # Run for each vertex count a 100 times to get a better average
         for ((i=1; i <= NUM_TRIALS; i++)) ; do
+
             # Generate a random graph
             $GRAPH_GEN $VERTEX_COUNT $CONNECTIVITY --output-dir=$TEMP_DIR
 
             # Run the algorithm
-            $EXEC "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}.in" --type=$TYPE --output-dir=$TEMP_DIR
+            for TYPE in constructive-degree-youn constructive-sum-alex.cpp constructive-sum-youn.cpp constructive-degree-alex.cpp; do
+
+            declare -i total
+            total=0
+            $EXEC "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}.in" --type=${TYPE} --output-dir=$TEMP_DIR
 
             val=$(( $(cut -f2 -d" " $TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}_${TYPE}.out | head -n1) ))
             total=$total+$val
+
+            echo -n "${VERTEX_COUNT}_${CONNECTIVITY} try = $i" >> $TEMP_DIR/resultat_${TYPE}
+            echo $(($total)) >> $TEMP_DIR/resultat_${TYPE}
+            done
         done
 
-        echo $(($total/$NUM_TRIALS)) >> $TEMP_DIR/moyenne
+        
     done
 done
 

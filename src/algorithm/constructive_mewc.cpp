@@ -55,8 +55,8 @@ VertexPtr getBestVertex(
  * @return std::vector<VertexPtr> The vertices sorted by degree
  */
 std::vector<VertexPtr> sortVerticesDegree(
-    Graph graph,
-    std::unordered_set<VertexPtr> vertices) // O(nlogn)
+    const Graph &graph,
+    const std::unordered_set<VertexPtr> &vertices) // O(nlogn)
 {
     std::vector<std::pair<VertexPtr, long unsigned int>> degrees;
     std::vector<VertexPtr> sortedVertices;

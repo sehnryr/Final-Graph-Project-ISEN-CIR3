@@ -15,7 +15,7 @@
  * @brief Construct a new Clique:: Clique object
  */
 Clique::Clique()
-    : weight(0)
+    : _weight(0)
 {
 }
 
@@ -37,17 +37,21 @@ Clique::~Clique()
 void Clique::addVertex(VertexPtr v)
 {
     if (!hasVertex(v))
-        vertices.insert(v);
+        _vertices.insert(v);
 }
 
 /**
- * @brief Get the vertices of the clique
+ * @brief Check if the clique contains a vertex
  *
- * @return std::unordered_set<VertexPtr> The vertices of the clique
+ * @param id The id of the vertex to check
+ * @return true If the vertex is in the clique
+ * @return false If the vertex is not in the clique
  */
-std::unordered_set<VertexPtr> Clique::getVertices() const
+bool Clique::hasVertex(unsigned int id) const // Time complexity: O(1)
 {
-    return vertices;
+    if (getVertex(id))
+        return true;
+    return false;
 }
 
 /**
@@ -59,9 +63,7 @@ std::unordered_set<VertexPtr> Clique::getVertices() const
  */
 bool Clique::hasVertex(VertexPtr v) const // Time complexity: O(1)
 {
-    if (getVertex(v->getId()))
-        return true;
-    return false;
+    return hasVertex(v->getId());
 }
 
 /**
@@ -77,58 +79,7 @@ bool Clique::hasVertex(VertexPtr v) const // Time complexity: O(1)
 std::optional<VertexPtr> Clique::getVertex(unsigned int id) const // Time complexity: O(1)
 {
     VertexPtr v = std::make_shared<Vertex>(id);
-    if (vertices.find(v) != vertices.end())
-        return *vertices.find(v);
+    if (_vertices.find(v) != _vertices.end())
+        return *_vertices.find(v);
     return {};
-}
-
-/**
- * @brief Set the weight of the clique
- *
- * @param weight The weight of the clique
- */
-void Clique::setWeight(long unsigned int weight)
-{
-    this->weight = weight;
-}
-
-/**
- * @brief Add a weight to the clique
- *
- * @param weight The weight to add
- */
-void Clique::addWeight(long unsigned int weight)
-{
-    this->weight += weight;
-}
-
-/**
- * @brief Get the weight of the clique
- *
- * @return long unsigned int The weight of the clique
- */
-long unsigned int Clique::getWeight() const // Time complexity: O(n^2)
-{
-    return weight;
-}
-
-/**
- * @brief Get the size of the clique
- *
- * @return long unsigned int The size of the clique
- */
-long unsigned int Clique::getSize() const
-{
-    return vertices.size();
-}
-
-/**
- * @brief Check if the clique is empty
- *
- * @return true If the clique is empty
- * @return false If the clique is not empty
- */
-bool Clique::isEmpty() const
-{
-    return vertices.empty();
 }

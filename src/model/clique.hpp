@@ -30,19 +30,34 @@ class Clique
 public:
     Clique();
     ~Clique();
+
+    // Set methods
     void addVertex(VertexPtr v);
-    std::unordered_set<VertexPtr> getVertices() const;
-    bool hasVertex(VertexPtr v) const;
+    inline void setWeight(long unsigned int weight) { this->_weight = weight; }
+    inline void addWeight(long unsigned int weight) { this->_weight += weight; }
+
+    // Get methods
     std::optional<VertexPtr> getVertex(unsigned int id) const;
-    void setWeight(long unsigned int weight);
-    void addWeight(long unsigned int weight);
-    long unsigned int getWeight() const;
-    long unsigned int getSize() const;
-    bool isEmpty() const;
+    inline std::unordered_set<VertexPtr> getVertices() const { return _vertices; }
+
+    inline std::unordered_set<VertexPtr> vertices() const { return _vertices; }
+
+    inline long unsigned int getWeight() const { return _weight; }
+    inline long unsigned int getSize() const { return _vertices.size(); }
+
+    inline long unsigned int weight() const { return _weight; }
+    inline long unsigned int size() const { return _vertices.size(); }
+
+    // Boolean methods
+    bool hasVertex(unsigned int id) const;
+    bool hasVertex(VertexPtr v) const;
+    inline bool isEmpty() const { return _vertices.empty(); }
+
+    inline bool empty() const { return _vertices.empty(); }
 
 private:
-    std::unordered_set<VertexPtr> vertices;
-    long unsigned int weight;
+    std::unordered_set<VertexPtr> _vertices;
+    long unsigned int _weight;
 };
 
 #endif // CLIQUE_HPP

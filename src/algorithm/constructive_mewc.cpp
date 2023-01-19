@@ -173,7 +173,7 @@ void constructiveMEWCRecursive(
 Clique constructiveMEWC(Graph g) // O(n^2)
 {
     // LaTeX : $R \gets \emptyset$
-    Clique clique;
+    Clique clique(g);
     // LaTeX : $P \gets V$
     std::unordered_set<VertexPtr> P = g.vertices();
     std::vector<VertexPtr> sortedVertices = sortVerticesDegree(g, P); // O(nlogn)
@@ -181,8 +181,6 @@ Clique constructiveMEWC(Graph g) // O(n^2)
 
     // LaTeX : \Call{ConstructiveRecursiveMEWC}{$R$, $P$}
     constructiveMEWCRecursive(g, clique, P, sortedVertices); // O(n^2)
-
-    clique.setWeight(getCliqueWeight(g, clique).value()); // O(n^2)
 
     // LaTeX : \Return R
     return clique;

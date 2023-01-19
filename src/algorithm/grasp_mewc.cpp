@@ -123,7 +123,7 @@ void AdaptGreedyFunction(
  */
 Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
 {
-    Clique Solution;
+    Clique Solution(graph);
     std::unordered_set<VertexPtr> P = graph.vertices();
 
     while (!P.empty())
@@ -133,8 +133,6 @@ Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
         Solution.addVertex(s); // Add Vertex to the solution we create
         AdaptGreedyFunction(graph, s, P);
     }
-
-    Solution.setWeight(getCliqueWeight(graph, Solution).value());
 
     return Solution;
 }
@@ -217,8 +215,8 @@ void UpdateSolution(Clique &Solution, Clique &BestSolution) // O(1)
  */
 Clique graspMEWC(Graph g)
 {
-    Clique BestSolution;
-    Clique Solution;
+    Clique BestSolution(g);
+    Clique Solution(g);
 
     for (unsigned short int i = 0; i < RETRIES; i++)
     {

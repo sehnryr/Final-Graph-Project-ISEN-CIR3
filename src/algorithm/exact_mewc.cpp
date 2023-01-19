@@ -98,10 +98,10 @@ void BronKerbosch(
 Clique exactMEWC(Graph g)
 {
     // variable to store the maximum weight clique
-    Clique max_clique;
+    Clique max_clique(g);
 
     // get all the maximal cliques in the graph
-    Clique R;
+    Clique R(g);
     std::unordered_set<VertexPtr> P = g.vertices();
     std::unordered_set<VertexPtr> X;
     std::vector<Clique> cliques;       // vector to store the maximal cliques
@@ -110,15 +110,9 @@ Clique exactMEWC(Graph g)
     // iterate over all maximal cliques
     for (auto clique : cliques) // O(3^(n/3))
     {
-        // get the weight of the clique
-        // note that it will always be a clique, because it is a maximal clique
-        // and the Bron-Kerbosch algorithm only returns maximal cliques
-        auto weight = getCliqueWeight(g, clique); // O(n^2)
-
-        clique.setWeight(weight.value());
         // if the clique is a clique and has a higher weight than the current
         // maximum weight clique, set the maximum weight clique to the current clique
-        if (weight && weight.value() > max_clique.weight())
+        if (clique.weight() > max_clique.weight())
             max_clique = clique;
     }
 

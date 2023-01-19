@@ -31,6 +31,4 @@ Clique runMEWC(Graph graph, Algorithm algorithm);
 Algorithm getAlgorithm(std::string algorithm);
 std::string getAlgorithmName(Algorithm algorithm);
 
-std::optional<long unsigned int> getCliqueWeight(Graph graph, Clique clique);
-
 #endif // MEWC_HPP

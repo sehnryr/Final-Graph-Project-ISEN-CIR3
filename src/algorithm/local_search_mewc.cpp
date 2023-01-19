@@ -38,7 +38,7 @@ unsigned int improveClique(
         return 0;
 
     // Copy the initial clique
-    Clique clique2;
+    Clique clique2(g);
     auto cv = clique->vertices();
     for (auto clique_vertex : cv)
         clique2.addVertex(clique_vertex);
@@ -102,7 +102,7 @@ unsigned int improveClique(
                     weight_improvement = 0;
 
                     // remove added vertices in clique2
-                    clique2 = Clique();
+                    clique2 = Clique(g);
                     for (auto clique_vertex : cv)
                         clique2.addVertex(clique_vertex);
 
@@ -149,7 +149,7 @@ unsigned int improveClique(
 Clique findInitialSolution(Graph g)
 {
     if (g.vertices().size() < 2)
-        return Clique();
+        return Clique(g);
 
     auto adjacency_matrix = g.adjacencyMatrix();
     unsigned int max_degree = 0;                                     // the maximum vertex degree in the graph
@@ -195,7 +195,7 @@ Clique findInitialSolution(Graph g)
     }
 
     // Create a clique with the vertex of max degree and its neighbour of max degree
-    Clique clique;
+    Clique clique(g);
     clique.addVertex(g.getVertex(max_vertex).value());
     clique.addVertex(g.getVertex(max_vertex2).value());
     clique.setWeight(g.getEdge(max_vertex, max_vertex2).value()->getWeight());
@@ -260,7 +260,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
 
     // If I have a vertex to remove, create a new clique which is a
     // copy of the original with the tested vertex removed
-    Clique new_clique;
+    Clique new_clique(g);
     for (auto clique_vertex : clique_vertices)
     {
         if (clique_vertex == min_weight_vertex)

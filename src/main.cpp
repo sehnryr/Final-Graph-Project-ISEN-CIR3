@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 
     // Read the input file
     Graph graph = read_file(input_path);
-    Clique clique;
+    Clique clique(graph);
 
     // Run the algorithm
     for (int i = 0; i < runs; i++)

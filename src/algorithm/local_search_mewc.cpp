@@ -42,7 +42,6 @@ unsigned int improveClique(
     auto cv = clique->vertices();
     for (auto clique_vertex : cv)
         clique2.addVertex(clique_vertex);
-    clique2.setWeight(clique->weight());
 
     auto vertices = g.vertices();
     auto v = *(clique->vertices().begin());    // a random vertex in the clique
@@ -86,7 +85,6 @@ unsigned int improveClique(
                     weight_improvement += g.getEdge(clique_vertex, vertex).value()->getWeight();
                 }
                 clique2.addVertex(vertex);
-                clique2.addWeight(weight_improvement);
 
                 // See if we can improve more the clique
                 total_weight_improvement = weight_improvement + improveClique(
@@ -105,8 +103,6 @@ unsigned int improveClique(
                     clique2 = Clique(g);
                     for (auto clique_vertex : cv)
                         clique2.addVertex(clique_vertex);
-
-                    clique2.setWeight(clique->weight());
                 }
                 else
                 {
@@ -198,7 +194,6 @@ Clique findInitialSolution(Graph g)
     Clique clique(g);
     clique.addVertex(g.getVertex(max_vertex).value());
     clique.addVertex(g.getVertex(max_vertex2).value());
-    clique.setWeight(g.getEdge(max_vertex, max_vertex2).value()->getWeight());
 
     // Get a full clique based on these two vertices
     improveClique(g, &clique, std::unordered_set<VertexPtr>(), 0, 0);
@@ -268,7 +263,6 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
 
         new_clique.addVertex(clique_vertex);
     }
-    new_clique.setWeight(init_clique.weight() - min_weight);
 
     // Put the tested vertex as banned
     std::unordered_set<VertexPtr> banned_vertices;

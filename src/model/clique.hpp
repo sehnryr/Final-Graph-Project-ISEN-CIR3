@@ -34,9 +34,6 @@ public:
     // Set methods
     void addVertex(VertexPtr v);
 
-    inline void setWeight(long unsigned int weight) { this->_weight = weight; }
-    inline void addWeight(long unsigned int weight) { this->_weight += weight; }
-
     // Get methods
     long unsigned int weight();
 

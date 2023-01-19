@@ -22,13 +22,13 @@ enum Algorithm
     Grasp
 };
 
-Clique exactMEWC(Graph g);
-Clique constructiveMEWC(Graph g);
-Clique localSearchMEWC(Graph g);
-Clique graspMEWC(Graph g);
-Clique runMEWC(Graph graph, Algorithm algorithm);
+Clique exactMEWC(const Graph &g);
+Clique constructiveMEWC(const Graph &g);
+Clique localSearchMEWC(const Graph &g);
+Clique graspMEWC(const Graph &g);
+Clique runMEWC(const Graph &graph, const Algorithm &algorithm);
 
-Algorithm getAlgorithm(std::string algorithm);
-std::string getAlgorithmName(Algorithm algorithm);
+Algorithm getAlgorithm(const std::string &algorithm);
+std::string getAlgorithmName(const Algorithm &algorithm);
 
 #endif // MEWC_HPP

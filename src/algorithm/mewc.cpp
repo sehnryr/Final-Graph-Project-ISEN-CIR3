@@ -22,7 +22,7 @@
  * @return Clique The clique found by the algorithm
  * @throws std::invalid_argument If the algorithm is invalid
  */
-Clique runMEWC(Graph graph, Algorithm algorithm)
+Clique runMEWC(const Graph &graph, const Algorithm &algorithm)
 {
     switch (algorithm)
     {
@@ -49,7 +49,7 @@ Clique runMEWC(Graph graph, Algorithm algorithm)
  * @return Algorithm The algorithm corresponding to the string
  * @throws std::invalid_argument If the string is invalid
  */
-Algorithm getAlgorithm(std::string algorithm)
+Algorithm getAlgorithm(const std::string &algorithm)
 {
     if (algorithm == "exact")
         return Algorithm::Exact;
@@ -72,7 +72,7 @@ Algorithm getAlgorithm(std::string algorithm)
  * @param algorithm The algorithm to get the name of
  * @return std::string The name of the algorithm
  */
-std::string getAlgorithmName(Algorithm algorithm)
+std::string getAlgorithmName(const Algorithm &algorithm)
 {
     switch (algorithm)
     {

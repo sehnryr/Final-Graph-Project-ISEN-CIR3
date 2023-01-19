@@ -29,10 +29,10 @@ public:
     ~Edge();
 
     // Get methods
-    inline VertexPtr first() const { return _first; }
-    inline VertexPtr second() const { return _second; }
+    inline const VertexPtr first() const { return _first; }
+    inline const VertexPtr second() const { return _second; }
     inline unsigned int weight() const { return _weight; }
-    inline std::optional<VertexPtr> getVertex(unsigned int id) const
+    inline const std::optional<VertexPtr> getVertex(unsigned int id) const
     {
         if (_first->id() == id)
             return _first;
@@ -40,29 +40,29 @@ public:
             return _second;
         return {};
     }
-    inline std::optional<VertexPtr> otherVertex(unsigned int id) const
+    inline const std::optional<VertexPtr> otherVertex(unsigned int id) const
     {
         if (auto v = getVertex(id))
             return *v == _first ? _second : _first;
         return {};
     }
-    inline std::optional<VertexPtr> otherVertex(VertexPtr v) const { return otherVertex(v->id()); }
+    inline const std::optional<VertexPtr> otherVertex(const VertexPtr &v) const { return otherVertex(v->id()); }
 
     // Boolean methods
     inline bool operator==(const Edge &e) const { return _first == e._first && _second == e._second && _weight == e._weight; }
     inline bool operator<(const Edge &e) const { return _weight < e._weight; }
 
     inline bool hasVertex(unsigned int id) const { return getVertex(id).has_value(); }
-    inline bool hasVertex(VertexPtr v) const { return hasVertex(v->id()); }
+    inline bool hasVertex(const VertexPtr &v) const { return hasVertex(v->id()); }
 
-    inline bool isIncident(unsigned int id1, unsigned int id2) const
+    inline bool isIncident(unsigned int first_id, unsigned int second_id) const
     {
-        if (auto _second = otherVertex(id1))
-            return _second.value()->id() == id2;
+        if (auto _second = otherVertex(first_id))
+            return _second.value()->id() == second_id;
         return false;
     }
-    inline bool isIncident(VertexPtr first, VertexPtr second) const { return isIncident(first->id(), second->id()); }
-    inline bool isIncident(EdgePtr e) const { return isIncident(e->first(), e->second()); }
+    inline bool isIncident(const VertexPtr &first, const VertexPtr &second) const { return isIncident(first->id(), second->id()); }
+    inline bool isIncident(const EdgePtr &e) const { return isIncident(e->first(), e->second()); }
 
 private:
     VertexPtr _first;

@@ -23,8 +23,8 @@
  * @return long unsigned int The sum of the adjacent edges of a vertex
  */
 long unsigned int getSumAdjacentEdges(
-    Graph graph,
-    VertexPtr vertex) // O(n)
+    const Graph &graph,
+    const VertexPtr &vertex) // O(n)
 {
     long unsigned int sum = 0;
     auto adjMatrix = graph.adjacencyMatrix();
@@ -42,8 +42,8 @@ long unsigned int getSumAdjacentEdges(
  * @return long unsigned int The maximum sum of the adjacent edges of a vertex
  */
 long unsigned int getGamma(
-    Graph graph,
-    std::unordered_set<VertexPtr> vertices) // O(n^2)
+    const Graph &graph,
+    const std::unordered_set<VertexPtr> &vertices) // O(n^2)
 {
     long unsigned int gamma = 0;
     auto adjMatrix = graph.adjacencyMatrix();
@@ -64,8 +64,8 @@ long unsigned int getGamma(
  * @return std::vector<VertexPtr> The Restricted Candidate List
  */
 std::vector<VertexPtr> MakeRCL(
-    Graph graph,
-    std::unordered_set<VertexPtr> vertices) // O(n^2)
+    const Graph &graph,
+    const std::unordered_set<VertexPtr> &vertices) // O(n^2)
 {
     long unsigned int gamma = getGamma(graph, vertices);
     std::vector<VertexPtr> RCL;
@@ -84,7 +84,7 @@ std::vector<VertexPtr> MakeRCL(
  * @param std::vector<VertexPtr> RCL
  * @return std::vector<VertexPtr> The vertex choose randomly
  */
-VertexPtr SelectElementAtRandom(std::vector<VertexPtr> &RCL) // O(1)
+VertexPtr SelectElementAtRandom(const std::vector<VertexPtr> &RCL) // O(1)
 {
     std::random_device rd;
     std::mt19937 gen(rd());
@@ -101,8 +101,8 @@ VertexPtr SelectElementAtRandom(std::vector<VertexPtr> &RCL) // O(1)
  * @param std::unordered_set<VertexPtr> &P
  */
 void AdaptGreedyFunction(
-    Graph graph,
-    VertexPtr vertex,
+    const Graph &graph,
+    const VertexPtr &vertex,
     std::unordered_set<VertexPtr> &P) // O(n)
 {
     auto adjMatrix = graph.adjacencyMatrix();
@@ -121,9 +121,9 @@ void AdaptGreedyFunction(
  * @param Graph graph
  * @return Clique The clique we create
  */
-Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
+Clique ConstructGreedyRandomizedSolution(const Graph &graph) // O(n^3)
 {
-    Clique Solution(graph);
+    Clique Solution;
     std::unordered_set<VertexPtr> P = graph.vertices();
 
     while (!P.empty())
@@ -147,10 +147,10 @@ Clique ConstructGreedyRandomizedSolution(Graph graph) // O(n^3)
  * @param std::vector<VertexPtr> tuple
  */
 void getKTuples(
-    std::unordered_set<VertexPtr> vertices,
+    const std::unordered_set<VertexPtr> &vertices,
     std::vector<std::vector<VertexPtr>> &kTuples,
-    std::unordered_set<VertexPtr>::iterator iter,
-    unsigned int k = TUPLE_SIZE,
+    const std::unordered_set<VertexPtr>::iterator &iter,
+    const unsigned int k = TUPLE_SIZE,
     std::vector<VertexPtr> tuple = {}) // O(k^n)
 {
     if (k == 0 || k > vertices.size())
@@ -174,7 +174,7 @@ void getKTuples(
  * @param Clique Solution
  * @return Clique The solution after the local search if it is better
  */
-Clique LocalSearchGrasp(Graph graph, Clique Solution)
+Clique LocalSearchGrasp(const Graph &graph, Clique Solution)
 {
     auto vertices = Solution.vertices();
     std::vector<std::vector<VertexPtr>> kTuples;
@@ -188,7 +188,7 @@ Clique LocalSearchGrasp(Graph graph, Clique Solution)
 
         Clique subSolution = localSearchMEWC(subgraph);
 
-        if (subSolution.weight() > Solution.weight())
+        if (subSolution.weight(graph) > Solution.weight(graph))
             Solution = subSolution;
     }
 
@@ -201,9 +201,9 @@ Clique LocalSearchGrasp(Graph graph, Clique Solution)
  * @param Clique &Solution
  * @param Clique &BestSolution
  */
-void UpdateSolution(Clique &Solution, Clique &BestSolution) // O(1)
+void UpdateSolution(const Graph &graph, Clique &Solution, Clique &BestSolution) // O(1)
 {
-    if (Solution.weight() > BestSolution.weight())
+    if (Solution.weight(graph) > BestSolution.weight(graph))
         BestSolution = Solution;
 }
 
@@ -213,16 +213,16 @@ void UpdateSolution(Clique &Solution, Clique &BestSolution) // O(1)
  * @param Graph g
  * @return Clique The best solution the GRASP can find
  */
-Clique graspMEWC(Graph g)
+Clique graspMEWC(const Graph &g)
 {
-    Clique BestSolution(g);
-    Clique Solution(g);
+    Clique BestSolution;
+    Clique Solution;
 
     for (unsigned short int i = 0; i < RETRIES; i++)
     {
         Solution = ConstructGreedyRandomizedSolution(g); // O(n^3)
         Solution = LocalSearchGrasp(g, Solution);
-        UpdateSolution(Solution, BestSolution); // O(1)
+        UpdateSolution(g, Solution, BestSolution); // O(1)
     }
 
     return BestSolution;

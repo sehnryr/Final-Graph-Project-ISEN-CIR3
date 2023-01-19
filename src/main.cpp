@@ -109,7 +109,7 @@ int main(int argc, char **argv)
 
     // Read the input file
     Graph graph = read_file(input_path);
-    Clique clique(graph);
+    Clique clique;
 
     // Run the algorithm
     for (int i = 0; i < runs; i++)
@@ -133,7 +133,7 @@ int main(int argc, char **argv)
 
     // Write the size of the clique and the weight of the clique
     output << clique.vertices().size() << " "
-           << clique.weight() << std::endl;
+           << clique.weight(graph) << std::endl;
 
     // Sort the vertices of the clique
     std::vector<VertexPtr> vertices;

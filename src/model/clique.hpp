@@ -28,18 +28,20 @@
 class Clique : public Graph
 {
 public:
-    Clique(Graph g);
-    Clique(GraphPtr g);
+    Clique();
     ~Clique();
 
     // Set methods
-    void addVertex(VertexPtr v);
+    inline void addVertex(const VertexPtr &v)
+    {
+        _vertices.insert(v);
+        _modified = true;
+    }
 
     // Get methods
-    long unsigned int weight();
+    long unsigned int weight(const Graph &graph);
 
 private:
-    GraphPtr _graph;
     long unsigned int _weight;
     bool _modified;
 };

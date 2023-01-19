@@ -38,7 +38,7 @@ unsigned int improveClique(
         return 0;
 
     // Copy the initial clique
-    Clique clique2(g);
+    Clique clique2;
     auto cv = clique->vertices();
     for (auto clique_vertex : cv)
         clique2.addVertex(clique_vertex);
@@ -100,7 +100,7 @@ unsigned int improveClique(
                     weight_improvement = 0;
 
                     // remove added vertices in clique2
-                    clique2 = Clique(g);
+                    clique2 = Clique();
                     for (auto clique_vertex : cv)
                         clique2.addVertex(clique_vertex);
                 }
@@ -145,7 +145,7 @@ unsigned int improveClique(
 Clique findInitialSolution(Graph g)
 {
     if (g.vertices().size() < 2)
-        return Clique(g);
+        return Clique();
 
     auto adjacency_matrix = g.adjacencyMatrix();
     unsigned int max_degree = 0;                                     // the maximum vertex degree in the graph
@@ -191,7 +191,7 @@ Clique findInitialSolution(Graph g)
     }
 
     // Create a clique with the vertex of max degree and its neighbour of max degree
-    Clique clique(g);
+    Clique clique;
     clique.addVertex(g.getVertex(max_vertex).value());
     clique.addVertex(g.getVertex(max_vertex2).value());
 
@@ -255,7 +255,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
 
     // If I have a vertex to remove, create a new clique which is a
     // copy of the original with the tested vertex removed
-    Clique new_clique(g);
+    Clique new_clique;
     for (auto clique_vertex : clique_vertices)
     {
         if (clique_vertex == min_weight_vertex)
@@ -292,7 +292,7 @@ Clique findNeighboor(Graph g, Clique init_clique, std::unordered_set<VertexPtr> 
  * @param g The graph to find the maximal clique in
  * @return The maximum weight clique found by local search
  */
-Clique localSearchMEWC(Graph g)
+Clique localSearchMEWC(const Graph &g)
 {
     Clique max_clique = findInitialSolution(g);    // The initial solution that may be improved
     std::unordered_set<VertexPtr> tested_vertices; // The vertices that have been tested
@@ -300,14 +300,14 @@ Clique localSearchMEWC(Graph g)
     // As long as the break conditions have not been reached
     while (1)
     {
-        unsigned int c_weight = max_clique.weight();                // The weight of the clique before modifying it
+        unsigned int c_weight = max_clique.weight(g);                // The weight of the clique before modifying it
         unsigned int tested_vertices_size = tested_vertices.size(); // The size of the set of tested vertices
 
         // Try improving the clique weight by removing a vertex
         max_clique = findNeighboor(g, max_clique, &tested_vertices);
 
         // If the weight of the clique is still the same, that means that it has not been improved
-        if (max_clique.weight() == c_weight)
+        if (max_clique.weight(g) == c_weight)
         {
             // If the size of the set of tested vertices is still the same, that means that we do not have any other vertex to try
             if (tested_vertices.size() == tested_vertices_size)

@@ -12,17 +12,8 @@
 /**
  * @brief Construct a new Clique:: Clique object
  */
-Clique::Clique(Graph g)
+Clique::Clique()
     : _weight(0), _modified(false)
-{
-    _graph = std::make_shared<Graph>(g);
-}
-
-/**
- * @brief Construct a new Clique:: Clique object
- */
-Clique::Clique(GraphPtr g)
-    : _graph(g), _weight(0), _modified(false)
 {
 }
 
@@ -34,20 +25,6 @@ Clique::~Clique()
 }
 
 /**
- * @brief Add a vertex to the clique
- *
- * This method adds a vertex to the clique. If the vertex is already in the clique,
- * it does nothing.
- *
- * @param v The vertex to add
- */
-void Clique::addVertex(VertexPtr v)
-{
-    Graph::addVertex(v);
-    _modified = true;
-}
-
-/**
  * @brief Get the weight of the clique
  *
  * This function calculates the weight of a clique. If the clique is not a clique,
@@ -55,9 +32,10 @@ void Clique::addVertex(VertexPtr v)
  *
  * The time complexity of this function is O(n^2), where n is the size of the clique.
  *
+ * @param Graph graph The graph in which the clique is
  * @return long unsigned int The weight of the clique
  */
-long unsigned int Clique::weight()
+long unsigned int Clique::weight(const Graph &graph)
 {
     if (_modified)
     {
@@ -72,7 +50,7 @@ long unsigned int Clique::weight()
                     continue;
                 // if the vertices are connected, add the weight of the edge
                 // to the weight of the clique
-                else if (auto edge = _graph->getEdge(*it, *jt))
+                else if (auto edge = graph.getEdge(*it, *jt))
                     _weight += edge.value()->weight();
                 // if the vertices are not connected, the clique is not a clique
                 else

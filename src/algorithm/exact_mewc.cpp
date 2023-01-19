@@ -27,7 +27,7 @@
  * @param cliques The vector of cliques to add the maximal cliques to
  */
 void BronKerbosch(
-    Graph graph,
+    const Graph &graph,
     Clique &R,
     std::unordered_set<VertexPtr> &P,
     std::unordered_set<VertexPtr> &X,
@@ -95,13 +95,13 @@ void BronKerbosch(
  * @param g The graph
  * @return The maximum weight clique
  */
-Clique exactMEWC(Graph g)
+Clique exactMEWC(const Graph &g)
 {
     // variable to store the maximum weight clique
-    Clique max_clique(g);
+    Clique max_clique;
 
     // get all the maximal cliques in the graph
-    Clique R(g);
+    Clique R;
     std::unordered_set<VertexPtr> P = g.vertices();
     std::unordered_set<VertexPtr> X;
     std::vector<Clique> cliques;       // vector to store the maximal cliques
@@ -112,7 +112,7 @@ Clique exactMEWC(Graph g)
     {
         // if the clique is a clique and has a higher weight than the current
         // maximum weight clique, set the maximum weight clique to the current clique
-        if (clique.weight() > max_clique.weight())
+        if (clique.weight(g) > max_clique.weight(g))
             max_clique = clique;
     }
 

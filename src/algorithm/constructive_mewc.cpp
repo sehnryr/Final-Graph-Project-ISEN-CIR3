@@ -26,7 +26,7 @@
  * @return VertexPtr The vertex with the best criteria
  */
 VertexPtr getBestVertex(
-    std::unordered_set<VertexPtr> vertices,
+    const std::unordered_set<VertexPtr> &vertices,
     std::vector<VertexPtr> &sortedVertices) // O(n)
 {
     VertexPtr bestVertex;
@@ -92,8 +92,8 @@ std::vector<VertexPtr> sortVerticesDegree(
  * @return std::vector<VertexPtr> The vertices sorted by the sum of their edges weights
  */
 std::vector<VertexPtr> sortVerticesSumWeight(
-    Graph graph,
-    std::unordered_set<VertexPtr> vertices) // O(n^2)
+    const Graph &graph,
+    const std::unordered_set<VertexPtr> &vertices) // O(n^2)
 {
     std::vector<std::pair<VertexPtr, long unsigned int>> weights;
     std::vector<VertexPtr> sortedVertices;
@@ -134,9 +134,9 @@ std::vector<VertexPtr> sortVerticesSumWeight(
  * @param P The set of vertices to consider
  */
 void constructiveMEWCRecursive(
-    Graph g,
+    const Graph &g,
     Clique &clique,
-    std::unordered_set<VertexPtr> P,
+    const std::unordered_set<VertexPtr> &P,
     std::vector<VertexPtr> &sortedVertices)
 {
     // Base case: Return if P is empty
@@ -170,10 +170,10 @@ void constructiveMEWCRecursive(
  * @param g The graph
  * @return Clique A guess of the maximum weight clique
  */
-Clique constructiveMEWC(Graph g) // O(n^2)
+Clique constructiveMEWC(const Graph &g) // O(n^2)
 {
     // LaTeX : $R \gets \emptyset$
-    Clique clique(g);
+    Clique clique;
     // LaTeX : $P \gets V$
     std::unordered_set<VertexPtr> P = g.vertices();
     std::vector<VertexPtr> sortedVertices = sortVerticesDegree(g, P); // O(nlogn)

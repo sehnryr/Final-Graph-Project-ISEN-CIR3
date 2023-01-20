@@ -2,32 +2,35 @@
 
 \subsection{Presentation}
 
-    A \textbf{heuristic algorithm} is a type of algorithm that uses rules of thumb to try to find an approximate solution to a problem, rather than an exact one. Heuristic algorithms are often used when it is not possible to find an ideal solution to a problem, or when a perfect solution would be too time-consuming to compute. They are also used when an approximate solution is good enough, or when finding a flawless solution is not the primary goal. Heuristic algorithms are commonly used in artificial intelligence, computer science, and other fields. They are often used to solve optimization problems, search problems, and other types of problems where an exact solution is not necessary or practical.
+    A \textbf{heuristic algorithm} is a type of algorithm that uses criteria to try to find an approximate solution to a problem, rather than an exact one. Heuristic algorithms are often used when it is not possible to find an ideal solution to a problem, or when a perfect solution would be too time-consuming to compute. They are also used when an approximate solution is good enough. Heuristic algorithms are commonly used in artificial intelligence, computer science, and other fields. They are often used to solve optimization problems, search problems, and other types of problems where an exact solution is not necessary or practical.
     \\ \\
-    A \textbf{constructive heuristic} algorithm is a type of heuristic algorithm that is used to find a solution to a problem by building it incrementally. Constructive heuristics start with a partial solution and gradually add to it until a complete solution is found. They are commonly used to solve optimization problems, where the goal is to find the optimal solution, or the solution that is the best among all possible solutions.
+    A \textbf{constructive heuristic} algorithm is a type of heuristic algorithm that is used to find a solution to a problem by building it incrementally. Constructive heuristics start with a partial solution and gradually improve it until a complete solution is found.
     \\ \\
-    As we said, the use of the constructive heuristic in solving the MEWC start with a partial solution and build it until a complete solution is found. To do this, the latter will be subject to a number of criteria. 
+    To solve the MEWC with a constructive algorithm, we will need some criteria : 
 
     \begin{enumerate}
-        \item Add The First Vertex to solution.
-        \item Seek for his most weighted neighbors. And add it to solution if it's a neighbor of all vertices in solution(to be sure to hold a clique in the final result). Store the weight of the edge between every members of the solution and the new vertex.
+        \item Add a first Vertex to make a partial solution.
+        \item Seek for one of his neighbors. And add it to solution if it's a neighbor of all vertices in solution(to be sure to hold a clique in the final result).
         \item Repeat the step 2 until no vertices is available to add
+        \item Calculate the weight of the clique found
     \end{enumerate}
 
     We will then have for solution a maximum clique with his weight. 
     \\ \\
-    In these choices of criteria, we can notice one that is quite important. The one to choose the First Vertex. Indeed, it is this one which will define the quality of our solution. Taking it randomly would be useless and counter productive for the sake of solving MEWC. As it was important, we thought about how to choose it and 2 answers appeared to us and we have a debate on the subject because we could not reach a consensus on it. We hesitated between these two solutions:
+    It is important to define the different criteria in a rigorous way. 
+    \\ \\
+    The first one is the choice of the first Vertex. Indeed, it is this one which will define the quality of our solution. Taking it randomly would be useless and counter productive for the sake of solving MEWC. As it was important, we thought about how to choose it and 2 answers appeared to us and we have a debate on the subject because we could not reach a consensus on it. We hesitated between these two solutions:
 
     \begin{itemize}
         \item The first idea was to take the highest degree vertex of the graph given as input. 
         \begin{itemize}
-            \item One reason to choose the highest degree vertex as the first vertex in the solution is that it may be more likely to be part of a maximum edge weight clique(because it's the case where it's the most likely to have the biggest clique who could be the MEWC). This is because it will allow more edges to be added to the solution, which can increase the overall sum of edge weights in the clique.
+            \item One reason to choose the highest degree vertex as the first vertex in the solution is that it may be more likely to be part of a maximum edge weight clique(because it's the case where it's the most likely to be member of the biggest clique who could be the MEWC). This is because it will allow more edges to be added to the solution, which can increase the overall sum of edge weights in the clique.
             \item Another reason is that it may be more likely to be connected to other high degree vertices. This means that by adding the highest degree vertex to the clique first, we may be able to include other high degree vertices in the clique as well, which can further increase the overall sum of edge weights.
         \end{itemize}
         \item The second one was to take the vertex with the highest sum of weights of the edges.
         \begin{itemize}
-            \item One reason to choose the vertex with the highest edge weight as the first vertex in the clique is that it may be more likely to be part of a maximum edge weight clique. This is because adding a vertex with a high edge weight to the clique will contribute more to the overall sum of edge weights in the clique, which is what we are trying to maximize.
-            \item Another reason is that we can potentially reduce the search space for the rest of the algorithm. This is because we know that any clique we find must include this vertex, which means that we can eliminate any vertices that are not connected to it as potential members of the clique. This can help to make the algorithm more efficient by reducing the number of vertices that we need to consider.
+            \item One reason to choose the vertex with the highest edge weight as the first vertex in the clique is that it may be more likely to be part of a maximum edge weight clique(because it's the case where it's the most likely to be member of the most weighted clique who could be the MEWC). This is because adding a vertex with a high edge weight to the clique will contribute more to the overall sum of edge weights in the clique, which is what we are trying to maximize.
+            \item Moreover, by taking a vertex with adjacent edges of high weight, one is more likely to find adjacent vertices that also have edges of high weight, which increases the probability of finding a clique of maximum weight. On the other hand, taking a vertex with higher degree, one is more likely to find adjacent vertices that have lower weight edges, which decreases the probability of finding a maximum weight clique.
         \end{itemize}
     \end{itemize}
     
@@ -85,8 +88,45 @@
 
     \vspace{1\baselineskip}
 
-    We implemented both ideas and performed tests on a number of graph to see which was the most consistent and we concluded that it was the vertex with the highest sum of weights of the edges. Moreover, in most graphs (at least the randomly generated ones), we had, in general, a rather homogeneous weights of edges which worked better with this one.
+    To know which one we were going to use, we implemented both ideas and performed tests on a number of graphs to see which was the most consistent. For that, we created 10 instances for different number of vertices (from 100 to 1000) and for different connectivity (25 50 75). We applied each of the two algorithms on each instance and averaged the 10 tests to get a usable result. We took the same criterion 2 to homogenize the results (take the vertex which has an adjacent edge with the highest weight compared to the last vertex added in the solution). The following results were obtained. 
     \\ \\
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{semilogyaxis}[
+                    xlabel = Number of vertices,
+                    ylabel = Maximum Weight of the clique founded,
+                    legend pos = outer north east,
+                    grid = major,
+                    width = 0.7\textwidth,
+                ]
+                \addplot[Blue, dashed, error bars/.cd, y dir=both, y explicit]
+                table[x index=0, y index=1] {experiment_data/constructive_sum_alex_25.dat};
+    
+                \addplot[Red, dashed, error bars/.cd, y dir=both, y explicit]
+                table[x index=0, y index=1] {experiment_data/constructive_sum_alex_50.dat};
+    
+                \addplot[Green, dashed, error bars/.cd, y dir=both, y explicit]
+                table[x index=0, y index=1] {experiment_data/constructive_sum_alex_75.dat};
+    
+                \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+                table[x index=0, y index=1] {experiment_data/constructive_degree_alex_25.dat};
+    
+                \addplot[Red, error bars/.cd, y dir=both, y explicit]
+                table[x index=0, y index=1] {experiment_data/constructive_degree_alex_50.dat};
+    
+                \addplot[Green, error bars/.cd, y dir=both, y explicit]
+                table[x index=0, y index=1] {experiment_data/constructive_degree_alex_75.dat};
+    
+                \addlegendentry{test}
+    
+                \legend{sum 25\%, sum 50\%, sum 75\%, degree 25\%, degree 50\%, degree 75\%}
+            \end{semilogyaxis}
+        \end{tikzpicture}
+        \caption{Weight of the maximum clique founded for different percentages of connectivity by two criteria algorithm}
+        \label{fig:comparaison_degree_sum}
+    \end{figure}
+    
     Constructive heuristic can be contrasted with other types of heuristics, such as local search heuristics, which try to find a solution by making small changes to an existing solution, or random heuristics, which generate solutions randomly and then choose the best one. Constructive heuristics are often used when it is important to find a solution that is complete and comprehensive, rather than just a local improvement.
     \\ \\
     Examples of some famous problems that are solved using constructive heuristics are the flow shop scheduling, the vehicle routing problem and the open shop problem.

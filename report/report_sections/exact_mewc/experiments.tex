@@ -10,9 +10,6 @@
                 grid = major,
                 width = 0.7\textwidth,
             ]
-            \addplot[Gray, dashed, error bars/.cd, y dir=both, y explicit]
-            table[x index=0, y index=1, y error index=2] {experiment_data/exact_100_avg.dat};
-
             \addplot[Red, error bars/.cd, y dir=both, y explicit]
             table[x index=0, y index=1, y error index=2] {experiment_data/exact_75_avg.dat};
 
@@ -25,7 +22,7 @@
             \addplot[Black, dashed, error bars/.cd, y dir=both, y explicit]
             table[x index=0, y index=1, y error index=2] {experiment_data/exact_0_avg.dat};
 
-            \addplot[Gray, domain=10:35] {x^2*3^(x/3)};
+            \addplot[Gray, domain=10:40] {x^2*3^(x/3)/9};
 
             \addplot[Black] gnuplot [raw gnuplot] {
                     f(x) = a*x^2;
@@ -38,7 +35,7 @@
 
             \addlegendentry{test}
 
-            \legend{100\%, 75\%, 50\%, 25\%, 0\%, upper bound, lower bound}
+            \legend{75\%, 50\%, 25\%, 0\%, upper bound, lower bound}
         \end{semilogyaxis}
     \end{tikzpicture}
     \caption{Execution time of the exact algorithm for different percentages of connectivity.}

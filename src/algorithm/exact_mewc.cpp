@@ -112,7 +112,7 @@ Clique exactMEWC(const Graph &g)
     {
         // if the clique is a clique and has a higher weight than the current
         // maximum weight clique, set the maximum weight clique to the current clique
-        if (clique.weight(g) > max_clique.weight(g))
+        if (clique.weight(g) >= max_clique.weight(g))
             max_clique = clique;
     }
 

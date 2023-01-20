@@ -12,6 +12,7 @@
 #include <vector>
 #include <map>
 #include <optional>
+#include <random>
 
 /**
  * @brief Find an option in the arguments
@@ -100,7 +101,8 @@ int main(int argc, char **argv)
     // We add 50 to round the fraction to the nearest integer
 
     // Seed the random number generator with the current time
-    srand(time(NULL));
+    std::random_device rd;
+    std::mt19937 gen(rd());
 
     // Open the output file
     std::ofstream output_file(output_path, std::ios::out);
@@ -118,9 +120,9 @@ int main(int argc, char **argv)
     for (unsigned int i = 0; i < num_vertices; i++)
         for (unsigned int j = i + 1; j < num_vertices; j++)
         {
-            if (rand() % max_edges < num_edges)
+            if ((long unsigned int)(std::uniform_int_distribution<>(0, max_edges - 1)(gen)) < num_edges)
             {
-                unsigned int weight = rand() % 100 + 1;
+                unsigned int weight = std::uniform_int_distribution<>(1, 100)(gen);
                 output_file << i + 1 << " " << j + 1 << " " << weight << std::endl;
                 num_edges--;
             }

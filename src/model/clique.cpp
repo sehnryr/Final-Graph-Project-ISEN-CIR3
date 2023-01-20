@@ -37,7 +37,7 @@ Clique::~Clique()
  */
 long unsigned int Clique::weight(const Graph &graph)
 {
-    if (_modified)
+    if (_modified && _vertices.size() > 1)
     {
         _weight = 0;
         auto _vertices = Graph::vertices();
@@ -55,9 +55,8 @@ long unsigned int Clique::weight(const Graph &graph)
                 // if the vertices are not connected, the clique is not a clique
                 else
                     return 0;
-
-        _modified = false;
     }
 
+    _modified = false;
     return _weight;
 }

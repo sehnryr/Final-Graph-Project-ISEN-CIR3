@@ -30,7 +30,7 @@ for CONNECTIVITY in 25 50 75 ; do
     cat /dev/null > "$RESULTS_DIR/${TYPE}_${CONNECTIVITY}.dat"
 
     # Run the experiment with 10, 20, 30, 40, 50, 60, 70, 80, 90, 100 vertices
-    for VERTEX_COUNT in 100 200 300 400 500 600 700 800 900 1000 ; do
+    for VERTEX_COUNT in 20 40 60 80 100 120 140 160 180 200 ; do
         # Run for each vertex count a 100 times to get a better average
         for ((i=1; i <= NUM_TRIALS; i++)) ; do
             # Generate a random graph

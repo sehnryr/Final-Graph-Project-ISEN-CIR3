@@ -2,109 +2,197 @@
 
 \subsection{Pseudo code}
 
+% \begin{algorithm}[H]
+%     \caption{Constructive algorithm}
+%     \label{constructive-pseudocode}
+%     \begin{algorithmic}[1]
+%         \Procedure{Constructive}{$G=(V,E)$}
+%             \State $S \gets \emptyset$ \Comment{Variable to store the clique that represents the Solution}
+%             \State $Sweight \gets 0$ \Comment{Variable to store the total weight of $S$}
+%             \State $P \gets \emptyset$ \Comment{Lists of vertex to store the vertex that could be added to $S$}
+%             \State $FirstVertex \gets$ \Call{getFirstVertex}{$G$} \Comment{Call a function to get the vertex of highest degree}
+%             \State \Call{addVertex}{$S$, $FirstVertex$} \Comment{add the $FirstVertex$ to $S$}
+%             \State $lastVertex \gets FirstVertex$ \Comment{Variable to store the last element added to $S$}
+%             \State \Call{getPotentielCandidate}{$G$, $FirstVertex$, $P$} \Comment{add to $P$ all the neighbors of $FirstVertex$}
+%             \While{$P.\text{size()} \neq 0$}
+%                 \State \Call{updateClique}{$G$, $lastVertex$, $P$, $R$} \Comment{Call the function that update $S$}
+%                 \State \Call{updatePotentielCandidate}{$G$, $lastVertex$, $P$} \Comment{Call the function that update $P$}
+%             \EndWhile
+%         \EndProcedure
+%     \end{algorithmic}
+% \end{algorithm}
+
+% \begin{algorithm}[H]
+%     \caption{First Vertex function}
+%     \label{getfirstvertex-pseudocode}
+%     \begin{algorithmic}[1]
+%         \Procedure{getFirstVertex}{$G$}
+%             \State $bestVertex \gets \emptyset$ \Comment{Variable to store the bestVertex found}
+%             \State $MaxNumNeighbors \gets 0$ \Comment{Variable to store the max number of neighbors found}
+%             \State $vertices \gets$ \Call{getVertices}{$G$} \Comment{get the lists of every vertex of $G$}
+%             \For{$vertex \in vertices$} \Comment{Iterate over all the vertices in $G$}
+%                 \If{$||N(vertex)|| > MaxNumNeighbors$}
+%                     \State $MaxNumNeighbors \gets ||N(vertex)||$ \Comment{replace the maximum size}
+%                     \State $bestVertex \gets vertex$ \Comment{replace $bestVertex$ with the $vertex$}
+%                 \EndIf
+%             \EndFor
+%             \State \Return{$bestVertex$}
+%         \EndProcedure
+%     \end{algorithmic}
+% \end{algorithm}
+
+% \begin{algorithm}[H]
+%     \caption{getPotentielCandidate function}
+%     \label{getpotentielcandidate-pseudocode}
+%     \begin{algorithmic}[1]
+%         \Procedure{getPotentielCandidate}{$G$,$lastVertex$,$P$}
+%             \For{$neighbor \in N(lastVertex)$}
+%                 \State $P$.\text{insert}($neighbor$) \Comment{Add the vertex to P}
+%             \EndFor
+%         \EndProcedure
+%     \end{algorithmic}
+% \end{algorithm}
+
+% \begin{algorithm}[H]
+%     \caption{updateClique function}
+%     \label{updateclique-pseudocode}
+%     \begin{algorithmic}[1]
+%         \Procedure{updateClique}{$G$,$lastVertex$,$P$, $S$}
+%         \State $weight \gets 0$ \Comment{Variable to store temporary the weight of each edge of $lastVertex$}
+%         \State $bestWeight \gets 0$ \Comment{Variable to store the max weight found}
+%         \State $CliqueWeight \gets 0$ \Comment{Variable to store the weight that we will add to the clique}
+%         \State $bestVertex \gets \emptyset$ \Comment{Variable to store the bestVertex found}
+%         \For {$vertex \in P$}
+%         \If{$vertex = lastVertex$}
+%         \State \textbf{continue}
+%         \Else
+%         \State edge $ \gets G.$\Call{getEdge}{$lastVertex$, $vertex$} \Comment{get the edge between $lastVertex$ and $vertex$}
+%         \State $weight \gets edge.\Call{getWeight}$ \Comment{get the weight of the edge between $lastVertex$ and $vertex$}
+%         \If{$weight > bestWeight$} \Comment{if the weight of $vertex$ is better than the best weight we found}
+%         \State $bestWeight \gets weight$ \Comment{replace the $bestWeight$ found}
+%         \State $bestVertex \gets vertex$ \Comment{replace the $bestVertex$ found}
+%         \State $weight \gets 0$ \Comment{reset weight to $0$}
+%         \Else
+%         \State $weight \gets 0$ \Comment{reset weight to $0$}
+%         \EndIf
+%         \EndIf
+%         \EndFor
+%         \State $vertices \gets S.\text{getVertices()}$ \Comment{Variable to store a list of the vertices of $S$}
+%         \For{$v \in vertices$} \Comment{For each $v$ in vertices, add the weight of it and $bestVertex$ in $cliqueWeight$}
+%         \State edge $ \gets$ \Call{graph.getWeight}{$v$, $bestVertex$}
+%         \State $cliqueWeight \gets cliqueWeight + edge.\Call{getWeight}$
+%         \EndFor
+%         \State \Call{addVertex}{$S$, $bestVertex$} \Comment{add $bestVertex$ in S}
+%         \State $lastVertex \gets bestVertex$ \Comment{replace the $lastVertex$ of S by $bestVertex$}
+%         \State \Call{addWeight}{$S$, $cliqueWeight$} \Comment{add the weight that bring the new vertex in S}
+%         \EndProcedure
+%     \end{algorithmic}
+% \end{algorithm}
+
+% \begin{algorithm}[H]
+%     \caption{updatePotentielCandidate function}
+%     \label{updatepotentielcandidate-pseudocode}
+%     \begin{algorithmic}[1]
+%         \Procedure{updatePotentielCandidate}{$G$,$lastVertex$,$P$}
+%             \State $neighbors \gets \emptyset$ \Comment{Variable to store the neighbors of $lastVertex$}
+%             \ForAll{$vertex \in N(lastVertex)$} \Comment{add every neighbors of $lastVertex$ in $neighbors$}
+%                 \State $neighbors.\text{insert}(N(vertex))$
+%             \EndFor
+%             \For{$v \in P$} 
+%                 \If {$neighbors.\text{count(i)} = 0$} \Comment{if $v \notin$ neighbors, remove $v$ in $P$}
+%                     \State $P.erase(v)$
+%                 \ElsIf {$lastVertex = v$} \Comment{if $lastVertex \in P$, remove it}
+%                     \State $P.\text{erase(v)}$
+%                 \EndIf
+%             \EndFor
+%         \EndProcedure
+%     \end{algorithmic}
+% \end{algorithm}
+
 \begin{algorithm}[H]
-    \caption{Constructive algorithm}
-    \label{constructive-pseudocode}
+    \caption{constructiveMEWC function}
+    \label{constructivemewc-pseudocode}
     \begin{algorithmic}[1]
-        \Procedure{Constructive}{$G=(V,E)$}
-            \State $S \gets \emptyset$ \Comment{Variable to store the clique that represents the Solution}
-            \State $Sweight \gets 0$ \Comment{Variable to store the total weight of $S$}
-            \State $P \gets \emptyset$ \Comment{Lists of vertex to store the vertex that could be added to $S$}
-            \State $FirstVertex \gets$ \Call{getFirstVertex}{$G$} \Comment{Call a function to get the vertex of highest degree}
-            \State \Call{addVertex}{$S$, $FirstVertex$} \Comment{add the $FirstVertex$ to $S$}
-            \State $lastVertex \gets FirstVertex$ \Comment{Variable to store the last element added to $S$}
-            \State \Call{getPotentielCandidate}{$G$, $FirstVertex$, $P$} \Comment{add to $P$ all the neighbors of $FirstVertex$}
-            \While{$P.\text{size()} \neq 0$}
-                \State \Call{updateClique}{$G$, $lastVertex$, $P$, $R$} \Comment{Call the function that update $S$}
-                \State \Call{updatePotentielCandidate}{$G$, $lastVertex$, $P$} \Comment{Call the function that update $P$}
-            \EndWhile
+        \Procedure{constructiveMEWC}{$G$}
+        \State $S \gets \emptyset$ \Comment{Variable to store the clique that represents the Solution}
+        \State $P \gets G.\text{vertices()}$ \Comment{Lists of vertex to store the vertex that could be added to $S$}
+        \State $Z \gets \Call{sortVerticesDegree}{G, P}$ \Comment{variable to store the vertices sorted by degree}
+        \State \Call{ConstructiveRecursiveMEWC}{$G$, $S$, $P$, $Z$}
+        \State \Call{getCliqueWeight}{$S$}
+        \State \Return S
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-    \caption{First Vertex function}
-    \label{getfirstvertex-pseudocode}
+    \caption{constructiveMEWCRecursive function}
+    \label{constructivemewcrecursive-pseudocode}
     \begin{algorithmic}[1]
-        \Procedure{getFirstVertex}{$G$}
-            \State $bestVertex \gets \emptyset$ \Comment{Variable to store the bestVertex found}
-            \State $MaxNumNeighbors \gets 0$ \Comment{Variable to store the max number of neighbors found}
-            \State $vertices \gets$ \Call{getVertices}{$G$} \Comment{get the lists of every vertex of $G$}
-            \For{$vertex \in vertices$} \Comment{Iterate over all the vertices in $G$}
-                \If{$||N(vertex)|| > MaxNumNeighbors$}
-                    \State $MaxNumNeighbors \gets ||N(vertex)||$ \Comment{replace the maximum size}
-                    \State $bestVertex \gets vertex$ \Comment{replace $bestVertex$ with the $vertex$}
-                \EndIf
-            \EndFor
-            \State \Return{$bestVertex$}
-        \EndProcedure
-    \end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}[H]
-    \caption{getPotentielCandidate function}
-    \label{getpotentielcandidate-pseudocode}
-    \begin{algorithmic}[1]
-        \Procedure{getPotentielCandidate}{$G$,$lastVertex$,$P$}
-            \For{$neighbor \in N(lastVertex)$}
-                \State $P$.\text{insert}($neighbor$) \Comment{Add the vertex to P}
-            \EndFor
-        \EndProcedure
-    \end{algorithmic}
-\end{algorithm}
-
-\begin{algorithm}[H]
-    \caption{updateClique function}
-    \label{updateclique-pseudocode}
-    \begin{algorithmic}[1]
-        \Procedure{updateClique}{$G$,$lastVertex$,$P$, $S$}
-        \State $weight \gets 0$ \Comment{Variable to store temporary the weight of each edge of $lastVertex$}
-        \State $bestWeight \gets 0$ \Comment{Variable to store the max weight found}
-        \State $CliqueWeight \gets 0$ \Comment{Variable to store the weight that we will add to the clique}
-        \State $bestVertex \gets \emptyset$ \Comment{Variable to store the bestVertex found}
-        \For {$vertex \in P$}
-        \If{$vertex = lastVertex$}
-        \State \textbf{continue}
-        \Else
-        \State edge $ \gets G.$\Call{getEdge}{$lastVertex$, $vertex$} \Comment{get the edge between $lastVertex$ and $vertex$}
-        \State $weight \gets edge.\Call{getWeight}$ \Comment{get the weight of the edge between $lastVertex$ and $vertex$}
-        \If{$weight > bestWeight$} \Comment{if the weight of $vertex$ is better than the best weight we found}
-        \State $bestWeight \gets weight$ \Comment{replace the $bestWeight$ found}
-        \State $bestVertex \gets vertex$ \Comment{replace the $bestVertex$ found}
-        \State $weight \gets 0$ \Comment{reset weight to $0$}
-        \Else
-        \State $weight \gets 0$ \Comment{reset weight to $0$}
+        \Procedure{constructiveMEWCRecursive}{$G$, $S$, $P$, $Z$}
+        \If {$P = \emptyset$}
+        \State \Return
         \EndIf
+        \State $v \gets \Call{getBestVertex}{P, Z}$ \Comment{Get the vertex with the highest degree}
+        \State $S \gets S \cup \{v\}$
+        \State \Call{ConstructiveRecursiveMEWC}{$G$, $S$, $P \cap (N(v) \cup {v})$, $Z$}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{getBestVertex function}
+    \label{getbestvertex-pseudocode}
+    \begin{algorithmic}[1]
+        \Procedure{getBestVertex}{$P$, $Z$}
+        \State $bestVertex \gets \emptyset$
+        \For{$v \in Z$}
+        \If {$\exists v \in P$}
+        \State $bestVertex \gets v$
+        \State $Z \gets Z - \{v\}$
+        \State \textbf{break}
         \EndIf
         \EndFor
-        \State $vertices \gets S.\text{getVertices()}$ \Comment{Variable to store a list of the vertices of $S$}
-        \For{$v \in vertices$} \Comment{For each $v$ in vertices, add the weight of it and $bestVertex$ in $cliqueWeight$}
-        \State edge $ \gets$ \Call{graph.getWeight}{$v$, $bestVertex$}
-        \State $cliqueWeight \gets cliqueWeight + edge.\Call{getWeight}$
-        \EndFor
-        \State \Call{addVertex}{$S$, $bestVertex$} \Comment{add $bestVertex$ in S}
-        \State $lastVertex \gets bestVertex$ \Comment{replace the $lastVertex$ of S by $bestVertex$}
-        \State \Call{addWeight}{$S$, $cliqueWeight$} \Comment{add the weight that bring the new vertex in S}
+        \State \Return $bestVertex$
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}
 
 \begin{algorithm}[H]
-    \caption{updatePotentielCandidate function}
-    \label{updatepotentielcandidate-pseudocode}
+    \caption{sortVerticesDegree function}
+    \label{sortverticesdegree-pseudocode}
     \begin{algorithmic}[1]
-        \Procedure{updatePotentielCandidate}{$G$,$lastVertex$,$P$}
-            \State $neighbors \gets \emptyset$ \Comment{Variable to store the neighbors of $lastVertex$}
-            \ForAll{$vertex \in N(lastVertex)$} \Comment{add every neighbors of $lastVertex$ in $neighbors$}
-                \State $neighbors.\text{insert}(N(vertex))$
-            \EndFor
-            \For{$v \in P$} 
-                \If {$neighbors.\text{count(i)} = 0$} \Comment{if $v \notin$ neighbors, remove $v$ in $P$}
-                    \State $P.erase(v)$
-                \ElsIf {$lastVertex = v$} \Comment{if $lastVertex \in P$, remove it}
-                    \State $P.\text{erase(v)}$
-                \EndIf
-            \EndFor
+        \Procedure{sortVerticesDegree}{$G$, $P$}
+        \State $degrees \gets (\emptyset, \emptyset)$ \Comment{Make a pair (vertex, degree)}
+        \State $Z \gets \emptyset$
+
+        \State $adjMatrix \gets G.getAdjacencyMatrix()$
+
+        \ForAll{$vertex \in P$}
+        \State $neighbors \gets adjMatrix[vertex.id()]$
+        \State $degrees.push\_back(vertex, |N|)$
+        \EndFor
+        \State \Call{sort}{degrees} \Comment{Sort the vertices by degree}
+        \ForAll{$[vertex, degree] \in degrees$}
+        \State $Z.push\_back(vertex)$
+        \EndFor
+        \State \Return $Z$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{Clique weight function}
+    \label{clique-weight2-pseudocode}
+    \begin{algorithmic}[1]
+        \Procedure{getCliqueWeight}{$S$} \Comment{We assume that the clique is complete}
+        \State $weight \gets 0$
+        \State $n \gets |S|$
+        \ForAll{$i \in \{1,2,\ldots,n\}$} \Comment{For each vertex in the clique}
+        \ForAll{$j \in \{i+1,i+2,\ldots,n\}$} \Comment{For each other vertex in the clique}
+        \State $weight \gets weight + w_{ij}$ \Comment{Add the weight of the edge between the two vertices}
+        \EndFor
+        \EndFor
+        \State \Return $weight$
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}

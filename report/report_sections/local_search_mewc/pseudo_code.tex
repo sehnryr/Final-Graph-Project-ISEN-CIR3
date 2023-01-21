@@ -1,3 +1,135 @@
 % ----- Pseudo - Code -----
 
 \subsection{Pseudo code}
+
+\begin{algorithm}[H]
+    \caption{Local search MEWC algorithm}
+    \label{local-search-mewc-pseudocode}
+    \begin{algorithmic}[1]
+        \Procedure{LocalSearchMEWC}{$G=(V,E)$}
+        
+        \State $solution \gets$ \Call{findInitialSolution}{$G$} \Comment{Variable to store the actual solution}
+        \State $testedVertices \gets \emptyset$ \Comment{Variable to store the vertices that have been tested}
+        
+        \While{$testedVertices.\text{size()} \neq G.\text{size()}$}
+            \State $neighbourSolution \gets$ \Call{findNeighbour}{$G$, $solution$, $testedVertices$} \Comment{Get one of the neighbours of the actual solution (fill $testedVertices$ with the vertex removed in this loop)}
+            \If{$neighbourSolution.\text{getWeight()} > solution.\text{getWeight()}$}
+                \State $solution \gets neighbourSolution$
+                \State $testedVertices \gets \emptyset$
+            \EndIf
+        \EndWhile
+
+        \State \Return $solution$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{Find initial solution algorithm}
+    \label{find-initial-solution-pseudocode}
+    \begin{algorithmic}[1]
+        \Procedure{findInitialSolution}{$G=(V,E)$}
+        
+        \State $maxDegreeVertex \gets 0$ \Comment{Variable to store the vertex of max degree}
+        
+        \ForAll{$vertex \in V$}
+            \If{$\text{d(}vertex\text{)} > \text{d(}maxDegreeVertex\text{)}$}
+                \State $maxDegreeVertex \gets vertex$
+            \EndIf
+        \EndFor
+
+        \State $maxDegreeVertex2 \gets 0$ \Comment{Variable to store the neighbour vertex of $maxDegreeVertex$ of max degree}
+
+        \ForAll{$vertex \in \text{neighboursOf(}maxDegreeVertex\text{)}$}
+            \If{$\text{d(}vertex\text{)} > \text{d(}maxDegreeVertex2\text{)}$}
+                \State $maxDegreeVertex2 \gets vertex$
+            \EndIf
+        \EndFor
+
+        \State $initialSolution \gets \{maxDegreeVertex, maxDegreeVertex2\}$ \Comment{The clique formed by the two vertices of max degree}
+        \State \Call{improveClique}{$G$, $initialSolution$} \Comment{Improve $initialSolution$ to have a maximal clique}        
+        \State \Return $initialSolution$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{Find neighbour algorithm}
+    \label{find-neighbour-pseudocode}
+    \begin{algorithmic}[1]
+        \Procedure{findNeighbour}{$G=(V,E)$,$initialClique$,$testedVertices$}
+        
+        \State $minWeightVertex \gets 0$ \Comment{Variable to store the vertex that adds a minimum weight in the clique}
+        \State $minWeight \gets \infty$ \Comment{Variable to store the min weight added by a vertex}
+
+        \ForAll{$v_1 \in \text{neighboursOf(}maxDegreeVertex\text{)} \And v_1 \notin testedVertices$}
+            \State $weight \gets 0$ \Comment{Variable to store the weight added by $v_1$}
+            \ForAll{$v_2 \in \text{neighboursOf(}maxDegreeVertex\text{)} \And v_2 \neq v_1$}
+                \State $weight \gets weight + \text{w(}v_1\text{, }v_2\text{)}$
+            \EndFor
+            \If{$weight < minWeight$}
+                \State $minWeightVertex \gets v_1$
+                \State $minWeight \gets weight$
+            \EndIf
+        \EndFor
+
+        \State $newClique \gets initialClique - \{minWeightVertex\}$ \Comment{Copy the initial clique but remove the tested vertex}
+        \State $bannedVertices \gets \{minWeightVertex\}$ \Comment{Set of vertices that we don't want to be in the new solution}
+
+        \State $improvement \gets$ \Call{improveClique}{$G$, $newClique$, $bannedVertices$, $minWeight$} \Comment{$improvement$ will be greater than $0$ if improveClique() find a clique that adds a weight greater than $minWeight$}
+
+        \If{$improvement <= minWeight$}
+            \State $testedVertices \gets testedVertices + \{minWeightVertex\}$
+            \State \Return $initialClique$ \Comment{If no better solution have been found, return the initial clique}
+        \EndIf
+
+        \State \Return $newClique$
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}
+
+\begin{algorithm}[H]
+    \caption{Improve clique algorithm}
+    \label{improve-clique-pseudocode}
+    \begin{algorithmic}[1]
+        \Procedure{improveClique}{$G=(V,E)$,$clique$,$bannedVertices$,$minWeight$,$actualWeightImprovement$}
+        
+        \State $C \gets clique$ \Comment{Variable to store a copy of $clique$}
+        \State $weightImprovement \gets 0$ \Comment{Variable to store the weight improvement done by adding a vertex in this iteration}
+        \State $total \gets 0$ \Comment{Variable to store the weight improvement made by adding vertices from this iteration}
+
+        \ForAll{$v \in V$}
+            \State $commonNeighbour \gets True$ \Comment{Boolean to know if $v$ is the common neighbour of all vertices of $C$}
+            \ForAll{$v_c \in C.\text{getVertices()}$}
+                \If{$(v, v_c) \notin E$}
+                    \State $commonNeighbour \gets False$
+                \EndIf
+            \EndFor
+            \If{$commonNeighbour$}
+                \ForAll{$v_c \in C.\text{getVertices()}$}
+                    \State $weightImprovement \gets weightImprovement + \text{w(}v,v_c\text{)}$
+                \EndFor
+                \State $C \gets C \cup \{v\}$
+                \State $total \gets weightImprovement +$ \Call{improveClique}{$G$, $C$, $bannedVertices$, $minWeight$, $actualWeightImprovement + weightImprovement$} \Comment{Try improving the clique by adding another vertex}
+                \If{$actualWeightImprovement + weightImprovement <= minWeight$}
+                    \State $weightImprovement \gets 0$
+                    \State $C \gets C - \{v\}$
+                \Else
+                    \State $improvementVertex \gets v$
+                    \State \textbf{break}
+                \EndIf
+            \Else
+                \State $bannedVertices \gets bannedVertices + \{v\}$
+            \EndIf
+        \EndFor
+
+        \If{$weightImprovement == 0$}
+            \State \Return $0$ \Comment{That means that we didn't find a better solution than the old one}
+        \EndIf
+
+        \State $clique \gets C$ \Comment{Copy the improved clique int the original one}
+
+        \State \Return $total$ \Comment{Return the total improvement}
+        \EndProcedure
+    \end{algorithmic}
+\end{algorithm}

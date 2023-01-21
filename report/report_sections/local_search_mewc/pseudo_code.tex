@@ -12,7 +12,7 @@
         \State $solutionWeight \gets$ \Call{getCliqueWeight}{$solution$} \Comment{Variable to store the weight of the actual solution}
         \State $testedVertices \gets \emptyset$ \Comment{Variable to store the vertices that have been tested}
         
-        \While{$|testedVertices|$ is not $|G|$}
+        \While{$|testedVertices|$ is not $|solution|$}
             \State $neighborSolution \gets$ \Call{findNeighbor}{$G$, $solution$, $testedVertices$} \Comment{Get one of the neighbors of the actual solution (fill $testedVertices$ with the vertex removed in this loop)}
             \State $neighborWeight \gets$ \Call{getCliqueWeight}{$neighborSolution$} \Comment{Get the weight of the neighbor solution}
             \If{$neighborWeight>solutionWeight$}
@@ -65,7 +65,7 @@
         \State $minWeightVertex \gets 0$ \Comment{Variable to store the vertex that adds a minimum weight in the clique}
         \State $w_{min} \gets \infty$ \Comment{Variable to store the min weight added by a vertex}
 
-        \ForAll{$v_1 \in N(maxDegreeVertex) \And v_1 \notin testedVertices$}
+        \ForAll{$v_1 \in V \And v_1 \notin testedVertices$}
             \State $weight \gets 0$ \Comment{Variable to store the weight added by $v_1$}
             \ForAll{$v_2 \in N(maxDegreeVertex) \And v_2 \neq v_1$}
                 \State $weight \gets weight + w(v_1,v_2)$
@@ -101,7 +101,7 @@
         \State $w_{improv} \gets 0$ \Comment{Variable to store the weight improvement done by adding a vertex in this iteration}
         \State $total \gets 0$ \Comment{Variable to store the weight improvement made by adding vertices from this iteration}
 
-        \ForAll{$v \in V$}
+        \ForAll{$v \in V \textbf{ with } v \notin C_c \And v \notin X$}
             \State $commonNeighbor \gets True$ \Comment{Boolean to know if $v$ is the common neighbor of all vertices of $C$}
             \ForAll{$v_c \in C_c$}
                 \If{$(v, v_c) \notin E$}
@@ -116,24 +116,17 @@
                 \State $C_c \gets C_c \cup \{v\}$
                 \State $total \gets w_{improv}$ + \Call{improveClique}{$G$, $C_c$, $X$, $w_{min}$, $w_{actual\ improv} + w_{improv}$} \Comment{Try improving the clique by adding another vertex}
                 \If{$w_{actual\ improv} + w_{improv} \le w_{min}$}
-                    \State $w_{improv} \gets 0$
-                    \State $C_c \gets C_c\backslash\{v\}$
+                    \State \Return 0 \Comment{That means that we didn't find a better solution than the old one}
                 \Else
-                    \State $v_{improv} \gets v$
-                    \State \textbf{break}
+                    \State $C \gets C_c$ \Comment{Copy the improved clique int the original one}
+                    \State \Return $total$ \Comment{Return the total improvement}
                 \EndIf
             \Else
                 \State $X \gets X \cup \{v\}$
             \EndIf
         \EndFor
-
-        \If{$w_{improv}$ is 0}
-            \State \Return 0 \Comment{That means that we didn't find a better solution than the old one}
-        \EndIf
-
-        \State $C \gets C_c$ \Comment{Copy the improved clique int the original one}
-
-        \State \Return $total$ \Comment{Return the total improvement}
+        
+        \State \Return $0$ \Comment{Return $0$ if we have no more vertices that are common neighbors of $C$}
         \EndProcedure
     \end{algorithmic}
 \end{algorithm}

@@ -1,3 +1,50 @@
-% ----- Complexité -----
+% ----- Complexity -----
 
 \subsection{Complexity}
+
+As for the other algorithms, let be a graph $G=(V,E)$ such that $n=|V|$. The cost 
+of attributing a value to a variable should always be $\mathcal{O}(1)$.
+\bigskip
+
+The complexity of the clique improvement algorithm is $\mathcal{O}(n^2)$ each time it is called. 
+This algorithm is recursive only if it finds an improvement in the clique size. However, each 
+time it is called, \textsc{improveClique()} can only find at most $n$ improvements, so it 
+recursively calls itself at most $n$ times. So the complexity of \textsc{improveClique()} is 
+$\mathcal{O}(n^3)$ when called by a function other than itself.
+\bigskip
+
+The complexity of the best neighbor search algorithm is $\mathcal{O}(n^3)$. It goes through 
+$n*n$ vertices when computing the vertex that adds a minimum weight, and as shown below the 
+complexity of \textsc{improveClique()} is $\mathcal{O}(n^3)$. The complexity of 
+\textsc{findNeighbor()} is then $\mathcal{T}(n^2 + n^3) = \mathcal{O}(n^3)$.
+\bigskip
+
+The complexity of the initial solution search algorithm is $\mathcal{O}(n^3)$. As for the 
+neighbor search algorithm, it is \textsc{improveClique()} that will define the complexity of 
+this algorithm because it goes through all the $n$ vertices $2$ times (that is $\mathcal{O}(n)$ 
+because get the degree of a vertex is $\mathcal{O}(1)$ as the class is made), and then calls 
+the function \textsc{improveClique()} of complexity $\mathcal{O}(n^3)$ to find a maximal clique. 
+The complexity of \textsc{findInitialSolution()} is thus $\mathcal{T}(2n + n^3) = \mathcal{O}(n^3)$.
+\bigskip
+
+Finally, the local search MEWC algorithm starts by finding an initial solution, which is 
+$\mathcal{O}(n^3)$. It gets the weight of this solution ($\mathcal{O}(n)$) and enters a $while$ 
+loop and does not exit until the size of $testedVertices$ is equal to the number of vertices of 
+the current solution (that is until we have tested to remove each vertex one by one without finding 
+a better solution). At each iteration in this $while$ loop, the algorithm calls the function 
+\textsc{findNeighbor()} of complexity $\mathcal{O}(n^3)$ and \textsc{getCliqueWeight()} of complexity 
+$\mathcal{O}(n)$. It only remains to know how many iterations are done in the $while$ loop. In the 
+worst case, the algorithm tries to remove all the vertices each time before finding one that improves 
+the solution, and in all the algorithm can only find $n$ better solutions (because each time we find 
+a solution, this one has necessarily a size greater than or equal to the previous one, and the more 
+we increase the size of the clique, the more the number of possible cliques of this size in the 
+graph decreases with a number of $n$ in the case where we have only cliques of $1$ vertex). This 
+gives $n*n$ iterations in the $while$ loop. So we have for the local search MEWC algorithm a 
+complexity of $\mathcal{T}(n^3 + n + n^2*(n^3 + n)) = \mathcal{O}(n^5)$.
+\bigskip
+
+In reality, the actual complexity of this algorithm is only a tiny fraction of $\mathcal{O}(n^5)$. 
+Most of the time when calculating the complexity in our case, the $n$ represents the size of the 
+actual solution clique instead of the total number of vertices in the graph. Similarly, the number 
+of iterations in the $while$ loop is much less than $n^2$ and would be closer to $n$ in most cases, 
+except in very special cases.

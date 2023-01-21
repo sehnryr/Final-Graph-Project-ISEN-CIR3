@@ -2,9 +2,9 @@
 
 \subsection{How it works}
 
-    To explain how our algorithm works, we will keeps track of two groups of vertices : $S$ which is a partially constructed clique and the partial solution that we will gradually implement. Moreover, we also have $Z$ which is the list of all the vertices sorted according to a criteria(best degree). Furthermore, we got $P$  which is the candidates vertices that could be included in the clique, and which represents the union of all vertex neighbors of the vertices in $S$.
+    To explain how our algorithm works, we will keep track of two groups of vertices : $S$ which is a partially constructed clique and the partial solution that we will gradually implement. Moreover, we also have $Z$ which is the list of all the vertices sorted according to a criterion (the best degree). Furthermore, we got $P$  which is the candidates vertices that could be included in the clique, and which represents the union of all vertex neighbors of the vertices in $S$.
     \\ \\
-    The algorithm begins by forming a list of all the vertices sorted according to a criteria (best degree). This is to facilitate the identification of the next vertices that we will add to our solution $S$. This makes it easier to identify the next vertices to be added to our solution $S$, it also saves complexity because we are not bound to check each criterion at each iteration. Then the algorithm will initialize $P$, and insert in it all the vertices of the graph.
+    The algorithm begins by forming a list of all the vertices sorted according to a criterion (the best degree). This is to facilitate the identification of the next vertices that we will add to our solution $S$. This makes it easier to identify the next vertices to be added to our solution $S$, it also saves complexity because we are not bound to check each criterion at each iteration. Then the algorithm will initialize $P$, and insert in it all the vertices of the graph.
     \\ \\
     It will then retrieve the first element of the list $Z$ that also belongs to $P$, and add it to the solution $S$. The selected element will then be removed from $Z$. After this step, $P$ is updated by considering only the neighbors of the vertices that are already part of $S$. This process is then repeated recursively until no more vertices are left in $P$, at which point the algorithm has obtained its maximum clique $S$.
     \\ \\
@@ -37,7 +37,7 @@
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            At the initial step, as said before, we will initialize $S$, $P$ and $Z$ by sorting the vertices based on a criteria. Here we chose the vertex of highest degree.
+            At the initial step, as said before, we will initialize $S$, $P$ and $Z$ by sorting the vertices based on a criterion. Here we chose the vertex of the highest degree.
             \begin{center}
                 \begin{tabular}{|lll|}
                     \hline
@@ -76,7 +76,7 @@
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            In step 1, the algorithm will take the first vertex of $Z$ if it is common to $P$ (here 2). In case of a tie, the algorithm will take the first checked vertex. He will then add it to $S$, represented in \textcolor{red}{red} . $P$, represented in \textcolor{Cerulean}{blue}, will be updated by taking only the vertices that are neighbors to all the members of $S$ (here, $S$ is composed only of vertex 2, so we take only the neighbors of 2).
+            In step 1, the algorithm will take the first vertex of $Z$ if it is common to $P$ (here 2). In case of a tie, the algorithm will take the first checked vertex. He will then add it to $S$, represented in \textcolor{red}{red}. $P$, represented in \textcolor{Cerulean}{blue}, will be updated by taking only the vertices that are neighbors to all the members of $S$ (here, $S$ is composed only of vertex 2, so we take only the neighbors of 2).
     
             \begin{center}
                 \begin{tabular}{|lll|}
@@ -116,7 +116,7 @@
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            In step 2, the algorithm will repeat the process of step 1 by making a recursive call until $P$ is empty. We can note in the process that our algorithm iterates again on some elements of $Z$, deleting them and refactoring the list does not improve the complexity, but implementing it as we did improves it in general(by not checking every neighbors each times). 
+            In step 2, the algorithm will repeat the process of step 1 by making a recursive call until $P$ is empty. We can note in the process that our algorithm iterates again on some elements of $Z$, deleting them and refactoring the list does not improve the complexity, but implementing it as we did improve it in general(by not checking every neighbors each times). 
     
             \begin{center}
                 \begin{tabular}{|lll|}
@@ -156,7 +156,7 @@
             \end{figure}
         \end{minipage}
         \begin{minipage}{0.6\textwidth}
-            In step 3, the algorithm repeat the step 1 by making a recursive call. It will finally find 1 which is the last vertex of $P$. The algorithm stop and we get the maximmum clique in \textcolor{red}{red} $(1,2,5)$.
+            In step 3, the algorithm repeat the step 1 by making a recursive call. It will finally find 1 which is the last vertex of $P$. The algorithm stop, and we get the maximum clique in \textcolor{red}{red} $(1,2,5)$.
     
             \begin{center}
                 \begin{tabular}{|lll|}
@@ -168,9 +168,10 @@
         \end{minipage}
     \end{minipage}
 
-    \vspace{1\baselineskip}
 
-    Now we calculate the weight of this clique. The constructive algorithm is now finished and we have obtained the following maximum clique of weight 10 : $$(1,2,5)$$
+\vspace{1\baselineskip}
+
+    Now we calculate the weight of this clique. The constructive algorithm is now finished, and we have obtained the following maximum clique of weight 10 : $$(1,2,5)$$
 
 \newpage
 

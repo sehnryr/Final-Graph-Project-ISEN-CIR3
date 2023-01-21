@@ -12,7 +12,7 @@
             \For {$i = 1 \to RETRIES$} \Comment{Iterate for 10 times}
                 \State $Sol \gets$ \Call{ConstructGreedyRandomizedSolution}{$G$}
                 \State $Sol \gets $\Call{LocalSearch}{$G$, $Sol$} \Comment{call a function that search the best clique}
-                \State \Call{UpdateSolution}{$Sol$, $BestSol$} \Comment{Check if the clique found is better than the clique we have}
+                \State \Call{UpdateSolution}{$Sol$, $BestSol$} \Comment{Update the best solution with the solution we found if she is better}
             \EndFor
             \State \Return{$BestSol$}
         \EndProcedure
@@ -24,13 +24,13 @@
     \label{ConstructGreedyRandomizedSolution-pseudocode}
     \begin{algorithmic}[1]
         \Procedure{ConstructGreedyRandomizedSolution}{$graph=(V,E)$}
-            \State $Solution \gets graph$
-            \State $P \gets graphe.vertices()$
+            \State $Solution \gets graph$   \Comment{Add the graph to the solution}
+            \State $P \gets graphe.vertices()$  \Comment{Add the vertex of the graph}
             \While{$P \neq \emptyset$}
-                \State $RCL \gets $\Call{MakeRCL}{$graph$,$P$}
+                \State $RCL \gets $\Call{MakeRCL}{$graph$,$P$}      \Comment{Create the Restricted Candidate List (RCL) of vertex}
                 \State $s \gets $\Call{SelectElementAtRandom}{$RCL$} \Comment{Choose randomly a vertex in the RCL}
-                \State $Solution \gets Solution \cup s$
-                \State \Call{AdaptGreedyFunction}{$graph,s,P$}
+                \State $Solution \gets Solution \cup s$     \Comment{Add the vertex choose randomly to the solution}
+                \State \Call{AdaptGreedyFunction}{$graph,s,P$}  \Comment{Adapt the graph with removing s to P}
             \EndWhile
             \State \Return{$Solution$}
         \EndProcedure
@@ -42,11 +42,11 @@
     \label{MakeRCL-pseudocode}
     \begin{algorithmic}[1]
         \Procedure{MakeRCL}{$graph=(V,E)$,$vertices$}
-            \State $gamma \gets $\Call{getGamma}{$graph$,$vertices$}
+            \State $gamma \gets $\Call{getGamma}{$graph$,$vertices$}    \Comment{Get the best sum weight of the graph}
             \For{$vertex \in vertices$}
-                \State $weight \gets $\Call{getSumAdjacentEdges}{$graph$,$vertex$}
-                \If{$weight > gamma/(1+Alpha)$}
-                    \State $RCL \gets RCL \cup vertex$
+                \State $weight \gets $\Call{getSumAdjacentEdges}{$graph$,$vertex$}  \Comment{Calcul the weight of each vertex in the graph}
+                \If{$weight > gamma/(1+Alpha)$}                 \Comment{Condition for the RLC}
+                    \State $RCL \gets RCL \cup vertex$      \Comment{Add the vertex to the RCL}
                 \EndIf
             \EndFor
             \State \Return{$RCL$}
@@ -54,34 +54,34 @@
     \end{algorithmic}
 \end{algorithm}
 
-\begin{algorithm}[H]
-    \caption{getGamma function}
-    \label{getGamma-pseudocode}
-    \begin{algorithmic}[1]
-        \Procedure{getGamma}{$graph=(V,E)$,$vertices$}
-            \State $gamma \gets $0
-            \State $adjMatrix \gets graph.\text{getAdjacencyMatrix()}$
-            \For{$vertex \in vertices$}
-                \State $weight \gets $\Call{getSumAdjacentEdges}{$graph$,$vertex$}
-                \If{$weight > gamma$}
-                    \State $gamma \gets weight$
-                \EndIf
-            \EndFor
-            \State \Return{$gamma$}
-        \EndProcedure
-    \end{algorithmic}
-\end{algorithm}
+%\begin{algorithm}[H]
+%    \caption{getGamma function}
+%    \label{getGamma-pseudocode}
+%    \begin{algorithmic}[1]
+%           \Procedure{getGamma}{$graph=(V,E)$,$vertices$}
+%            \State $gamma \gets $0
+%            \State $adjMatrix \gets graph.\text{getAdjacencyMatrix()}$
+%           \For{$vertex \in vertices$}
+%                \State $weight \gets $\Call{getSumAdjacentEdges}{$graph$,$vertex$}
+%                \If{$weight > gamma$}
+%                    \State $gamma \gets weight$
+%                \EndIf
+%            \EndFor
+%            \State \Return{$gamma$}
+%        \EndProcedure
+%    \end{algorithmic}
+%\end{algorithm}
 
 \begin{algorithm}[H]
     \caption{getSumAdjacentEdges function}
     \label{getSumAdjacentEdges-pseudocode}
     \begin{algorithmic}[1]
         \Procedure{getSumAdjacentEdges}{$graph=(V,E)$,$vertex$}
-            \State $sum \gets 0$
-            \State $adjMatrix \gets graph.getAdjacencyMatrix()$
-            \State $neighbors \gets adjMatrix[vertex-\>getId()]$
+            \State $sum \gets 0$            \Comment{initialize the sum to 0}
+            \State $adjMatrix \gets graph.getAdjacencyMatrix()$ \Comment{get the adjency Matrix of the graph}
+            \State $neighbors \gets adjMatrix[vertex-\>getId()]$ \Comment{add to the neighbor the sum of the weight for neighbor of the vertex}
             \For{$\text{[neighbor, edge]} \in neighbors$} 
-                \State $sum \gets sum \cup edge\text{->getWeight()}$
+                \State $sum \gets sum \cup edge\text{->getWeight()}$    \Comment{add to the sum the weight of each edges of the vertex}
             \EndFor
             \State \Return{$sum$}
         \EndProcedure
@@ -93,13 +93,13 @@
     \label{AdaptGreedyFunction-pseudocode}
     \begin{algorithmic}[1]
         \Procedure{AdaptGreedyFunction}{$graph=(V,E)$,$vertex$,$P$}
-            \State $adjMatrix \gets graph.getAdjacencyMatrix()$
-            \State $adjList \gets adjMatrix[vertex->getId()]$
+            \State $adjMatrix \gets graph.getAdjacencyMatrix()$ \Comment{get the adjency Matrix of the graph}
+            \State $adjList \gets adjMatrix[vertex->getId()]$ 
             \State $P\_copy \gets P$
             \State $P \gets P - \lbrace vertex \rbrace$
             \For{$v \in P\_copy$}
                 \If{adjList.find(v-\>getId()) == adjList.end()}
-                    \State $P \gets P - \lbrace v \rbrace$
+                    \State $P \gets P - \lbrace v \rbrace$      \Comment{remove the vertex v to P}
                 \EndIf
             \EndFor
         \EndProcedure
@@ -111,17 +111,17 @@
     \label{LocalSearchGrasp-pseudocode}
     \begin{algorithmic}[1]
         \Procedure{LocalSearchGrasp}{$graph=(V,E)$,$Solution$}
-            \State $vertices \gets Solution.\text{getVertices()}$
+            \State $vertices \gets Solution.\text{getVertices()}$   \Comment{get the vertices of the clique we found}
             \State $kTuples$
-            \State \Call{$vertices$, $kTuples$, $vertices.\text{begin()}$}
+            \State \Call{getKTuples}($vertices$, $kTuples$, $vertices.\text{begin()}$) \Comment{get all the kTuples of a set of vertices}
             \For{$tuple \in kTuples$}
-                \State $subgraph \gets graph$
+                \State $subgraph \gets graph$   \Comment{create a subgraph of the graph}
                 \For{$vertex \in tuple$}
-                    \State $subgraph$.\text{removeVertex}(vertex)
+                    \State $subgraph$.\text{removeVertex}(vertex) \Comment{remove every vertex in the ktuple in the subgraph}
                 \EndFor
-                \State $subSolution \gets localSearchMEWC(subgraph)$
+                \State $subSolution \gets localSearchMEWC(subgraph)$ \Comment{use the localsearch algorithm to find a solution with the subgraph}
                 \If{subSolution\.getWeight()$ > $Solution.getWeight()}
-                    \State $Solution \gets subSolution$
+                    \State $Solution \gets subSolution$ \Comment{if the solution of the subgraph is better than the solution we found then remplace it}
                 \EndIf
             \EndFor
             \State \Return{Solution}
@@ -151,14 +151,14 @@
 \end{algorithm}
 
 
-\begin{algorithm}[H]
-    \caption{UpdateSolution function}
-    \label{UpdateSolution-pseudocode}
-    \begin{algorithmic}[1]
-        \Procedure{UpdateSolution}{$Solution$,$BestSolution$}
-            \If{$Solution.weight() > BestSolution.weight()$}
-                \State $Solution = BestSolution$
-            \EndIf
-        \EndProcedure
-    \end{algorithmic}
-\end{algorithm}
+%\begin{algorithm}[H]
+%    \caption{UpdateSolution function}
+%    \label{UpdateSolution-pseudocode}
+%    \begin{algorithmic}[1]
+%        \Procedure{UpdateSolution}{$Solution$,$BestSolution$}
+%            \If{$Solution.weight() > BestSolution.weight()$}
+%                \State $Solution = BestSolution$
+%            \EndIf
+%        \EndProcedure
+%    \end{algorithmic}
+%\end{algorithm}

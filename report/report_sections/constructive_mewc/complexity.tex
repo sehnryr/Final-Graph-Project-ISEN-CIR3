@@ -5,10 +5,46 @@
 Let be a graph $G = (V,E)$, such that $n = =|V|$ and $m = |E|$, we can now calculate the complexity of our algorithm. The cost of attributing a value to a variable should always be $\mathcal{O}(1)$. The cost of getting an adjacency matrix of the graph should always be $\mathcal{O}(1)$, this is due to the efficient implementation of our classes to get it.
 \bigskip
 
-The complexity of the weight calculation is $\mathbb{O}(n^2)$, because we need to iterate two times over the vertices of the clique to get every edge and by extension their cumulative weight.
-\bigskip
-
 The worst complexity of our algorithm is when we study a complete graph. This means that all vertices have the maximum number of neighbors possible.
 \bigskip
 
-This means that the function constructiveMEWCRecursive will callback $\mathbb{O}(n)$ times. In these callbacks, we call the getBestVertex function which will iterate on all the elements of Z ($\mathbb{O}(n)$ because the graph is complete). To check if the elements of Z is member of P, we use the.
+First, we will sort all the vertices in ascending order. To do this, we will initialize a pair vector (vertex, degree) that we will fill with its adjacent matrix. This operation takes $\mathbb{O}(n)$ times. We will then use the sort function to sort the vertices according to their degree, which takes $\mathbb{O}(nlogn)$ times\footnotemark. Then we will fill $Z$ with the sorted vertices of the pair vector.
+\footnotetext{\url{https://en.cppreference.com/w/cpp/algorithm/sort}}
+\bigskip
+
+The function \textsc{constructiveMEWCRecursive}, we call the \textsc{getBestVertex} function which will iterate on all the elements of $Z$ ($\mathbb{O}(n)$ because the graph is complete). To check if the elements of Z is member of P, we use the \textsc{find()} function which is constant\footnotemark. The function is $\mathbb{O}(1)$ if there are no hash collisions, can be $\mathbb{O}(n)$ if there are hash collisions or hash is the same for any key. Something that does not happen in our case, it will then always be $\mathbb{O}(1)$. We will then refactor the elements of $Z$ at the last iteration on the elements $Z$ and break. The operation take $\mathbb{O}(n)$ times but 1 times. The complexity of \textsc{getBestVertex} will be $\mathbb{O}(2n)$. 
+\footnotetext{\url{https://en.cppreference.com/w/cpp/container/unordered_set/find}}
+\bigskip
+
+Moreover in the function \textsc{constructiveMEWCRecursive}, we will iterate on all the elements of the adjacency matrix of the vertex we're looking to check its neighbors in order to make the intersection of $P$ and the neighbors. To do this, we use the \textsc{count()} function which is constant/footnotemark. The function is $\mathbb{O}(1)$ in the same logic of the \textsc{find()} function.
+\footnotetext{\url{https://en.cppreference.com/w/cpp/container/unordered_set/count}}
+\bigskip
+
+We then can calculate the complexity of the function \textsc{constructiveMEWCRecursive}. 
+\begin{equation}
+    T(n)=\begin{cases}
+        3        & \text{if } n=0 \\
+        T(n-1) + 3n & \text{if } n>0
+    \end{cases}
+\end{equation}
+
+By subtitution, we have :
+\begin{align}
+    T(n)&=T(n-1)+3n\\
+    &=[T(n-2)+3n]+3n\\
+    &=...\\
+    &=T(n - i) + i*(3n) \\
+    &=[T(n - i  + 1) + 3n] + i*(3n) \\
+    &=...\\
+    &=T(n - n + 1)+(3n)*(n-1) \\
+    &= 3 + 3n^2 - 3n
+\end{align}
+
+We can conclude that the complexity of \textsc{ConstructiveRecursiveMEWC} is $\mathbb{O}(n^2)$.
+\bigskip
+
+The complexity of the weight calculation is $\mathbb{O}(n^2)$, because we need to iterate two times over the vertices of the clique to get every edge and by extension their cumulative weight.
+\bigskip
+
+So the total complexity of \textsc{constructiveMEWC} is : 
+$$ T(n) = n logn + n^2 + n^2 \in O(n^2) $$

@@ -11,339 +11,142 @@ The first part is \dots
 The second part is \dots
 \bigskip
 
-%For \alpha 0.1
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{|c|c|ccc|ccc|}
+        \hline
+        \multirow{2}*{$\alpha$} & \multirow{2}*{iterations} & \multicolumn{3}{c|}{execution time} & \multicolumn{3}{c|}{weight} \\
+        \cline{3-8} & & min & avg & max & min & avg & max \\
+        \hline
+        0.6 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.7 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.8 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.9 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+    \end{tabular}
+    \caption{Experimental results: \textsc{GRASP} solution statistics (20 vertices, 5 runs)}
+    \label{fig:grasp_mewc_20_5}
+\end{figure}
 
-\begin{center}
-    \begin{tabular}{l{2cm}|*{6}{p{2cm}|}} 
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{|c|c|ccc|ccc|}
         \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
+        \multirow{2}*{$\alpha$} & \multirow{2}*{iterations} & \multicolumn{3}{c|}{execution time} & \multicolumn{3}{c|}{weight} \\
+        \cline{3-8} & & min & avg & max & min & avg & max \\
         \hline
-            10 & 6977 &  230 & 17461 & 197 & 163 & 641  \\
+        0.6 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
         \hline
-            20 & 424 932 & 9 994	& 76 394 & 546	& 36 & 642 \\
+        0.7 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
         \hline
-            30 & 133 704 & 34 966  & 246563 & 605 & 208 & 1136 \\
+        0.8 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
         \hline
-            40 & 216 640 & 81 566  & 507744 & 838 & 202 & 1442 \\
+        0.9 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
         \hline
-            50 & 440 127 & 90 786  & 794 295 & 902 & 245 & 1696 \\
-        \hline
-            60 & 887 490 & 123 529 & 1330 755 & 1126 & 221 & 1693 \\
-        \hline
-            70 & 1 068 646 & 191 018 & 1 836 007 & 1317 & 142 & 1711 \\
-        \hline
-            80 & 1 689 908 & 233 813 & 2 572 957 & 1426 & 101 & 1885 \\
-        \hline
-            90 & 2 126 937 & 179 712 & 2 778 304 & 1343 & 113 & 1699 \\
-        \hline
-            100 & 76 394 & 407 988 & 4 026 029 & 1460 & 193 & 2231 \\
-        \hline
-     \end{tabular}
-\end{center}
+    \end{tabular}
+    \caption{Experimental results: \textsc{GRASP} solution statistics (40 vertices, 5 runs)}
+    \label{fig:grasp_mewc_40_5}
+\end{figure}
 
-%For \alpha 0.1
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{|c|c|ccc|ccc|}
+        \hline
+        \multirow{2}*{$\alpha$} & \multirow{2}*{iterations} & \multicolumn{3}{c|}{execution time} & \multicolumn{3}{c|}{weight} \\
+        \cline{3-8} & & min & avg & max & min & avg & max \\
+        \hline
+        0.6 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.7 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.8 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.9 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+    \end{tabular}
+    \caption{Experimental results: \textsc{GRASP} solution statistics (60 vertices, 5 runs)}
+    \label{fig:grasp_mewc_60_5}
+\end{figure}
 
-\begin{center}
-    \begin{tabular}{|*{7}{p{2cm}|}} 
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{|c|c|ccc|ccc|}
         \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
+        \multirow{2}*{$\alpha$} & \multirow{2}*{iterations} & \multicolumn{3}{c|}{execution time} & \multicolumn{3}{c|}{weight} \\
+        \cline{3-8} & & min & avg & max & min & avg & max \\
         \hline
-            10 & 7187 &  1812 & 15906 & 197 & 163 &  641 \\
+        0.6 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
         \hline
-            20 & 38283 & 7844	& 74495 & 568	& 44 & 693 \\
+        0.7 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
         \hline
-            30 & 119202 & 48510  & 297519 & 660 & 193 & 1136 \\
+        0.8 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
         \hline
-            40 & 283440 & 78472  & 539531 & 867 & 187 & 1442 \\
+        0.9 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
         \hline
-            50 & 459105 & 78701  & 756381 & 902 & 227 & 1696 \\
-        \hline
-            60 & 827650 & 119239 & 1359282 & 1126 & 203 & 1693 \\
-        \hline
-            70 & 1098887 & 207341 & 1818013 & 1317 & 138 & 1711 \\
-        \hline
-            80 & 1625482 & 339145 & 2732441 & 1357 & 183 & 2046\\
-        \hline
-            90 & 1858056 & 201874 & 2623161 & 1362 & 165 &  2142\\
-        \hline
-            100 & 2647381 & 321048 & 3753588 & 1555 & 140 & 2231 \\
-        \hline
-     \end{tabular}
-\end{center}									
+    \end{tabular}
+    \caption{Experimental results: \textsc{GRASP} solution statistics (80 vertices, 5 runs)}
+    \label{fig:grasp_mewc_80_5}
+\end{figure}
 
-
-%For \alpha 0.3
-
-\begin{center}
-    \begin{tabular}{|*{7}{p{2cm}|}} 
-        \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
-        \hline
-            10 & 8066 & 2113  & 17389 & 197 & 163 & 641  \\
-        \hline
-            20 & 42431 & 7284 & 69878 & 568 & 44 & 693 \\
-        \hline
-            30 & 110748 &  36914 & 238193 & 660 & 185 & 1136 \\
-        \hline
-            40 & 259497 & 75438  & 554670 & 871 & 160 & 1442 \\
-        \hline
-            50 & 448213 & 74110  & 731221 & 838 & 238 & 1696 \\
-        \hline
-            60 & 841774 & 111675 & 1288660 & 1126 & 203 & 1693 \\
-        \hline
-            70 & 942469 & 227306 & 1774057 & 1317 & 138 & 1711 \\
-        \hline
-            80 & 1568824 & 355898 & 2944324 & 1282 & 136 & 1969\\
-        \hline
-            90 & 1791300 & 193102 & 2577171 & 1343 & 92 &  1750\\
-        \hline
-            100 & 2604484 & 346290 & 3979450 & 1460 & 147 & 2033 \\
-        \hline
-     \end{tabular}
-\end{center}
-								
-
-
-%For \alpha 0.4
-
-\begin{center}
-    \begin{tabular}{|*{7}{p{2cm}|}} 
-        \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
-        \hline
-            10 &  &   &  &  &  &   \\
-        \hline
-            20 &  & &  & 	&  &  \\
-        \hline
-            30 &  &   &  &  &  &  \\
-        \hline
-            40 &  &   &  &  &  &  \\
-        \hline
-            50 &  &   &  &  &  &  \\
-        \hline
-            60 &  &  &  & &  &  \\
-        \hline
-            70 &  &  &  &  & &  \\
-        \hline
-            80 &  &  &  &  &  & \\
-        \hline
-            90 &  &  &  &  &  &  \\
-        \hline
-            100 &  &  &  &  &  &  \\
-        \hline
-     \end{tabular}
-\end{center}
-
-Minimum de temps d'execution	6724	42806	130779	252055	461600	728778	962020	1486344	1719864	2375384
-Écartype de temps d'execution	2743,594319	5945,040115	35664,2858	79863,08452	64960,70905	132862,432	242373,6447	417762,4054	263441,3963	306073,6892
-Maximum de temps d'execution	19575	63060	239656	520349	712012	1282741	1854368	2821005	2719862	3440227
-Minimum de poids	197	568	660	871	915	1126	1317	1282	1293	1452
-Écartype de poids	163,3841253	44,41062315	182,2219942	147,2034482	230,2172512	208,4788807	138,5230799	172,4420309	118,8379608	124,7628048
-Maximum de poids	641	693	1136	1442	1696	1693	1711	1969	1943	1872
-
-%For \alpha 0.5
-
-\begin{center}
-    \begin{tabular}{|*{7}{p{2cm}|}} 
-        \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
-        \hline
-            10 &  &   &  &  &  &   \\
-        \hline
-            20 &  & &  & 	&  &  \\
-        \hline
-            30 &  &   &  &  &  &  \\
-        \hline
-            40 &  &   &  &  &  &  \\
-        \hline
-            50 &  &   &  &  &  &  \\
-        \hline
-            60 &  &  &  & &  &  \\
-        \hline
-            70 &  &  &  &  & &  \\
-        \hline
-            80 &  &  &  &  &  & \\
-        \hline
-            90 &  &  &  &  &  &  \\
-        \hline
-            100 &  &  &  &  &  &  \\
-        \hline
-     \end{tabular}
-\end{center}
-
-Minimum de temps d'execution	6055	41044	109934	254412	423236	797975	930015	1461631	1712953	2291780
-Écartype de temps d'execution	1484,854213	5931,434516	44363,81099	66544,01023	94475,44577	152716,7409	268927,5135	438578,3274	184845,8165	352521,7737
-Maximum de temps d'execution	12357	65554	254973	550416	720061	1431598	1868305	2888009	2533183	3514992
-Minimum de poids	197	568	660	871	838	1126	1171	1282	1293	1452
-Écartype de poids	163,3841253	44,41062315	193,3504233	150,0591607	228,6746949	203,7784463	157,9044852	181,9860548	110,6430525	115,9453944
-Maximum de poids	641	693	1136	1442	1696	1693	1711	1969	1707	1885
-
-
-%For \alpha 0.6
-
-\begin{center}
-    \begin{tabular}{|*{7}{p{2cm}|}} 
-        \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
-        \hline
-            10 &  &   &  &  &  &   \\
-        \hline
-            20 &  & &  & 	&  &  \\
-        \hline
-            30 &  &   &  &  &  &  \\
-        \hline
-            40 &  &   &  &  &  &  \\
-        \hline
-            50 &  &   &  &  &  &  \\
-        \hline
-            60 &  &  &  & &  &  \\
-        \hline
-            70 &  &  &  &  & &  \\
-        \hline
-            80 &  &  &  &  &  & \\
-        \hline
-            90 &  &  &  &  &  &  \\
-        \hline
-            100 &  &  &  &  &  &  \\
-        \hline
-     \end{tabular}
-\end{center}
-
-Minimum de temps d'execution	6374	44198	115639	246242	416992	695875	970935	1444017	1691681	2383659
-Écartype de temps d'execution	1961,441415	8294,83254	44870,06471	54653,38202	63942,09548	137358,2434	224475,2454	416875,1775	196662,7677	330163,1655
-Maximum de temps d'execution	14896	80842	251421	453251	676813	1235193	1772060	2707749	2391147	3475771
-Minimum de poids	197	568	660	871	838	1126	1317	1282	1362	1358
-Écartype de poids	163,3841253	44,41062315	187,6179047	152,4500898	256,4686712	212,0508207	139,1037651	201,8026235	109,9417871	139,4983994
-Maximum de poids	641	693	1136	1442	1696	1693	1711	1969	1749	1849
-
-
-%For \alpha 0.7
-
-\begin{center}
-    \begin{tabular}{|*{7}{p{2cm}|}} 
-        \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
-        \hline
-            10 &  &   &  &  &  &   \\
-        \hline
-            20 &  & &  & 	&  &  \\
-        \hline
-            30 &  &   &  &  &  &  \\
-        \hline
-            40 &  &   &  &  &  &  \\
-        \hline
-            50 &  &   &  &  &  &  \\
-        \hline
-            60 &  &  &  & &  &  \\
-        \hline
-            70 &  &  &  &  & &  \\
-        \hline
-            80 &  &  &  &  &  & \\
-        \hline
-            90 &  &  &  &  &  &  \\
-        \hline
-            100 &  &  &  &  &  &  \\
-        \hline
-     \end{tabular}
-\end{center}
-
-Minimum de temps d'execution	5990	46049	114081	260748	464731	751613	956928	1397890	1768057	2409200
-Écartype de temps d'execution	1825,698225	9373,733894	43907,66088	58662,44373	72207,24983	149186,8837	220097,2986	411328,3072	222099,439	338988,6598
-Maximum de temps d'execution	13381	82021	249432	462802	683445	1253754	1715061	2739035	2533100	3509544
-Minimum de poids	197	568	660	838	913	1126	1317	1282	1362	1452
-Écartype de poids	163,3841253	44,28394535	181,2866657	151,9611414	187,2852671	205,4485001	138,7234742	199,2301996	99,52095026	163,9145453
-Maximum de poids	641	693	1136	1442	1696	1693	1711	1969	1707	2109
-
-
-%For \alpha 0.8
-
-\begin{center}
-    \begin{tabular}{|*{7}{p{2cm}|}} 
-        \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
-        \hline
-            10 &  &   &  &  &  &   \\
-        \hline
-            20 &  & &  & 	&  &  \\
-        \hline
-            30 &  &   &  &  &  &  \\
-        \hline
-            40 &  &   &  &  &  &  \\
-        \hline
-            50 &  &   &  &  &  &  \\
-        \hline
-            60 &  &  &  & &  &  \\
-        \hline
-            70 &  &  &  &  & &  \\
-        \hline
-            80 &  &  &  &  &  & \\
-        \hline
-            90 &  &  &  &  &  &  \\
-        \hline
-            100 &  &  &  &  &  &  \\
-        \hline
-     \end{tabular}
-\end{center}
-
-Minimum de temps d'execution	5880	42931	115981	256023	440816	754725	970402	1337468	1703084	2361775
-Écartype de temps d'execution	2042,965537	7583,988195	52482,29119	58805,25836	49261,21435	157897,5048	230078,2914	381732,6154	211970,0463	269434,4459
-Maximum de temps d'execution	14655	80442	306220	453577	616495	1336100	1807188	2807250	2529195	3298630
-Minimum de poids	197	568	660	838	838	1141	1317	1282	1290	1358
-Écartype de poids	163,3841253	44,41062315	185,705613	154,7832151	243,7631694	199,4674778	143,7923511	149,2465214	135,0030608	140,4183773
-Maximum de poids	641	693	1136	1442	1696	1693	1711	1969	1830	2022
-
-
-%For \alpha 0.9
-
-\begin{center}
-    \begin{tabular}{|*{7}{p{2cm}|}} 
-        \hline
-        \multirow{Number of vertices} & \multicolumn{3}{c|}{Execution Time} & \multicolumn{3}{c|}{weight} \\
-             & Min & standard deviation & Max & Min & standard deviation & Max \\
-            \cline{2-11}
-        \hline
-            10 &  &   &  &  &  &   \\
-        \hline
-            20 &  & &  & 	&  &  \\
-        \hline
-            30 &  &   &  &  &  &  \\
-        \hline
-            40 &  &   &  &  &  &  \\
-        \hline
-            50 &  &   &  &  &  &  \\
-        \hline
-            60 &  &  &  & &  &  \\
-        \hline
-            70 &  &  &  &  & &  \\
-        \hline
-            80 &  &  &  &  &  & \\
-        \hline
-            90 &  &  &  &  &  &  \\
-        \hline
-            100 &  &  &  &  &  &  \\
-        \hline
-     \end{tabular}
-\end{center}
-
-Minimum de temps d'execution	5935	44594	109475	244053	428214	719605	880056	1494522	1679640	2355081
-Écartype de temps d'execution	2051,454064	5444,398269	37387,00608	52584,20765	67767,22797	141485,0999	249038,9523	346851,815	179682,5787	343981,3515
-Maximum de temps d'execution	14064	67051	231329	464627	672387	1260450	1847842	2711685	2459173	3652628
-Minimum de poids	197	568	660	871	838	1126	1317	1282	1293	1460
-Écartype de poids	163,3841253	44,14313188	176,9263403	142,4999335	233,2339263	210,8815542	143,8477963	210,6343457	133,5425413	118,5195847
-Maximum de poids	641	693	1136	1442	1696	1693	1711	1969	1848	1849
+\begin{figure}[H]
+    \centering
+    \begin{tabular}{|c|c|ccc|ccc|}
+        \hline
+        \multirow{2}*{$\alpha$} & \multirow{2}*{iterations} & \multicolumn{3}{c|}{execution time} & \multicolumn{3}{c|}{weight} \\
+        \cline{3-8} & & min & avg & max & min & avg & max \\
+        \hline
+        0.6 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.7 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.8 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+        0.9 & 6 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 7 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+            & 8 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 & 0.000 \\
+        \hline
+    \end{tabular}
+    \caption{Experimental results: \textsc{GRASP} solution statistics (100 vertices, 5 runs)}
+    \label{fig:grasp_mewc_100_5}
+\end{figure}

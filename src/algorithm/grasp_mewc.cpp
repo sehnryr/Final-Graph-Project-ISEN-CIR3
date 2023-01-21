@@ -11,8 +11,8 @@
 
 #include "mewc.hpp"
 
-#define ALPHA 0.5    // restricted candidate list parameter
-#define RETRIES 10   // number of retries for the grasp algorithm
+#define ALPHA 0.9    // restricted candidate list parameter
+#define RETRIES 7   // number of retries for the grasp algorithm
 #define TUPLE_SIZE 1 // size of the tuple to consider
 
 /**

@@ -3,9 +3,11 @@
 \subsection{Presentation}
 
 A \textbf{heuristic algorithm} is a type of algorithm that uses criteria to try to find an approximate solution to a problem, rather than an exact one. Heuristic algorithms are often used when it is not possible to find an ideal solution to a problem, or when a perfect solution would be too time-consuming to compute. They are also used when an approximate solution is good enough. Heuristic algorithms are commonly used in artificial intelligence, computer science, and other fields. They are often used to solve optimization problems, search problems, and other types of problems where an exact solution is not necessary or practical.
-\\ \\
+\bigskip
+
 A \textbf{constructive heuristic} algorithm is a type of heuristic algorithm that is used to find a solution to a problem by building it incrementally. Constructive heuristics start with a partial solution and gradually improve it until a complete solution is found.
-\\ \\
+\bigskip
+
 To solve the MEWC with a constructive algorithm, we will need some criteria :
 
 \begin{enumerate}
@@ -16,9 +18,11 @@ To solve the MEWC with a constructive algorithm, we will need some criteria :
 \end{enumerate}
 
 We will then have for solution a maximum clique with his weight.
-\\ \\
+\bigskip
+
 It is important to define the different criteria in a rigorous way.
-\\ \\
+\bigskip
+
 The first one is the choice of the first Vertex. Indeed, it is this one which will define the quality of our solution. Taking it randomly would be useless and counterproductive for the sake of solving MEWC or for any other problem. There is a lot of implementation which depends on its use. In our project, as it was important, we thought about how to choose it and 2 answers appeared to us, and we have a debate on the subject because we could not reach a consensus on it. We hesitated between these two solutions:
 
 \begin{itemize}
@@ -37,7 +41,8 @@ The first one is the choice of the first Vertex. Indeed, it is this one which wi
 \vspace{1\baselineskip}
 
 We will illustrate these explanations with figure 11 and 12 which shows the advantages of each over the other.
-\\ \\
+\bigskip
+
 \begin{minipage}{\linewidth}
     \begin{minipage}{0.5\textwidth}
         \begin{figure}[H]
@@ -91,7 +96,8 @@ We will illustrate these explanations with figure 11 and 12 which shows the adva
 \vspace{1\baselineskip}
 
 To know which one we were going to use, we implemented both ideas and performed tests on a number of random graphs to see which was the most consistent. For that, we created 10 instances for different number of vertices (from 100 to 1000) and for different connectivity (25 50 75). We applied each of the two algorithms on each instance and averaged the 10 tests to get a usable result. We took the same criterion 2 to homogenize the results (take the vertex which has an adjacent edge with the highest weight compared to the last vertex added in the solution). The following results were obtained. We will name the best sum of adjacent weight $sum$, and the highest degree vertex $degree$.
-\\ \\
+\bigskip
+
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
@@ -130,11 +136,14 @@ To know which one we were going to use, we implemented both ideas and performed 
 \end{figure}
 
 We can observe that the two results obtained are identical. This can be explained by the fact that on an average of several graphs, the values become more and more regular and homogeneous which does not favor either of the two criteria (while each can be better than the other on some cases). We therefore decided to choose the highest degree vertex because it is less algorithm complexity than its opponent (although both are of the same absolute complexity $\mathbb{O}(n^2)$).
-\\ \\
+\bigskip
+
 To choose criterion 2, we also considered two implementations. Seek each time for the last vertex added to S its neighbors whose edge is the highest. Or search as done in criterion 1, the highest degree neighbors of the last vertex added to S.
-\\ \\
+\bigskip
+
 To know which one we were going to use, we implemented both ideas and performed the same process as for choosing criterion 1. The following results were obtained. We will name the neighbors whose edge is the highest $highweightN$, and the highest degree neighbors $degreeN$
-\\ \\
+\bigskip
+
 \begin{figure}[H]
     \centering
     \begin{tikzpicture}
@@ -173,8 +182,10 @@ To know which one we were going to use, we implemented both ideas and performed 
 \end{figure}
 
 We can observe that the two results obtained are also identical or present a difference that is not important enough to be noticeable. This can be explained with the same explanation as for the choice of criterion 1. We then chose to take the highest degree neighbors as criterion 2 because its implementation just requires us to make a sorted list of the different vertices of the graph. This makes us gain in constant complexity compared to its opponent.
-\\ \\
+\bigskip
+
 Constructive heuristic can be contrasted with other types of heuristics, such as local search heuristics, which try to find a solution by making small changes to an existing solution, or random heuristics, which generate solutions randomly and then choose the best one. Constructive heuristics are often used when it is important to find a solution that is complete and comprehensive, rather than just a local improvement.
-\\ \\
+\bigskip
+
 Examples of some famous problems that are solved using constructive heuristics are the flow shop scheduling, the vehicle routing problem and the open shop problem.
 

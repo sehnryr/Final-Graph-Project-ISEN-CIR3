@@ -15,7 +15,7 @@ TEMP_DIR=./temp
 
 RESULTS_DIR=./report/experiment_data
 
-NUM_TRIALS=10
+NUM_TRIALS=5
 
 # Create TEMP_DIR
 mkdir -p $TEMP_DIR
@@ -40,10 +40,10 @@ for CONNECTIVITY in 25 50 75 ; do
             # Generate a random graph
             $GRAPH_GEN $VERTEX_COUNT $CONNECTIVITY --output-dir=$TEMP_DIR
 
-            # Run the algorithm
-            for TYPE in "exact" "constructive" "local-search" "grasp" ; do
-                $EXEC "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}.in" --output-dir=$TEMP_DIR --type=$TYPE >> /dev/null
-            done
+            EXACT_TIME=$($EXEC "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}.in" --output-dir=$TEMP_DIR --type=exact)
+            CONSTRUCTIVE_TIME=$($EXEC "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}.in" --output-dir=$TEMP_DIR --type=constructive)
+            LOCAL_SEARCH_TIME=$($EXEC "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}.in" --output-dir=$TEMP_DIR --type=local-search)
+            GRASP_TIME=$($EXEC "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}.in" --output-dir=$TEMP_DIR --type=grasp)
 
             EXACT=$(get_result_clique_weight "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}_exact.out")
             CONSTRUCTIVE=$(get_result_clique_weight "$TEMP_DIR/${VERTEX_COUNT}_${CONNECTIVITY}_constructive.out")
@@ -57,6 +57,7 @@ for CONNECTIVITY in 25 50 75 ; do
 
             # Add the time to the result file
             echo "$VERTEX_COUNT $EXACT_PERCENT $CONSTRUCTIVE_PERCENT $LOCAL_SEARCH_PERCENT $GRASP_PERCENT" >> "$RESULTS_DIR/accuracy_${CONNECTIVITY}.dat"
+            echo "$VERTEX_COUNT $EXACT_TIME $CONSTRUCTIVE_TIME $LOCAL_SEARCH_TIME $GRASP_TIME" >> "$RESULTS_DIR/time_${CONNECTIVITY}.dat"
         done
     done
 done

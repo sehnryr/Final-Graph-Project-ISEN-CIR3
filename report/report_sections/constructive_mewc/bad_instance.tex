@@ -8,7 +8,7 @@ As we have seen when choosing our criteria, although our algorithm works very we
 Our algorithm takes the highest degree vertex, so a bad instance would be when the highest degree vertex is not part of the MEWC. 
 \bigskip
 
-Also, since we generated the graphs randomly, we usually get a consistent result. But if we are in a case with very heterogeneous values it can happen to have results very far from the MEWC. Here, the MEWC includes a vertex that is not reachable with this choice
+Also, since we generated the graphs randomly, we usually get a consistent result. But if we are in a case with very heterogeneous values it can happen to have results very far from the MEWC. Here in figure \ref{fig:bad-instance-vertex-highest-degree1}, the MEWC includes a vertex that is not reachable with this choice.
 
 \begin{center}
     \begin{figure}[H]
@@ -35,7 +35,7 @@ Also, since we generated the graphs randomly, we usually get a consistent result
     \end{figure}
 \end{center}
 
-Moreover, our algorithm takes the highest degree vertex to add a new vertex to the solution S. This raises the same problems as those presented by the criterion. The algorithm can form a clique with a vertex that does not belong to the MEWC or is worse while the initial clique could be part of the MEWC or a better solution. Here, the algorithm will take 5 $\rightarrow$ 2 $\rightarrow$ 3 when every other choice could lead to a better clique. 
+Moreover, our algorithm takes the highest degree vertex to add a new vertex to the solution S. This raises the same problems as those presented by the criterion. The algorithm can form a clique with a vertex that does not belong to the MEWC or is worse while the initial clique could be part of the MEWC or a better solution. Here in figure \ref{fig:bad-instance-vertex-highest-degree2}, the algorithm will take 5 $\rightarrow$ 2 $\rightarrow$ 3 when every other choice could lead to a better clique. 
 
 \begin{center}
     \begin{figure}[H]

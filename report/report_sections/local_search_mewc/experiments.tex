@@ -1,3 +1,35 @@
 % ----- Experiments -----
 
 \subsection{Experiments}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+                xlabel = Number of vertices,
+                ylabel = Execution time ($\mu$s),
+                legend pos = outer north east,
+                grid = major,
+                width = 0.7\textwidth,
+            ]
+            \addplot[Red, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/local_search_75_avg.dat};
+
+            \addplot[Green, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/local_search_50_avg.dat};
+
+            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/local_search_25_avg.dat};
+
+            \addplot[Black, domain=0:1000]{0.00000007146*x^5};
+
+            \addlegendentry{test}
+
+            \legend{75\%, 50\%, 25\%, theorical}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Execution time of the local search algorithm for different percentages of connectivity.}
+    \label{fig:local_search_time}
+\end{figure}
+
+For this experiment, we generated five random graphs with 100 to 1000 vertices to find an average execution time for each percentage of connectivity. The connectivity is the percentage of chance that 2 vertices are linked. The results are shown in figure \ref{fig:local_search_time}. At each number of vertices, an average execution time is calculated, and the standard deviation is represented by the error bars. The number of graphs generated for each percentage of connectivity and number of vertices is limited to 5 to reduce the execution time of the experiment which already takes more than 8 minutes to compute only one result for 1000 vertices case for the 75\% connectivity. Moreover, we use a linear scale that allows us to highlight the results we want to analyze.

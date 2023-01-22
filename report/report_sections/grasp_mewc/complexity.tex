@@ -1,3 +1,53 @@
 % ----- Complexité -----
 
 \subsection{Complexity}
+
+To calculate the complexity of the algorithm, we will consider the complexity of
+each part of the algorithm. The first part is the \textbf{greedy randomized heuristic}
+and the second one is the \textbf{local search}.
+\bigskip
+
+First part: \textbf{Greedy randomized heuristic}
+\bigskip
+
+\textsc{getSumAdjacentEdges} is a function that returns the sum of the weights of
+the edges adjacent to a vertex. This function iterates over the edges adjacent to
+the vertex and sums their weights. The complexity of this function is $\mathcal{O}(m)$.
+\bigskip
+
+\textsc{getGamma} is a function that returns the highest sum of adjacent edges
+weight in $V_k$. This function iterates over the vertices of $P$ and calls the
+\textsc{getSumAdjacentEdges} function. The complexity of this function is
+$\mathcal{O}(n\cdot m)$.
+\bigskip
+
+\textsc{MakeRCL} is a function that returns the restricted candidate list. This
+function calls the \textsc{getGamma} function and iterates over the vertices of
+$P$. The complexity of this function is $\mathcal{O}(n\cdot m)$.
+\bigskip
+
+\textsc{AdaptGreedyFunction} is a function that adapts the greedy function to the
+restricted candidate list. This function iterates over the vertices of $P$ and
+checks if they are not adjacent to a vertex. The complexity of this function is
+$\mathcal{O}(n)$.
+\bigskip
+
+\textsc{ConstructGreedyRandomizedSolution} is a function that constructs a solution
+using the greedy randomized heuristic. This iterates over the vertices of $P$ and
+calls the \textsc{MakeRCL} function and the \textsc{AdaptGreedyFunction} function.
+It also selects a vertex from the RCL and adds it to the clique but as this part 
+is constant in complexity, we can ignore it.
+The complexity of this function is $\mathcal{O}(n^2\cdot m)$.
+\bigskip
+
+Second part: \textbf{Local search}
+\bigskip
+
+We know from previously that the complexity of the \textsc{getCliqueWeight} function
+is $\mathcal{O}(n^2)$ and the complexity of the \textsc{LocalSearch} function is
+$\mathcal{O}(n^5)$. We can then say that the complexity of the \textsc{LocalSearchGrasp}
+function is $\mathcal{O}(n^6)$ as it iterates over the vertices of the solution.
+\bigskip
+
+Combining the two parts, we can say that the complexity of the \textsc{Grasp} function
+is $\mathcal{O}(n^6)$.

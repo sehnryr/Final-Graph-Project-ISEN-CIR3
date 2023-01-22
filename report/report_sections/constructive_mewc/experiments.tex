@@ -21,7 +21,7 @@
             \addplot[Blue, error bars/.cd, y dir=both, y explicit]
             table[x index=0, y index=1, y error index=2] {experiment_data/constructive_25_avg.dat};
 
-            \addplot[Black, domain=0:1000] {x^2};
+            \addplot[Black, domain=0:1000] {4.87734*x^2};
 
 
             \addlegendentry{test}
@@ -33,4 +33,4 @@
     \label{fig:constructive_time}
 \end{figure}
 
-For this experiment, we generated five random graphs with 100 to 1000 vertices to find an average execution time for each percentage of connectivity. The results are shown in figure \ref{constructive_time}. At each number of vertices, an average execution time is calculated, and the standard deviation is represented by the error bars. The number of graphs generated for each percentage of connectivity and number of vertices is limited to 5 to reduce 
+For this experiment, we generated five random graphs with 100 to 1000 vertices to find an average execution time for each percentage of connectivity. The results are shown in figure \ref{fig:constructive_time}. At each number of vertices, an average execution time is calculated, and the standard deviation is represented by the error bars. The number of graphs generated for each percentage of connectivity and number of vertices is limited to 5 because it is a sufficient number of tests that allows us to highlight the results we want to analyse.

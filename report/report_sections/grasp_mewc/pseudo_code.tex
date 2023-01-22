@@ -10,7 +10,7 @@
             \State $BestSolution \gets \emptyset$ \Comment{Variable to store the Best clique that represents the Solution}
             \For {$i = 1,\cdots,RETRIES$} \Comment{Iterate for $RETRIES$ times}
                 \State $Solution \gets$ \Call{ConstructGreedyRandomizedSolution}{$G$}
-                \State $Solution \gets$ \Call{LocalSearch}{$G$, $Solution$} \Comment{call a function that search the best clique}
+                \State $Solution \gets$ \Call{LocalSearchGrasp}{$G$, $Solution$} \Comment{call a function that search the best clique}
                 \State \Call{UpdateSolution}{$Solution$, $BestSolution$} \Comment{Update the best solution with the solution we found if it is better}
             \EndFor
             \State \Return{$BestSol$}

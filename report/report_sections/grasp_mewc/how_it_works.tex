@@ -2,11 +2,46 @@
 
 \subsection{How it works}
 
-The \textbf{Greedy Randomized Adaptive Search Procedures} (GRASP) algorithm works in two parts.
+GRASP mainly uses two parts: the first one is the \textbf{greedy randomized heuristic}
+and the second one is the \textbf{local search}. The first part is used to
+construct the solution and the second one is used to refine it. The algorithm
+works by incrementally constructing solutions using greedy randomization. At each
+step, the algorithm chooses the next vertex of the clique using a greedy
+randomized heuristic. The heuristic is used to decide which vertex should be
+added to the current clique in order to maximize the total weight of the clique.
 \bigskip
 
-The first part is \dots
+Let $C$ denote the clique to be constructed. GRASP begins with an empty clique $C$.
+Let $k=0$, $V_{k=0}=V$ and $E_{k=0}=E$. A plausible greedy choice for the maximum
+edge weight clique is to select the vertex with the highest sum of weights of its
+adjacent edges with respect to the graph induced by the yet unselected vertices
+that are not adjacent to any previously selected vertex. Let $N(v)$ denote the
+neighboring vertices of $v$ and $w(u,v)$ denote the weight of the edge between
+vertices $u$ and $v$. The greedy choice is to select a vertex with the highest
+sum of weight of its adjacent edges. Instead of selecting the greedy choice,
+the GRASP construction phase builds a restricted candidate list (RCL) of all
+vertices having high sum of adjacent edges weight, but not necessarily the
+highest. Let $\Gamma$ be the highest sum of adjacent edges weight in $V_k$, i.e.
 \bigskip
 
-The second part is \dots
+$$\Gamma=\max\left\{\sum_{u\in N(v)}w(u,v)|v\in V_k\right\}$$
 \bigskip
+
+And let $\alpha>0$ be the restricted candidate parameter. The value restricted
+candidate list is:
+\bigskip
+
+$$\text{RLC}=\left\{v\in V_k|\sum_{u\in N(v)}w_{uv}>\frac{\Gamma}{1+\alpha}\right\}$$
+\bigskip
+
+We next describe a $k$-exchange search procedure in the initial graph $G$. The
+idea here is to take as input a clique $C\subseteq V$ of size $p$ and consider
+all $k$-tuples of vertices in $C$, for a given parameter $k$, $0<k<p$. For each
+$k$-tuple, we consider all possible $k$-tuples $\{v_{i_1},...,v_{i_k}\}$, apply 
+an exhaustive search to find a maximum edge weight clique in the graph induced 
+by the vertices of $G$ such that $V_k=V\backslash\{v_{i_1},...,v_{i_k}\}$. 
+If the resulting clique $\mathcal{N}$ is larger that $C$, the new best solution 
+has to be $\mathcal{N}$.
+\bigskip
+
+For practical reasons, we use $k=1$ in our implementation.

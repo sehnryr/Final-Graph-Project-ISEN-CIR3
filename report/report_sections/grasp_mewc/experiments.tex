@@ -182,12 +182,12 @@ In addition, it often has the highest  minimum weight. In our case, it is the be
             \addplot[Blue, error bars/.cd, y dir=both, y explicit]
             table[x index=0, y index=1, y error index=2] {experiment_data/grasp_25_avg.dat};
 
-            %\addplot[Black, domain=0:300] {4.87734*x^2};
+            \addplot[Black, domain=20:200] {0.00000176389*x^6};
 
 
             \addlegendentry{test}
 
-            \legend{75\%, 50\%, 25\%}
+            \legend{75\%, 50\%, 25\%, theorical}
         \end{semilogyaxis}
     \end{tikzpicture}
     \caption{Execution time of the grasp algorithm for different percentages of connectivity.}

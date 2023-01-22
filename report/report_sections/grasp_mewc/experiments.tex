@@ -161,3 +161,44 @@ So we decided to choose Retries in our alogorithm for 7.
 Now for $\alpha$, we chose $\alpha$ = 0.9 because for each graph with differents number of vertices we found this $\alpha$ in the best average of weight and execution time.
 In addition, it often has the highest  minimum weight. In our case, it is the best candidate.
 For the execution time, it does not have the best but he has one of the best average execution time.  (not sure to say it)
+
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{semilogyaxis}[
+                xlabel = Number of vertices,
+                ylabel = Execution time ($\mu$s),
+                legend pos = outer north east,
+                grid = major,
+                width = 0.7\textwidth,
+            ]
+            \addplot[Red, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/grasp_75_avg.dat};
+
+            \addplot[Green, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/grasp_50_avg.dat};
+
+            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1, y error index=2] {experiment_data/grasp_25_avg.dat};
+
+            %\addplot[Black, domain=0:300] {4.87734*x^2};
+
+
+            \addlegendentry{test}
+
+            \legend{75\%, 50\%, 25\%}
+        \end{semilogyaxis}
+    \end{tikzpicture}
+    \caption{Execution time of the grasp algorithm for different percentages of connectivity.}
+    \label{fig:grasp_time}
+\end{figure}
+
+For this experiment, we generated fifty random graphs with 20 to 200 vertices to
+find an average execution time for each percentage of connectivity. The results
+are shown in figure \ref{fig:grasp_time}. At each number of vertices, an average
+execution time is calculated, and the standard deviation is represented by the
+error bars. The number of graphs generated for each
+percentage of connectivity and number of vertices is limited to 5 because it is a sufficient
+number of tests to get what we want to analyze. Moreover, we use a semilog scale in the y axis that allows
+us to highlight the results we want to analyze. If we use a lenear scale we will not see the 25\% of connectivity.

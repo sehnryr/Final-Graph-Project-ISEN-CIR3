@@ -168,3 +168,32 @@ average \% of clique weight for 75\% of connectivity. The connectivity is the pe
 of chance that 2 vertices are linked. The results are shown in figure \ref{fig:algorithm_75_time}. At each number of
 vertices, an average clique weight is calculated, and converted to \% based on the result obtained with the exact algorithm.
 // à martin de détailler
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{loglogaxis}[
+                xlabel = Number of vertices,
+                ylabel = Theorical complexity,
+                legend pos = outer north east,
+                grid = major,
+                width = 0.5\textwidth,
+                legend cell align = {left},
+            ]
+            \addplot[Red, domain=10:100] {x^2*3^(x/3)};
+
+            \addplot[Green, domain=10:100] {x^2};
+
+            \addplot[Blue, domain=10:100] {x^5};
+
+            \addplot[Black, domain=10:100] {x^6};
+
+
+            \addlegendentry{test}
+
+            \legend{exact, constructive, local search, grasp}
+        \end{loglogaxis}
+    \end{tikzpicture}
+    \caption{Execution time of the constructive algorithm for different percentages of connectivity.}
+    \label{fig:constructive_time}
+\end{figure}

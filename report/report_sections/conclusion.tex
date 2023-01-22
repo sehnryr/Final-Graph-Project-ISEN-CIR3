@@ -54,3 +54,115 @@ After this, we decided to conclude according to the number of vertices of our st
     \item \textbf{5000 + Vertices} : Finally we will use the "Constructive" algorithm which is the least precise but the fastest and allows to answer in an acceptable time
 
 \end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+                xlabel = Number of vertices,
+                ylabel = \% of solution based on exact,
+                legend pos = outer north east,
+                grid = major,
+                width = 0.5\textwidth,
+                legend cell align = {left},
+            ]
+            \addplot[Red, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_exact.dat};
+
+            \addplot[Green, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_constructive_25.dat};
+
+            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_local_search_25.dat};
+
+            \addplot[Black, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_grasp_25.dat};
+
+            \addlegendentry{test}
+
+            \legend{exact, constructive, local search, grasp}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Execution time of the different algorithm for 25\% of connectivity.}
+    \label{fig:algorithm_25_time}
+\end{figure}
+
+For this experiment, we generated 10 random graphs with 10 to 100 vertices to find an
+average \% for 25\% of connectivity. The connectivity is the percentage
+of chance that 2 vertices are linked. The results are shown in figure \ref{fig:algorithm_25_time}. At each number of
+vertices, an average clique weight is calculated, and converted to \% based on the result obtained with the exact algorithm.
+// à martin de détailler
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel = Number of vertices,
+            ylabel = \% of solution based on exact,
+                legend pos = outer north east,
+                grid = major,
+                width = 0.5\textwidth,
+            ]
+            \addplot[Red, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_exact.dat};
+
+            \addplot[Green, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_constructive_50.dat};
+
+            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_local_search_50.dat};
+
+            \addplot[Black, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_grasp_50.dat};
+
+            \addlegendentry{test}
+
+            \legend{exact, constructive, local search, grasp}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Execution time of the different algorithm for 50\% of connectivity.}
+    \label{fig:algorithm_50_time}
+\end{figure}
+
+For this experiment, we generated 10 random graphs with 10 to 100 vertices to find an
+average \% for 50\% of connectivity. The connectivity is the percentage
+of chance that 2 vertices are linked. The results are shown in figure \ref{fig:algorithm_50_time}. At each number of
+vertices, an average clique weight is calculated, and converted to \% based on the result obtained with the exact algorithm.
+// à martin de détailler
+
+\begin{figure}[H]
+    \centering
+    \begin{tikzpicture}
+        \begin{axis}[
+            xlabel = Number of vertices,
+            ylabel = \% of solution based on exact,
+                legend pos = outer north east,
+                grid = major,
+                width = 0.5\textwidth,
+            ]
+            \addplot[Red, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_exact.dat};
+
+            \addplot[Green, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_constructive_75.dat};
+
+            \addplot[Blue, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_local_search_75.dat};
+
+            \addplot[Black, error bars/.cd, y dir=both, y explicit]
+            table[x index=0, y index=1] {experiment_data/accuracy_avg_grasp_75.dat};
+
+            \addlegendentry{test}
+
+            \legend{exact, constructive, local search, grasp}
+        \end{axis}
+    \end{tikzpicture}
+    \caption{Execution time of the different algorithm for 75\% of connectivity.}
+    \label{fig:algorithm_75_time}
+\end{figure}
+
+For this experiment, we generated 10 random graphs with 10 to 100 vertices to find an
+average \% for 75\% of connectivity. The connectivity is the percentage
+of chance that 2 vertices are linked. The results are shown in figure \ref{fig:algorithm_75_time}. At each number of
+vertices, an average clique weight is calculated, and converted to \% based on the result obtained with the exact algorithm.
+// à martin de détailler

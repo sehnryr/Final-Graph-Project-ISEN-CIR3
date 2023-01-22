@@ -135,7 +135,7 @@ To know which one we were going to use, we implemented both ideas and performed 
     \label{fig:comparaison_degree_sum}
 \end{figure}
 
-We can observe in figure \ref{fig:comparaison_degree_sum} that the two results obtained are identical. This can be explained by the fact that on an average of several graphs, the values become more and more regular and homogeneous which does not favor either of the two criteria (while each can be better than the other on some cases). We therefore decided to choose the highest degree vertex because it have less algorithm complexity than its opponent (although both are of the same absolute complexity $\mathbb{O}(n^2)$).
+We can observe in figure \ref{fig:comparaison_degree_sum} that the two results obtained are identical. This can be explained by the fact that on an average of several graphs, the values become more and more regular and homogeneous which does not favor either of the two criteria (while each can be better than the other on some cases). We therefore decided to choose the highest degree vertex because it have less algorithm complexity than its opponent (although both are of the same absolute complexity $\mathcal{O}(n^2)$).
 \bigskip
 
 To choose criterion 2, we also considered two implementations. Seek each time for the last vertex added to S its neighbors whose edge is the highest. Or search as done in criterion 1, the highest degree neighbors of the last vertex added to S.

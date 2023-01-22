@@ -1,3 +1,56 @@
 % ----- Conclusion -----
 
 \section{Conclusion}
+
+As we have seen before, the MEWC problem is a problem that we cannot answer for a general case. 
+As these algorithms are NP-hard we cannot find a solution in polynomial time.
+By trying to optimize the solution of the problem we notice that the algorithms are more or less efficient depending on different criteria which are :
+
+\begin{itemize}
+    \item \textbf{The number of vertices} 
+
+    \item \textbf{The connectivity of them}
+
+    \item \textbf{The random generation} which can create special cases for some algorithms (bad instances)
+\end{itemize}
+
+We can therefore deduce from the graph (the one to study) that we can select the most suitable algorithm to solve the problem in the best way.\bigskip
+
+\large\textbf{Comparison of algorithms} \newline 
+
+\underline{Speed of results}\bigskip
+
+We are now going to compare the different algorithms from a general point of view, even if it would be necessary to do a study again according to the starting graph we have.
+Let's look at the complexity and the execution time of these different algorithms.
+
+\begin{itemize}
+    \item \textbf{Complexity} : As we compare the complexity of the algorithms we obtain : \bigskip
+    
+Exact (O($n^2\sqrt[3]{3}^n$) - Constructive (O($n^2$)) - Local Search (O($n^5$)) - Grasp (O($n^6$)) \bigskip
+    
+    Since the complexity will vary depending on the connectivity and degeneracy of the graph we will look at the execution time too.
+    
+    \item \textbf{Execution time} : \bigskip
+    
+ Constructive ($5.10^6$) -  Local Search (A COMPLETER) - Grasp ($10^8$) - Exact (\thicksim $10^8$) 
+\end{itemize}
+\underline{Accuracy of results}\bigskip 
+
+Another very important criterion to consider is the accuracy of the answer obtained. \bigskip 
+
+Accuracy is in this order (from most to least accurate):
+
+Exact - Grasp - Local Search - Constructive \bigskip 
+
+\large\textbf{Choice of the algorithm} \newline
+
+After this, we decided to conclude according to the number of vertices of our strating graph :
+
+\begin{itemize}
+    \item \textbf{10 - 100 Vertices} : We will use the "Exact" algorithm which allows to give a very precise solution but which is slow.
+
+    \item \textbf{100 + Vertices} : In order to don't wait too long for an answer, we plan to use the "Grasp" algorithm and then the "Local Search" which are certainly less precise but which allows to give an answer in less time.
+
+    \item \textbf{5000 + Vertices} : Finally we will use the "Constructive" algorithm which is the least precise but the fastest and allows to answer in an acceptable time
+
+\end{itemize}

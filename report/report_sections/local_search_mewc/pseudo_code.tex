@@ -77,7 +77,7 @@
         \EndFor
 
         \State $newClique \gets C_i - \{minWeightVertex\}$ \Comment{Copy the initial clique but remove the tested vertex}
-        \State $X \gets \{minWeightVertex\}$ \Comment{Set of vertices that we don't want to be in the new solution}
+        \State $X \gets \{minWeightVertex\}$ \Comment{Set of vertices that we do not want to be in the new solution}
 
         \State $improvement \gets$ \Call{improveClique}{$G$, $newClique$, $X$, $w_{min}$} \Comment{$improvement$ will be greater than $0$ if improveClique() find a clique that adds a weight greater than $w_{min}$}
 
@@ -116,7 +116,7 @@
                 \State $C_c \gets C_c \cup \{v\}$
                 \State $total \gets w_{improv}$ + \Call{improveClique}{$G$, $C_c$, $X$, $w_{min}$, $w_{actual\ improv} + w_{improv}$} \Comment{Try improving the clique by adding another vertex}
                 \If{$w_{actual\ improv} + w_{improv} \le w_{min}$}
-                    \State \Return 0 \Comment{That means that we didn't find a better solution than the old one}
+                    \State \Return 0 \Comment{That means that we did not find a better solution than the old one}
                 \Else
                     \State $C \gets C_c$ \Comment{Copy the improved clique int the original one}
                     \State \Return $total$ \Comment{Return the total improvement}

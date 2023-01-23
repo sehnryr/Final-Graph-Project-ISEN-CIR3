@@ -14,31 +14,61 @@ by trying to find the most efficient algorithm to solve the problem in the best
 way.
 \bigskip
 
-\large\textbf{Comparison of algorithms} \newline 
+Among the different criteria that we will study when comparing these algorithms. We have the \textbf{speed of the results} obtained. This last one is important because the application of the MEWC on different real cases can be subject to certain time constraints. It is obvious that finding the best possible solution would be preferable but as we have seen with the exact, on a large number of vertices, we would need several generations which is not tenable to solve it. This is why we have studied other algorithms that present some alternatives. We are now going to compare them in more detail on the speed of the results obtained. \bigskip
 
-\underline{Speed of results}\bigskip
-
-We are now going to compare the different algorithms from a general point of view, even if it would be necessary to do a study again according to the starting graph we have.
-Let's look at the complexity and the execution time of these different algorithms.
+To evaluate this, we will focus on two points: their theoretical complexity but also their execution time in practice that we have done. Note that this comparison is made on randomly generated graphs and therefore presents a general case, but each application case must be seen from a different angle and it is necessary to redo a study. \bigskip
 
 \begin{itemize}
-    \item \textbf{Complexity} : As we compare the complexity of the algorithms we obtain : \bigskip
+    \item \textbf{Complexity} : As we compare the theorical complexity of the algorithms in general, we obtain : \bigskip
     
-Exact (O($n^2\sqrt[3]{3}^n$)) - Constructive (O($n^2$)) - Local Search (O($n^5$)) - Grasp (O($n^6$)) \bigskip
+    Exact (O($n^2\sqrt[3]{3}^n$)) $>$ Grasp (O($n^6$)) $>$ Local Search (O($n^5$)) $>$ Constructive (O($n^2$)) \bigskip
+
+    We can observe it on the figure \ref{fig:theorical_algorithm_complexity}:
+
+    \begin{figure}[H]
+        \centering
+        \begin{tikzpicture}
+            \begin{loglogaxis}[
+                    xlabel = Number of vertices,
+                    ylabel = Theorical complexity,
+                    legend pos = outer north east,
+                    grid = major,
+                    width = 0.5\textwidth,
+                    legend cell align = {left},
+                ]
+                \addplot[Red, domain=10:100] {x^2*3^(x/3)};
     
-    Since the complexity will vary depending on the connectivity and degeneracy of the graph we will look at the execution time too.
+                \addplot[Green, domain=10:100] {x^2};
+    
+                \addplot[Blue, domain=10:100] {x^5};
+    
+                \addplot[Black, domain=10:100] {x^6};
+    
+    
+                \addlegendentry{test}
+    
+                \legend{exact, constructive, local search, grasp}
+            \end{loglogaxis}
+        \end{tikzpicture}
+        \caption{Theorical omplexity of the algorithm in function of the number of vertices.}
+        \label{fig:theorical_algorithm_complexity}
+    \end{figure}
+    
+    Since the complexity will vary depending on the connectivity and degeneracy of the graph we will look at the execution time for each graph.
     
     \item \textbf{Execution time} : \bigskip
     
-Constructive ($5.10^6$) -  Local Search (A COMPLETER) - Grasp ($10^8$) - Exact ($\thicksim 10^8$) 
+    You can find the execution time in the different experimental parts that we have done before in our report. We get the same results. \bigskip
+    
+    Exact on figure \ref{fig:exact_time} $>$ Grasp on figure \ref{fig:grasp_time} $>$ Local Search on figure \ref{fig:local_search_time} $>$ Constructive on figure \ref{fig:constructive_time}.
 \end{itemize}
-\underline{Accuracy of results}\bigskip 
 
-Another very important criterion to consider is the accuracy of the answer obtained. \bigskip 
+Another important criterion to consider is the precision of the results you are looking for, in a real application case, for example let's take our example from figure \ref{fig:applications_example}. You don't necessarily need to get the best possible click, but a slightly worse one will do just fine. The different algorithms we have studied have different levels of expectation in terms of usability results. \bigskip
 
-Accuracy is in this order (from most to least accurate):
+To evaluate this, we will compare the accuracy of the different algos against the exact one (because it always gives the best result).
 
-Exact - Grasp - Local Search - Constructive \bigskip 
+
+
 
 \large\textbf{Choice of the algorithm} \newline
 

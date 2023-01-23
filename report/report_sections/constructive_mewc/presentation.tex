@@ -12,7 +12,7 @@ To solve the MEWC with a constructive algorithm, we will need some criteria :
 
 \begin{enumerate}
     \item Add a first Vertex to make a partial solution.
-    \item Seek for one of his neighbors. And add it to solution if it's a neighbor of all vertices in solution(to be sure to hold a clique in the final result).
+    \item Seek for one of his neighbors. And add it to solution if it is a neighbor of all vertices in solution(to be sure to hold a clique in the final result).
     \item Repeat the step 2 until no vertices is available to add
     \item Calculate the weight of the clique found
 \end{enumerate}
@@ -28,12 +28,12 @@ The first one is the choice of the first Vertex. Indeed, it is this one which wi
 \begin{itemize}
     \item The first idea was to take the highest degree vertex of the graph given as input.
           \begin{itemize}
-              \item One reason to choose the highest degree vertex as the first vertex in the solution is that it may be more likely to be part of a maximum edge weight clique(because it's the case where it's the most likely to be member of the biggest clique who could be the MEWC). This is because it will allow more edges to be added to the solution, which can increase the overall sum of edge weights in the clique.
+              \item One reason to choose the highest degree vertex as the first vertex in the solution is that it may be more likely to be part of a maximum edge weight clique(because it is the case where it is the most likely to be member of the biggest clique who could be the MEWC). This is because it will allow more edges to be added to the solution, which can increase the overall sum of edge weights in the clique.
               \item Another reason is that it may be more likely to be connected to other high degree vertices. This means that by adding the highest degree vertex to the clique first, we may be able to include other high degree vertices in the clique as well, which can further increase the overall sum of edge weights.
           \end{itemize}
     \item The second one was to take the vertex with the highest sum of weights of the edges.
           \begin{itemize}
-              \item One reason to choose the vertex with the highest edge weight as the first vertex in the clique is that it may be more likely to be part of a maximum edge weight clique(because it's the case where it's the most likely to be member of the most weighted clique who could be the MEWC). This is because adding a vertex with a high edge weight to the clique will contribute more to the overall sum of edge weights in the clique, which is what we are trying to maximize.
+              \item One reason to choose the vertex with the highest edge weight as the first vertex in the clique is that it may be more likely to be part of a maximum edge weight clique(because it is the case where it is the most likely to be member of the most weighted clique who could be the MEWC). This is because adding a vertex with a high edge weight to the clique will contribute more to the overall sum of edge weights in the clique, which is what we are trying to maximize.
               \item Moreover, taking a vertex with higher degree can find adjacent vertices that have lower weight edges, which decreases the probability of finding a maximum weight clique. This does not happen with this choice.
           \end{itemize}
 \end{itemize}

@@ -19,18 +19,18 @@ Among the different criteria that we will study when comparing these algorithms.
 To evaluate this, we will focus on two points: their theoretical complexity but also their execution time in practice that we have done. Note that this comparison is made on randomly generated graphs and therefore presents a general case, but each application case must be seen from a different angle and it is necessary to redo a study. \bigskip
 
 \begin{itemize}
-    \item \textbf{Complexity} : As we compare the theorical complexity of the algorithms in general, we obtain : \bigskip
+    \item \textbf{Complexity} : As we compare the theoretical complexity of the algorithms in general, we obtain : \bigskip
     
     Exact (O($n^2\sqrt[3]{3}^n$)) $>$ Grasp (O($n^6$)) $>$ Local Search (O($n^5$)) $>$ Constructive (O($n^2$)) \bigskip
 
-    We can observe it on the figure \ref{fig:theorical_algorithm_complexity}:
+    We can observe it on the figure \ref{fig:theoretical_algorithm_complexity}:
 
     \begin{figure}[H]
         \centering
         \begin{tikzpicture}
             \begin{loglogaxis}[
                     xlabel = Number of vertices,
-                    ylabel = Theorical complexity,
+                    ylabel = Theoretical complexity,
                     legend pos = outer north east,
                     grid = major,
                     width = 0.5\textwidth,
@@ -50,8 +50,8 @@ To evaluate this, we will focus on two points: their theoretical complexity but 
                 \legend{exact, constructive, local search, grasp}
             \end{loglogaxis}
         \end{tikzpicture}
-        \caption{Theorical omplexity of the algorithm in function of the number of vertices.}
-        \label{fig:theorical_algorithm_complexity}
+        \caption{Theoretical omplexity of the algorithm in function of the number of vertices.}
+        \label{fig:theoretical_algorithm_complexity}
     \end{figure}
     
     Since the complexity will vary depending on the connectivity and degeneracy of the graph we will look at the execution time for each graph.

@@ -63,7 +63,7 @@ To evaluate this, we will focus on two points: their theoretical complexity but 
     Exact on figure \ref{fig:exact_time} $>$ Grasp on figure \ref{fig:grasp_time} $>$ Local Search on figure \ref{fig:local_search_time} $>$ Constructive on figure \ref{fig:constructive_time}.
 \end{itemize}
 
-Another important criterion to consider is the precision of the results you are looking for, in a real application case, for example let's take our example from figure \ref{fig:applications_example}. You don't necessarily need to get the best possible click, but a slightly worse one will do just fine. The different algorithms we have studied have different levels of expectation in terms of usability results. \bigskip
+Another important criterion to consider is \textbf{the precision of the results} you are looking for, in a real application case, for example let's take our example from figure \ref{fig:applications_example}. You don't necessarily need to get the best possible click, but a slightly worse one will do just fine. The different algorithms we have studied have different levels of expectation in terms of usability results. \bigskip
 
 To evaluate this, we will compare the percentage of the solution based on the exact one (because it always gives the best result) with different level of connectivity. \bigskip
 
@@ -237,4 +237,5 @@ A local search algorithm is a good compromise between accuracy and time. It will
 
 Lastly, a heuristic algorithm like the GRASP (Greedy Randomized Adaptive Search Procedure) algorithm is a good choice when a high level of accuracy is needed. Although it is the most accurate of the heuristic approaches, it is also the slowest of them. \bigskip
 
-In summary, when solving a problem with a large number of vertices, heuristic algorithms such as the greedy, local search, and grasp algorithms are more appropriate to use. However, when the number of vertices is small, an exact algorithm such as the branch and bound algorithm may be used for a more accurate solution, even though it may take longer. \bigskip
+In summary, when solving a problem with a large number of vertices, heuristic algorithms such as the greedy, local search, and grasp algorithms are more appropriate to use. 
+\newpage However, when the number of vertices is small, an exact algorithm such as the branch and bound algorithm may be used for a more accurate solution, even though it may take longer. \bigskip

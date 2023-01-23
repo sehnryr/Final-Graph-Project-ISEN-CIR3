@@ -27,16 +27,17 @@ maximum, and not the global maximum. The direction of the green arrow indicates 
     \begin{tikzpicture}
         \draw[thick,->] (0,0) -- (10,0) node[anchor=north west] {Solutions};
         \draw[thick,->] (0,0) -- (0,4.5) node[anchor=south east] {Quality (weight)};
-        \draw (0,0) .. controls (2,5) and (3,-2) .. (5,3);
+        \draw (0,0) .. controls (1.8,4.4) and (2.5,0) .. (4,1.1);
+        \draw (4,1.1) .. controls (4.4,1.5) and (4.5,1.8) .. (5,3);
         \draw (5,3) .. controls (6,6) and (7,0) .. (10,0);
         \draw[red,thick,->] (2,3) -- (1.5,2.2);
         \node[red] at (2,3.3) {Local maximum};
         \draw[red,thick,->] (7,4.8) -- (5.7,4);
         \node[red] at (7,5.1) {Global maximum};
-        \draw[blue,fill] (2.7,1.4) circle (1.5pt);
-        \draw[blue,thick,->] (2,0.7) -- (2.5,1.2);
+        \draw[blue,fill] (2.7,1.3) circle (1.5pt);
+        \draw[blue,thick,->] (2,0.7) -- (2.5,1.1);
         \node[blue] at (2,0.4) {First solution};
-        \draw[green,thick,->] (3.4,1.3) -- (1.8,2.2);
+        \draw[green,thick,->] (3.4,1.1) -- (1.8,2.2);
     \end{tikzpicture}
     \caption{Example to illustrate the functioning of the local search}
     \label{fig:local_search_example}
@@ -46,13 +47,15 @@ The first thing to do was to find an initial solution that is most likely to be
 close to the best solution. To do this, the algorithm relies on an arbitrary 
 criterion that will work in most cases: take the highest degree vertex in the 
 graph, its highest degree neighbor and try to form a maximal clique with these 
-two vertices. This criterion will allow in most cases to form a rather large 
+two vertices. 
+\newpage
+This criterion will allow in most cases to form a rather large 
 clique because if we take the highest degree vertex, we have more chance to form 
 a larger clique, and thus we have more chance to have a clique of great weight.
 \bigskip
 
 The second and harder thing to do was to find the neighborhood criterion: what 
-is the neighbor of a maximal clique? After some research, the solution we found 
+is the neighbor of a maximal clique ? After some research, the solution we found 
 was to take our current maximum clique, remove a vertex from it (the one that adds 
 the least weight to the clique) and see if we can find a new, better maximum 
 clique. The problem with this solution for finding neighbors was that we only 

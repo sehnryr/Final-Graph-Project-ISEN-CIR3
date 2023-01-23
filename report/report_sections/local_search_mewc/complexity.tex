@@ -7,6 +7,7 @@ of attributing a value to a variable should always be $\mathcal{O}(1)$.
 \bigskip
 
 The complexity of the clique improvement algorithm is $\mathcal{O}(n^2)$ each time it is called. 
+\newpage
 This algorithm is recursive only if it finds an improvement in the clique size. However, each 
 time it is called, \textsc{improveClique()} can only find at most $n$ improvements, so it 
 recursively calls itself at most $n$ times. So the complexity of \textsc{improveClique()} is 

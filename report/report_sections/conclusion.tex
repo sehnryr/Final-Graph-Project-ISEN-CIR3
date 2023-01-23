@@ -65,23 +65,7 @@ To evaluate this, we will focus on two points: their theoretical complexity but 
 
 Another important criterion to consider is the precision of the results you are looking for, in a real application case, for example let's take our example from figure \ref{fig:applications_example}. You don't necessarily need to get the best possible click, but a slightly worse one will do just fine. The different algorithms we have studied have different levels of expectation in terms of usability results. \bigskip
 
-To evaluate this, we will compare the accuracy of the different algos against the exact one (because it always gives the best result).
-
-
-
-
-\large\textbf{Choice of the algorithm} \newline
-
-After this, we decided to conclude according to the number of vertices of our strating graph :
-
-\begin{itemize}
-    \item \textbf{10 - 100 Vertices} : We will use the "Exact" algorithm which allows to give a very precise solution but which is slow.
-
-    \item \textbf{100 + Vertices} : In order to don't wait too long for an answer, we plan to use the "Grasp" algorithm and then the "Local Search" which are certainly less precise but which allows to give an answer in less time.
-
-    \item \textbf{5000 + Vertices} : Finally we will use the "Constructive" algorithm which is the least precise but the fastest and allows to answer in an acceptable time
-
-\end{itemize}
+To evaluate this, we will compare the percentage of the solution based on the exact one(because it always gives the best result) with different level of connectivity. \bigskip
 
 \begin{figure}[H]
     \centering
@@ -112,14 +96,32 @@ After this, we decided to conclude according to the number of vertices of our st
         \end{axis}
     \end{tikzpicture}
     \caption{\% of solution based on the exact of the different algorithm for 25\% of connectivity.}
-    \label{fig:algorithm_25_time}
+    \label{fig:algorithm_25_accuracy}
 \end{figure}
 
-For this experiment, we generated 10 random graphs with 10 to 100 vertices to find an
-average \% for 25\% of connectivity. The connectivity is the percentage
-of chance that 2 vertices are linked. The results are shown in figure \ref{fig:algorithm_25_time}. At each number of
-vertices, an average clique weight is calculated, and converted to \% based on the result obtained with the exact algorithm.
-// à martin de détailler
+
+For this experiment, we generated 10 random graphs with 10 to 100 vertices to find an average \% for 25\% of connectivity. The connectivity is the percentage of chance that 2 vertices are linked. The results are shown in figure \ref{fig:algorithm_25_accuracy}. At each number of vertices, an average clique weight is calculated, and converted to \% based on the result obtained with the exact algorithm. \bigskip
+
+We can see that the exact algorithm has the best \% of solution. Then the grasp is comming in second and is very good with a little number of vertices. The third in terms of solution quality is the local search and the last one is the constructive. We can see a tendency for the quality of the solution to decrease as the number of vertices increases. \bigskip
+
+Here is the average of the correct solution for each algorithms with 25\% of connectivity: \bigskip
+
+\begin{center}
+    \rowcolors{2}{gray!10}{gray!30}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Algorithms} & \textbf{Average \% of solution based on exact}                         \\
+        \hline
+        Exact & 100\% \\
+        Grasp & 92.38\% \\
+        Local Search & 76.65\% \\
+        Constructive & 56.87\% \\
+        \hline
+    \end{tabular}
+    \rowcolors{1}{}{}
+\end{center}
+
+We do exactly the same with 50\% connectivity:
 
 \begin{figure}[H]
     \centering
@@ -150,14 +152,29 @@ vertices, an average clique weight is calculated, and converted to \% based on t
         \end{axis}
     \end{tikzpicture}
     \caption{\% of solution based on the exact of the different algorithm for 50\% of connectivity.}
-    \label{fig:algorithm_50_time}
+    \label{fig:algorithm_50_accuracy}
 \end{figure}
 
-For this experiment, we generated 10 random graphs with 10 to 100 vertices to find an
-average \% for 50\% of connectivity. The connectivity is the percentage
-of chance that 2 vertices are linked. The results are shown in figure \ref{fig:algorithm_50_time}. At each number of
-vertices, an average clique weight is calculated, and converted to \% based on the result obtained with the exact algorithm.
-// à martin de détailler
+We can observe the same results as in figure \ref{fig:algorithm_25_accuracy} for 25\%. The trends of the curves and the rankings of the algorithms are the same as before. However, we notice that the performances are better and we can see it easily with the graph of averages. \bigskip
+
+Here is the average of the correct solution for each algorithms with 50\% of connectivity: \bigskip
+
+\begin{center}
+    \rowcolors{2}{gray!10}{gray!30}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Algorithms} & \textbf{Average \% of solution based on exact}                         \\
+        \hline
+        Exact & 100\% \\
+        Grasp & 91.6\% \\
+        Local Search & 77.45\% \\
+        Constructive & 63.34\% \\
+        \hline
+    \end{tabular}
+    \rowcolors{1}{}{}
+\end{center}
+
+We do exactly the same with 75\% connectivity:
 
 \begin{figure}[H]
     \centering
@@ -191,49 +208,33 @@ vertices, an average clique weight is calculated, and converted to \% based on t
     \label{fig:algorithm_75_time}
 \end{figure}
 
-For this experiment, we generated 10 random graphs with 10 to 100 vertices to find an
-average \% of clique weight for 75\% of connectivity. The connectivity is the percentage
-of chance that 2 vertices are linked. The results are shown in figure \ref{fig:algorithm_75_time}. At each number of
-vertices, an average clique weight is calculated, and converted to \% based on the result obtained with the exact algorithm.
-// à martin de détailler
+The results obtained are identical to those for lower connectivities. We can note the confirmation that the accuracy of the results improves when the connectivity is stronger, which is a point that should be taken into account in some application cases. The connectivity will not have any importance on the accuracy ranking of each algorithm. \bigskip
 
-\begin{figure}[H]
-    \centering
-    \begin{tikzpicture}
-        \begin{loglogaxis}[
-                xlabel = Number of vertices,
-                ylabel = Theorical complexity,
-                legend pos = outer north east,
-                grid = major,
-                width = 0.5\textwidth,
-                legend cell align = {left},
-            ]
-            \addplot[Red, domain=10:100] {x^2*3^(x/3)};
+Here is the average of the correct solution for each algorithms with 50\% of connectivity: \bigskip
 
-            \addplot[Green, domain=10:100] {x^2};
+\begin{center}
+    \rowcolors{2}{gray!10}{gray!30}
+    \begin{tabular}{|c|c|}
+        \hline
+        \textbf{Algorithms} & \textbf{Average \% of solution based on exact}                         \\
+        \hline
+        Exact & 100\% \\
+        Grasp & 94.67\% \\
+        Local Search & 85.51\% \\
+        Constructive & 73.69\% \\
+        \hline
+    \end{tabular}
+    \rowcolors{1}{}{}
+\end{center}
 
-            \addplot[Blue, domain=10:100] {x^5};
+In the end, we can conlude that each algorithm has its own advantages and disadvantages. \bigskip
 
-            \addplot[Black, domain=10:100] {x^6};
+The exact algorithm is able to find the optimal solution for the MEWC, but it can take a significant amount of time to do so, particularly as the number of vertices and connectivity in the problem increases. \bigskip
 
+On the other hand, a constructive algorithm is much faster in finding a solution, but it may not necessarily result in the most optimal solution. This algorithm is a good choice when the number of vertices is large and a quick solution is needed. \bigskip
 
-            \addlegendentry{test}
+A local search algorithm is a good compromise between accuracy and time. It will give a better result than the constructive one and will stay in an acceptable time frame. \bigskip
 
-            \legend{exact, constructive, local search, grasp}
-        \end{loglogaxis}
-    \end{tikzpicture}
-    \caption{Execution time of the constructive algorithm for different percentages of connectivity.}
-    \label{fig:constructive_time}
-\end{figure}
+Lastly, a heuristic algorithm like the GRASP (Greedy Randomized Adaptive Search Procedure) algorithm is a good choice when a high level of accuracy is needed. Although it is the most accurate of the heuristic approaches, it is also the slowest of them. \bigskip
 
-In the end, we can conclude that each algorithm has its own advantages and
-disadvantages. The exact algorithm is the most accurate, but it is also the most
-time-consuming. The constructive algorithm is the fastest, but it is also the
-least accurate. The local search algorithm is a good compromise between accuracy
-and time. The grasp algorithm is the most accurate of the heuristic approaches,
-but it is also the slowest of them.
-\bigskip
-
-Generally speaking, the exact algorithm will be employed when the number of
-vertices is small, and the heuristic algorithms will be used when the number of
-vertices is large.
+In summary, when solving a problem with a large number of vertices, heuristic algorithms such as the greedy, local search, and grasp algorithms are more appropriate to use. However, when the number of vertices is small, an exact algorithm such as the branch and bound algorithm may be used for a more accurate solution, even though it may take longer. \bigskip

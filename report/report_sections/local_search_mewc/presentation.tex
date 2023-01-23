@@ -17,13 +17,13 @@ of this new solution up to a certain stopping condition. As can be seen from thi
 definition, the local search algorithm will only take the neighbors that have a 
 better solution, so if to reach the optimal solution we have to go through a decrease 
 in the quality of the solution, then we will never reach this optimal solution. 
-Finally, if we consider a graph with the neighboring solutions on the x-axis and 
+Finally, if we consider a graph like in the figure \ref{fig:local_search_example}, with the neighboring solutions on the x-axis and 
 the quality of these solutions on the y-axis (in this case the weight of the clique 
 found), we will observe that the local search algorithm will only give the local 
 maximum, and not the global maximum.
 
-
-\begin{center}
+\begin{figure}[H]
+    \centering
     \begin{tikzpicture}
         \draw[thick,->] (0,0) -- (10,0) node[anchor=north west] {Solutions};
         \draw[thick,->] (0,0) -- (0,4.5) node[anchor=south east] {Quality (weight)};
@@ -38,7 +38,9 @@ maximum, and not the global maximum.
         \node[blue] at (2,0.4) {First solution};
         \draw[green,thick,->] (3.4,1.3) -- (1.8,2.2);
     \end{tikzpicture}
-\end{center}
+    \caption{Example to illustrate the functioning of the local search}
+    \label{fig:local_search_example}
+\end{figure}
 
 The first thing to do was to find an initial solution that is most likely to be 
 close to the best solution. To do this, the algorithm relies on an arbitrary 

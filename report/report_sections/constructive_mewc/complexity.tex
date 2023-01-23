@@ -26,11 +26,11 @@ The complexity of \textsc{getBestVertex} will be :
     T(n) = (n+n) \in \mathcal{O}(n)
 \end{equation}
 
-Moreover, in the function \textsc{constructiveMEWCRecursive}, we will iterate on all the elements of the adjacency matrix of the vertex we're looking to check its neighbors in order to make the intersection of $P$ and the neighbors. To do this, we use the \textsc{count()} function which is constant\footnotemark. The function is $\mathcal{O}(1)$ in the same logic of the \textsc{find()} function.
+Moreover, in the function \textsc{constructiveMEWCRecursive}, we will iterate on all the elements of the adjacency matrix of the vertex we are looking to check its neighbors in order to make the intersection of $P$ and the neighbors. To do this, we use the \textsc{count()} function which is constant\footnotemark. The function is $\mathcal{O}(1)$ in the same logic of the \textsc{find()} function.
 \footnotetext{\url{https://en.cppreference.com/w/cpp/container/unordered_set/count}}
 \bigskip
 
-We then can calculate the complexity of the function \textsc{constructiveMEWCRecursive}. 
+We can thus calculate the complexity of the function \textsc{constructiveMEWCRecursive}. 
 \begin{equation}
     T(n)=\begin{cases}
         3        & \text{if } n=0 \\

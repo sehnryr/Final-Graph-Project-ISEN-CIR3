@@ -3,13 +3,13 @@
 \subsection{How it works}
 
 As said before, the local search algorithm takes an initial solution, and as long 
-as a certain condition is not met, it looks at the neighbours of this initial solution 
-and keeps the neighbouring solution if it is better. Here is a rough overview of 
+as a certain condition is not met, it looks at the neighbors of this initial solution 
+and keeps the neighboring solution if it is better. Here is a rough overview of 
 how all local search algorithms work:
 
 \begin{enumerate}
     \item Finding an initial solution
-    \item Look at a neighbour solution of the current one
+    \item Look at a neighbor solution of the current one
     \begin{itemize}
         \item If the new solution is better than the old one, keep it as a solution
         \item Else, keep the old one as solution
@@ -18,7 +18,7 @@ how all local search algorithms work:
 \end{enumerate}
 
 First, in our case, finding the initial solution is done by taking the highest 
-degree vertex, then its highest degree neighbour. These two vertices form a 
+degree vertex, then its highest degree neighbor. These two vertices form a 
 clique which will be improved to form a maximal clique as shown below:
 
 \begin{minipage}{\linewidth}
@@ -88,9 +88,9 @@ clique which will be improved to form a maximal clique as shown below:
     \end{minipage}
     \begin{minipage}{0.6\textwidth}
         We can assume that the first vertex looked at to find a maximal clique will 
-        be $1$, and as it is the neighbour of both $2$ and $3$ (all the vertices of 
+        be $1$, and as it is the neighbor of both $2$ and $3$ (all the vertices of 
         the current clique), we add it to the clique. We now look for common 
-        neighbours of the three vertices of the clique: we find none, so the 
+        neighbors of the three vertices of the clique: we find none, so the 
         clique $\{1, 2, 3\}$ forms a maximal clique: this is our initial solution 
         and its weight is $w(C_{init}) = 1+2+4 = 7$.
     \end{minipage}
@@ -98,7 +98,7 @@ clique which will be improved to form a maximal clique as shown below:
 
 \bigskip
 
-We now have an initial solution. The objective will be to look at its neighbours to 
+We now have an initial solution. The objective will be to look at its neighbors to 
 find a better solution (that is a maximal clique with a higher weight). This is done 
 by deleting a vertex in our current solution. With one less vertex, the clique may 
 not be maximal anymore, so we will try to make it maximal. If the weight of the new 
@@ -139,7 +139,7 @@ weight to the clique. This will increase the chances of finding a better solutio
         Among the three vertices of the current solution, the $2$ is the one which 
         adds the least weight (if we remove it, we reduce the weight of the clique 
         by $2+1=3$). We obtain then a clique made up of the vertices $\{1, 3\}$. 
-        Now, these two vertices have no neighbour in common, so this clique is 
+        Now, these two vertices have no neighbor in common, so this clique is 
         maximal and of weight $w(C_1) = 4$. As $w(C_1) = 4 < w(C_{init}) = 7$, we 
         do not keep this solution.
     \end{minipage}
@@ -178,7 +178,7 @@ weight to the clique. This will increase the chances of finding a better solutio
     \begin{minipage}{0.6\textwidth}
         The second vertex of minimum weight is $1$. If we remove it, we observe that 
         the vertex $4$ is adjacent to the two remaining vertices in the clique 
-        ($\{2, 3\}$). So we add it to our solution and we obtain the clique 
+        ($\{2, 3\}$). So we add it to our solution, and we obtain the clique 
         $C_2 = \{2, 3, 4\}$ with $w(C_2) = 9$. Let's see if this clique is maximal or 
         if we can still improve it.
     \end{minipage}
@@ -217,8 +217,8 @@ weight to the clique. This will increase the chances of finding a better solutio
     \begin{minipage}{0.6\textwidth}
         We can see that vertex $5$ is adjacent to all the vertices of $C_2$. We can 
         therefore add it to the clique: $C_2 = \{2, 3, 4, 5\}$ and $w(C_2) = 18$. We 
-        notice that the vertices of the clique have no common neighbour, so we keep 
-        $C_2$ as is. We then have $w(C_2) = 18$ greater than $w(C_{init}) = 7$. We 
+        notice that the vertices of the clique have no common neighbor, so we keep 
+        $C_2$ as is. Furthermore, we then have $w(C_2) = 18$ greater than $w(C_{init}) = 7$. We 
         therefore take $C_2$ as the current solution.
     \end{minipage}
 \end{minipage}
@@ -229,5 +229,5 @@ Now that we know how the solution is improved, all that remains is to see when t
 ends: what is the stop condition? A simple way to stop the algorithm is to define the stop 
 condition as the moment when we have no more vertices to test, that is when we have removed 
 all vertices one by one from the current solution without finding a better solution. Thus, 
-we will have tested all the possibilities and we will obtain a maximal clique which cannot 
+we will have tested all the possibilities, and we will obtain a maximal clique which cannot 
 be improved with this local search algorithm.

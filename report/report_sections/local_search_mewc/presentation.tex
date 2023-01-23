@@ -7,17 +7,17 @@ So, like the constructive algorithm, the local search will find a solution that 
 or may not be the best one, and we will have no idea how far we are from the real 
 solution. The difference between constructive and local search is that constructive 
 is based on criteria to find a solution whereas local search will find a first 
-solution and visit the "neighbouring" solutions to find an optimal solution. This 
-"neighbourhood" criterion is the most important one for this algorithm, it is the 
+solution and visit the "neighboring" solutions to find an optimal solution. This 
+"neighborhood" criterion is the most important one for this algorithm, it is the 
 one that will choose to enter one way or another, and therefore it is the one that 
-will give the final solution and define its quality. The neighbour of a solution is 
+will give the final solution and define its quality. The neighbor of a solution is 
 found by making small changes to the solution found to see if a better solution can 
-be obtained. If this is the case, then we start again by looking at the neighbours 
+be obtained. If this is the case, then we start again by looking at the neighbors 
 of this new solution up to a certain stopping condition. As can be seen from this 
-definition, the local search algorithm will only take the neighbours that have a 
+definition, the local search algorithm will only take the neighbors that have a 
 better solution, so if to reach the optimal solution we have to go through a decrease 
 in the quality of the solution, then we will never reach this optimal solution. 
-Finally, if we consider a graph with the neighbouring solutions on the x-axis and 
+Finally, if we consider a graph with the neighboring solutions on the x-axis and 
 the quality of these solutions on the y-axis (in this case the weight of the clique 
 found), we will observe that the local search algorithm will only give the local 
 maximum, and not the global maximum.
@@ -43,17 +43,17 @@ maximum, and not the global maximum.
 The first thing to do was to find an initial solution that is most likely to be 
 close to the best solution. To do this, the algorithm relies on an arbitrary 
 criterion that will work in most cases: take the highest degree vertex in the 
-graph, its highest degree neighbour and try to form a maximal clique with these 
+graph, its highest degree neighbor and try to form a maximal clique with these 
 two vertices. This criterion will allow in most cases to form a rather large 
 clique because if we take the highest degree vertex, we have more chance to form 
-a larger clique and thus we have more chance to have a clique of great weight.
+a larger clique, and thus we have more chance to have a clique of great weight.
 \bigskip
 
-The second and harder thing to do was to find the neighbourhood criterion: what 
-is the neighbour of a maximal clique? After some research, the solution we found 
+The second and harder thing to do was to find the neighborhood criterion: what 
+is the neighbor of a maximal clique? After some research, the solution we found 
 was to take our current maximum clique, remove a vertex from it (the one that adds 
 the least weight to the clique) and see if we can find a new, better maximum 
-clique. The problem with this solution for finding neighbours was that we only 
+clique. The problem with this solution for finding neighbors was that we only 
 took into account very few cases: we did not take into account the case where we 
 had to delete two or more vertices in our clique to find a better one. The 
 solution found to solve this problem was to try to remove all sets of $k$ vertices 
@@ -61,16 +61,16 @@ and see if we could get a better clique. The new problem with this way of doing
 things was the complexity: to find all sets (or part of sets) of $k$ vertices among 
 $n$ (the total number of vertices in the clique), the complexity became $\mathcal{O}(n!)$. 
 Now, the principle of a heuristic algorithm like local search is to find an approximate 
-solution but with polynomial complexity and $n!$ is anything but polynomial and it 
+solution but with polynomial complexity and $n!$ is anything but polynomial, and it 
 would take like forever to run this algorithm for a large graph with many of vertices 
 and edges.
 \bigskip
 
 After several trials running both the factorial complexity algorithm that takes 
-sets of vertices to find a neighbouring solution and the one that removes only one 
+sets of vertices to find a neighboring solution and the one that removes only one 
 vertex at a time, we found that both found an approximately similar solution where 
 the one that removed only one vertex ran almost instantaneously as opposed to the 
 other that took several minutes. As the goal of the local search algorithm is to 
 find an approximate solution in a very short time, we decided to keep the first 
-neighbourhood criterion found, that is to locate a vertex to try to improve the 
+neighborhood criterion found, that is to locate a vertex to try to improve the 
 clique found.

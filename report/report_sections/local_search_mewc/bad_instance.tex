@@ -7,7 +7,7 @@ be a lot of bad instances for the local search algorithm because the objective i
 much faster than the exact algorithm and not to have the exact solution. The algorithm has 
 to make choices at several points that will define the quality of the result obtained. The 
 two main moments where it can make the wrong choice are: when choosing the initial solution 
-and when choosing which best neighbour to go to.
+and when choosing which best neighbor to go to.
 \bigskip
 
 For the first point, if the local search algorithm starts towards a solution too far 
@@ -58,8 +58,8 @@ a star and the second a complete subgraph as shown in the example below:
 
 Here, the first vertex that will be taken to form the initial solution will be $1$ because 
 $d(1) = 6$ is the maximum degree and the second vertex will be $7$ because it is the 
-highest degree neighbour of $1$. This initial solution already forms a maximum clique of 
-weight $2$. When we look at the neighbours of this solution by removing either $1$ or $2$, 
+highest degree neighbor of $1$. This initial solution already forms a maximum clique of 
+weight $2$. When we look at the neighbors of this solution by removing either $1$ or $2$, 
 we will never obtain a better solution than the initial solution. However, we observe well 
 on this example that the maximum clique is the clique formed by the vertices $\{10, 11, 12, 13\}$ 
 of weight $60$, well higher than $2$. The best way to counter this kind of problem would be 
@@ -68,7 +68,7 @@ of lesser quality to try to reach the best solution.
 \bigskip
 
 The second way in which the algorithm can make a bad choice at a given time is by incorrectly 
-choosing which of the best neighbours of the current solution to keep. Let's take an example:
+choosing which of the best neighbors of the current solution to keep. Let's take an example:
 
 \begin{figure}[H]
     \centering
@@ -98,7 +98,7 @@ choosing which of the best neighbours of the current solution to keep. Let's tak
 \end{figure}
 
 Here, let us suppose that the current solution is $C = \{1, 2\}$. When the algorithm goes 
-to look for a neighbour of this solution, it will have two possible choices, both offering 
+to look for a neighbor of this solution, it will have two possible choices, both offering 
 the same quality of solution: $\{2, 3\}$ and $\{2, 5\}$. The problem arises if he chooses 
 to go towards $\{2, 3\}$. In this case, the best solution that he can find will be $\{3, 4\}$ 
 with a weight of $3$ whereas if he had gone towards $\{2, 5\}$, he would have obtained the 

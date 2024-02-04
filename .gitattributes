@@ -1,2 +1,5 @@
 * text=auto
 * eol=lf
+
+# Hide LaTeX report files from Github stats
+report/** -linguist-detectable
